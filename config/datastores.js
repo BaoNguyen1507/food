@@ -51,6 +51,10 @@ module.exports.datastores = {
     // adapter: 'sails-mysql',
     // url: 'mysql://user:password@host:port/database',
 
+    adapter: 'sails-mongo',
+    host: '127.0.0.1', // defaults to `localhost` if omitted 
+    port: 27017, // defaults to 27017 if omitted 
+    database: 'ekidprodb', // or omit if not relevant
   },
 
 

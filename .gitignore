@@ -87,7 +87,7 @@ config/local.js
 #
 ################################################
 
-node_modules
+node_modules/
 
 
 ################################################
@@ -129,4 +129,7 @@ lib-cov
 *.log
 *.out
 *.pid
+database/db
+database/dump
+assets/images/zadmin
 
