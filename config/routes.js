@@ -46,42 +46,41 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
   //LOGIN
-  'POST /api/v1/entrance/login/': { controller: 'entrance/LoginController', action: 'login' },
+  'POST /api/v1/entrance/login/': { controller: 'backend/LoginController', action: 'login' },
 
   // USER
-  'GET /api/v1/user/': { controller: 'user/UserController', action: 'search' },
-  'GET /api/v1/user/:id/': { controller: 'user/UserController', action: 'get' },
-  'POST /api/v1/user/': { controller: 'user/UserController', action: 'add' },
-  'PATCH /api/v1/user/:id/': { controller: 'user/UserController', action: 'edit' },
-  'PATCH /api/v1/user/': { controller: 'user/UserController', action: 'trash' },
-
+  'GET /api/v1/user/': { controller: 'backend/UserController', action: 'search' },
+  'GET /api/v1/user/:id/': { controller: 'backend/UserController', action: 'get' },
+  'POST /api/v1/user/': { controller: 'backend/UserController', action: 'add' },
+  'PATCH /api/v1/user/:id/': { controller: 'backend/UserController', action: 'edit' },
+  'PATCH /api/v1/user/': { controller: 'backend/UserController', action: 'trash' },
   // TAXONOMY
-  'GET /api/v1/taxonomy/': { controller: 'taxonomy/TaxonomyController', action: 'search' },
-  'GET /api/v1/taxonomy/:id/': { controller: 'taxonomy/TaxonomyController', action: 'get' },
-  'POST /api/v1/taxonomy/': { controller: 'taxonomy/TaxonomyController', action: 'add' },
-  'PATCH /api/v1/taxonomy/:id/': { controller: 'taxonomy/TaxonomyController', action: 'edit' },
-  'PATCH /api/v1/taxonomy/': { controller: 'taxonomy/TaxonomyController', action: 'trash' },
+  'GET /api/v1/taxonomy/': { controller: 'backend/TaxonomyController', action: 'search' },
+  'GET /api/v1/taxonomy/:id/': { controller: 'backend/TaxonomyController', action: 'get' },
+  'POST /api/v1/taxonomy/': { controller: 'backend/TaxonomyController', action: 'add' },
+  'PATCH /api/v1/taxonomy/:id/': { controller: 'backend/TaxonomyController', action: 'edit' },
+  'PATCH /api/v1/taxonomy/': { controller: 'backend/TaxonomyController', action: 'trash' },
 
   // PARENT
-  'GET /api/v1/parent/': { controller: 'parent/ParentController', action: 'search' },
-  'GET /api/v1/parent/:id/': { controller: 'parent/ParentController', action: 'get' },
-  'POST /api/v1/parent/': { controller: 'parent/ParentController', action: 'add' },
-  'PATCH /api/v1/parent/:id/': { controller: 'parent/ParentController', action: 'edit' },
-  'PATCH /api/v1/parent/': { controller: 'parent/ParentController', action: 'trash' },
+  'GET /api/v1/parent/': { controller: 'backend/ParentController', action: 'search' },
+  'GET /api/v1/parent/:id/': { controller: 'backend/ParentController', action: 'get' },
+  'POST /api/v1/parent/': { controller: 'backend/ParentController', action: 'add' },
+  'PATCH /api/v1/parent/:id/': { controller: 'backend/ParentController', action: 'edit' },
+  'PATCH /api/v1/parent/': { controller: 'backend/ParentController', action: 'trash' },
 
   // STUDENT
-  'GET /api/v1/student/': { controller: 'student/StudentController', action: 'search' },
-  'GET /api/v1/student/:id/': { controller: 'student/StudentController', action: 'get' },
-  'POST /api/v1/student/': { controller: 'student/StudentController', action: 'add' },
-  'PATCH /api/v1/student/:id/': { controller: 'student/StudentController', action: 'edit' },
-  'PATCH /api/v1/student/': { controller: 'student/StudentController', action: 'trash' },
+  'GET /api/v1/student/': { controller: 'backend/StudentController', action: 'search' },
+  'GET /api/v1/student/:id/': { controller: 'backend/StudentController', action: 'get' },
+  'POST /api/v1/student/': { controller: 'backend/StudentController', action: 'add' },
+  'PATCH /api/v1/student/:id/': { controller: 'backend/StudentController', action: 'edit' },
+  'PATCH /api/v1/student/': { controller: 'backend/StudentController', action: 'trash' },
  
   // POST
-  'GET /api/v1/post/': { controller: 'post/PostController', action: 'search' },
-  'GET /api/v1/post/:id/': { controller: 'post/PostController', action: 'get' },
-  'POST /api/v1/post/': { controller: 'post/PostController', action: 'add' },
-  'PATCH /api/v1/post/:id/': { controller: 'post/PostController', action: 'edit' },
-  'PATCH /api/v1/post/': { controller: 'post/PostController', action: 'trash' },
+  'GET /api/v1/post/': { controller: 'backend/PostController', action: 'search' },
+  'GET /api/v1/post/:id/': { controller: 'backend/PostController', action: 'get' },
+  'POST /api/v1/post/': { controller: 'backend/PostController', action: 'add' },
+  'PATCH /api/v1/post/:id/': { controller: 'backend/PostController', action: 'edit' },
+  'PATCH /api/v1/post/': { controller: 'backend/PostController', action: 'trash' },
 
   // ALBUM
   'GET /api/v1/album/': { controller: 'album/AlbumController', action: 'search' },
@@ -91,72 +90,72 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   'PATCH /api/v1/album/': { controller: 'album/AlbumController', action: 'trash' },
 
   // SCHOOL
-  'POST /api/v1/school/login/': { controller: 'school/SchoolUserController', action: 'login' },
-  'GET /api/v1/school/': { controller: 'school/SchoolController', action: 'search' },
-  'GET /api/v1/school/:id/': { controller: 'school/SchoolController', action: 'get' },
-  'POST /api/v1/school/': { controller: 'school/SchoolController', action: 'add' },
-  'PATCH /api/v1/school/:id/': { controller: 'school/SchoolController', action: 'edit' },
-  'PATCH /api/v1/school/': { controller: 'school/SchoolController', action: 'trash' },
+  'POST /api/v1/school/login/': { controller: 'backend/SchoolUserController', action: 'login' },
+  'GET /api/v1/school/': { controller: 'backend/SchoolController', action: 'search' },
+  'GET /api/v1/school/:id/': { controller: 'backend/SchoolController', action: 'get' },
+  'POST /api/v1/school/': { controller: 'backend/SchoolController', action: 'add' },
+  'PATCH /api/v1/school/:id/': { controller: 'backend/SchoolController', action: 'edit' },
+  'PATCH /api/v1/school/': { controller: 'backend/SchoolController', action: 'trash' },
 
   // CLASS
-  'GET /api/v1/class/': { controller: 'class/ClassController', action: 'search' },
-  'GET /api/v1/class/:id/': { controller: 'class/ClassController', action: 'get' },
-  'POST /api/v1/class/': { controller: 'class/ClassController', action: 'add' },
-  'PATCH /api/v1/class/:id/': { controller: 'class/ClassController', action: 'edit' },
-  'PATCH /api/v1/class/': { controller: 'class/ClassController', action: 'trash' },
+  'GET /api/v1/class/': { controller: 'backend/ClassController', action: 'search' },
+  'GET /api/v1/class/:id/': { controller: 'backend/ClassController', action: 'get' },
+  'POST /api/v1/class/': { controller: 'backend/ClassController', action: 'add' },
+  'PATCH /api/v1/class/:id/': { controller: 'backend/ClassController', action: 'edit' },
+  'PATCH /api/v1/class/': { controller: 'backend/ClassController', action: 'trash' },
 
   // SUBJECT
-  'GET /api/v1/subject/': { controller: 'subject/SubjectController', action: 'search' },
-  'GET /api/v1/subject/:id/': { controller: 'subject/SubjectController', action: 'get' },
-  'POST /api/v1/subject/': { controller: 'subject/SubjectController', action: 'add' },
-  'PATCH /api/v1/subject/:id/': { controller: 'subject/SubjectController', action: 'edit' },
-  'PATCH /api/v1/subject/': { controller: 'subject/SubjectController', action: 'trash' },
+  'GET /api/v1/subject/': { controller: 'backend/SubjectController', action: 'search' },
+  'GET /api/v1/subject/:id/': { controller: 'backend/SubjectController', action: 'get' },
+  'POST /api/v1/subject/': { controller: 'backend/SubjectController', action: 'add' },
+  'PATCH /api/v1/subject/:id/': { controller: 'backend/SubjectController', action: 'edit' },
+  'PATCH /api/v1/subject/': { controller: 'backend/SubjectController', action: 'trash' },
   
   // COMMENT
-  'GET /api/v1/comment/': { controller: 'comment/CommentController', action: 'search' },
-  'GET /api/v1/comment/:id/': { controller: 'comment/CommentController', action: 'get' },
-  'POST /api/v1/comment/': { controller: 'comment/CommentController', action: 'add' },
-  'PATCH /api/v1/comment/:id/': { controller: 'comment/CommentController', action: 'edit' },
-  'PATCH /api/v1/comment/': { controller: 'comment/CommentController', action: 'trash' },
+  'GET /api/v1/comment/': { controller: 'backend/CommentController', action: 'search' },
+  'GET /api/v1/comment/:id/': { controller: 'backend/CommentController', action: 'get' },
+  'POST /api/v1/comment/': { controller: 'backend/CommentController', action: 'add' },
+  'PATCH /api/v1/comment/:id/': { controller: 'backend/CommentController', action: 'edit' },
+  'PATCH /api/v1/comment/': { controller: 'backend/CommentController', action: 'trash' },
 
   // MEDIA
-  'GET /api/v1/media/': { controller: 'media/MediaController', action: 'search' },
-  'GET /api/v1/media/:id/': { controller: 'media/MediaController', action: 'get' },
-  'POST /api/v1/media/': { controller: 'media/MediaController', action: 'add' },
-  'PATCH /api/v1/media/:id/': { controller: 'media/MediaController', action: 'edit' },
-  'PATCH /api/v1/media/': { controller: 'media/MediaController', action: 'trash' },
-  'POST /api/v1/media/upload/': { controller: 'media/MediaController', action: 'upload' },
+  'GET /api/v1/media/': { controller: 'backend/MediaController', action: 'search' },
+  'GET /api/v1/media/:id/': { controller: 'backend/MediaController', action: 'get' },
+  'POST /api/v1/media/': { controller: 'backend/MediaController', action: 'add' },
+  'PATCH /api/v1/media/:id/': { controller: 'backend/MediaController', action: 'edit' },
+  'PATCH /api/v1/media/': { controller: 'backend/MediaController', action: 'trash' },
+  'POST /api/v1/media/upload/': { controller: 'backend/MediaController', action: 'upload' },
   
   //FOOD
-  'GET /api/v1/food/': { controller: 'food/FoodController', action: 'search' },
-  'GET /api/v1/food/:id/': { controller: 'food/FoodController', action: 'get' },
-  'POST /api/v1/food/': { controller: 'food/FoodController', action: 'add' },
-  'PATCH /api/v1/food/:id/': { controller: 'food/FoodController', action: 'edit' },
-  'PATCH /api/v1/food/': { controller: 'food/FoodController', action: 'trash' },
+  'GET /api/v1/food/': { controller: 'backend/FoodController', action: 'search' },
+  'GET /api/v1/food/:id/': { controller: 'backend/FoodController', action: 'get' },
+  'POST /api/v1/food/': { controller: 'backend/FoodController', action: 'add' },
+  'PATCH /api/v1/food/:id/': { controller: 'backend/FoodController', action: 'edit' },
+  'PATCH /api/v1/food/': { controller: 'backend/FoodController', action: 'trash' },
 
   //NOTIFICATION
-  'GET /api/v1/notification/': { controller: 'notification/NotificationController', action: 'search' },
-  'GET /api/v1/notification/:id/': { controller: 'notification/NotificationController', action: 'get' },
-  'POST /api/v1/notification/': { controller: 'notification/NotificationController', action: 'add' },
-  'PATCH /api/v1/notification/:id/': { controller: 'notification/NotificationController', action: 'edit' },
-  'PATCH /api/v1/notification/': { controller: 'notification/NotificationController', action: 'trash' },
+  'GET /api/v1/notification/': { controller: 'backend/NotificationController', action: 'search' },
+  'GET /api/v1/notification/:id/': { controller: 'backend/NotificationController', action: 'get' },
+  'POST /api/v1/notification/': { controller: 'backend/NotificationController', action: 'add' },
+  'PATCH /api/v1/notification/:id/': { controller: 'backend/NotificationController', action: 'edit' },
+  'PATCH /api/v1/notification/': { controller: 'backend/NotificationController', action: 'trash' },
 
   //SCHEDULE
-  'GET /api/v1/schedule/': { controller: 'schedule/ScheduleController', action: 'search' },
-  'GET /api/v1/schedule/:id/': { controller: 'schedule/ScheduleController', action: 'get' },
-  'POST /api/v1/schedule/': { controller: 'schedule/ScheduleController', action: 'add' },
-  'PATCH /api/v1/schedule/:id/': { controller: 'schedule/ScheduleController', action: 'edit' },
-  'PATCH /api/v1/schedule/': { controller: 'schedule/ScheduleController', action: 'trash' },
+  'GET /api/v1/schedule/': { controller: 'backend/ScheduleController', action: 'search' },
+  'GET /api/v1/schedule/:id/': { controller: 'backend/ScheduleController', action: 'get' },
+  'POST /api/v1/schedule/': { controller: 'backend/ScheduleController', action: 'add' },
+  'PATCH /api/v1/schedule/:id/': { controller: 'backend/ScheduleController', action: 'edit' },
+  'PATCH /api/v1/schedule/': { controller: 'backend/ScheduleController', action: 'trash' },
 
   //MENU
-  'GET /api/v1/menu/': { controller: 'menu/MenuController', action: 'search' },
-  'GET /api/v1/menu/:id/': { controller: 'menu/MenuController', action: 'get' },
-  'POST /api/v1/menu/': { controller: 'menu/MenuController', action: 'add' },
-  'PATCH /api/v1/menu/:id/': { controller: 'menu/MenuController', action: 'edit' },
-  'PATCH /api/v1/menu/': { controller: 'menu/MenuController', action: 'trash' },
+  'GET /api/v1/menu/': { controller: 'backend/MenuController', action: 'search' },
+  'GET /api/v1/menu/:id/': { controller: 'backend/MenuController', action: 'get' },
+  'POST /api/v1/menu/': { controller: 'backend/MenuController', action: 'add' },
+  'PATCH /api/v1/menu/:id/': { controller: 'backend/MenuController', action: 'edit' },
+  'PATCH /api/v1/menu/': { controller: 'backend/MenuController', action: 'trash' },
 
   // FILE
-  'GET /assets/images/zadmin/uploads/*': { controller: 'file/FileController', action: 'get' },
+  'GET /assets/images/zadmin/uploads/*': { controller: 'backend/FileController', action: 'get' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

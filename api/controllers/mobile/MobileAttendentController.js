@@ -11,6 +11,7 @@ const ClassService = require('../../services/ClassService');
 module.exports = {
 
   checkAttendent: async (req, res) => {
+    sails.log.info("================================ AttendentController.checkAttendent => START ================================");
     let params = req.allParams();
     let arrayStudents = params.students;
     let classAttendent = params.class;
@@ -36,9 +37,11 @@ module.exports = {
     if (classAttendent) {
       Attendent.addToCollection(newAttendent.id, 'class', classAttendent).exec(function (err) { });
     }
+    sails.log.info("================================ AttendentController.checkAttendent => END ================================");
     return res.ok(newAttendent);
   },
   checkStudentByClass: async (req, res) => { 
+    sails.log.info("================================ AttendentController.checkStudentByClass => START ================================");
     let params = req.allParams();
     let classID = params.class;
     if (!classID) {
@@ -52,6 +55,7 @@ module.exports = {
       tmp.gender = classObj.students[i].gender;
       arrStudent.push(tmp);
     }
+    sails.log.info("================================ AttendentController.checkStudentByClass => END ================================");
     return res.ok({
       data : arrStudent
     })

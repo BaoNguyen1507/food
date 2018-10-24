@@ -45,7 +45,6 @@ module.exports = {
       return res.badRequest(ClassError.ERR_SDKCLASS_EXISTED);
     }
     let students = params.students;
-    sails.log('check data student', students);
     // PREPARE DATA CLASS
     const newData = {
       className: params.className, // REQUIRED
