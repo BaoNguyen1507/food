@@ -45,7 +45,6 @@ module.exports = {
       return res.badRequest(AttendentError.ERR_CLASS_REQUIRED);
     } 
     let classObj = await ClassService.get({ id: classID });
-    sails.log('class id student', classObj.students);
     let arrStudent = [];
     for (let i = 0; i < classObj.students.length; i++){
       let tmp = {};
