@@ -17,15 +17,16 @@ module.exports = {
 
     // CHECK CONTENT PARAMS
     if (!params.title || !params.title.trim().length) {
-      return res.badRequest(RoleError.ERR_CONTENT_REQUIRED);
-    } else if (!params.permissions || !params.permissions.trim().length) {
-      return res.badRequest(RoleError.ERR_CONTENT_REQUIRED);
+      return res.badRequest(RoleError.ERR_TITLE_REQUIRED);
+    } else if (!params.permissions) {
+      return res.badRequest(RoleError.ERR_PERMISSION_REQUIRED);
     }
-
+    let permissions = params.permissions;
+   
     // PREPARE DATA ROLE
     const newData = {
       title: params.title, // REQUIRED
-      permissions: params.permissions, // REQUIRED
+      permissions: permissions, // REQUIRED
       description: params.description,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       createdBy: req.session.userId
