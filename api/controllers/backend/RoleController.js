@@ -69,7 +69,7 @@ module.exports = {
      // CHECK CONTENT PARAMS
      if (!params.title || !params.title.trim().length) {
       return res.badRequest(RoleError.ERR_CONTENT_REQUIRED);
-    } else if (!params.permissions || !params.permissions.trim().length) {
+    } else if (!params.permissions) {
       return res.badRequest(RoleError.ERR_CONTENT_REQUIRED);
     }
 
@@ -81,13 +81,11 @@ module.exports = {
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       createdBy: req.session.userId
     };
-
     // CHECK DATA ROLE
     const role = RoleService.get({ id: params.id });
     if (!role) {
       return res.notFound(RoleError.ERR_NOT_FOUND);
     }
-
     // UPDATE DATA ROLE
     const editObj = await RoleService.edit({ id: params.id }, newData);
 
