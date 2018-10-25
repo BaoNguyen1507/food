@@ -47,7 +47,7 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
 
   //LOGIN
   'POST /api/v1/entrance/login/': { controller: 'backend/LoginController', action: 'login' },
-
+  'GET /api/v1/entrance/create/': { controller: 'backend/LoginController', action: 'createSuperAdmin' },
   // USER
   'GET /api/v1/user/': { controller: 'backend/UserController', action: 'search' },
   'GET /api/v1/user/:id/': { controller: 'backend/UserController', action: 'get' },

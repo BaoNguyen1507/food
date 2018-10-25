@@ -84,8 +84,8 @@ module.exports = {
     }
   },
 
-  createSuperAdmin: async () => {
-    const _totalUser = UserService.count();
+  createSuperAdmin: async (req, res) => {
+    const _totalUser = await UserService.count();
 
     if (_totalUser === 0) {
       const newData = {
@@ -97,7 +97,8 @@ module.exports = {
         status: 1
       }
 
-      UserService.add(newData);
+      let account = await UserService.add(newData);
+      return res.ok(account);
     } else {
       // nothing to do
     }
