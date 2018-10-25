@@ -22,8 +22,8 @@ module.exports.custom = {
   * > but it can also be used for user-uploaded images, webhooks, etc.      *
   *                                                                         *
   **************************************************************************/
-  // baseUrl: 'http://171.244.45.121:1338',
-  baseUrl: 'http://localhost:1337',
+  baseUrl: 'http://ekidpro.api.test.zinimedia.com:1338',
+  // baseUrl: 'http://localhost:1338',
 
   BACKEND: {
 
