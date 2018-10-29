@@ -120,15 +120,6 @@ module.exports = {
       return res.badRequest(ClassError.ERR_ADMISSIONNUMBER_REQUIRED);
     }
 
-    //  CHECK SDKCLASS EXIST
-    const foundSdkClass = await ClassService.find({
-      sdkClass: params.sdkClass
-    });
-
-    if (foundSdkClass.length) {
-      return res.badRequest(ClassError.ERR_SDKCLASS_EXISTED);
-    }
-
     const newData = {
       className: params.className, // REQUIRED
       totalStudent: params.totalStudent, // REQUIRED
