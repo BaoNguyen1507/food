@@ -23,7 +23,7 @@ module.exports = {
     }
     const newData = {
       students: arrayStudents, 
-      class: classAttendent,
+      classID: classAttendent,
       dateOff: dateOff,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT
     };
@@ -35,7 +35,7 @@ module.exports = {
       Attendent.addToCollection(newAttendent.id, 'students', arrayStudents).exec(function (err) { });
     }
     if (classAttendent) {
-      Attendent.addToCollection(newAttendent.id, 'class', classAttendent).exec(function (err) { });
+      Attendent.addToCollection(newAttendent.id, 'classID', classAttendent).exec(function (err) { });
     }
     sails.log.info("================================ AttendentController.checkAttendent => END ================================");
     return res.ok(newAttendent);

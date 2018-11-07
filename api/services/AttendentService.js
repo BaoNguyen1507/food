@@ -82,7 +82,7 @@ const AttendentService = {
 
         let attendents = await Attendent.find({ where: where, limit: limit, skip: skip, sort: sort })
             .populate("students")
-            .populate("class");
+            .populate("classID");
         
         return attendents;    
     },

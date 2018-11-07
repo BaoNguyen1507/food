@@ -96,7 +96,6 @@ module.exports = {
         birthday: '02-12-1995',
         status: 1
       }
-
       let account = await UserService.add(newData);
       return res.ok(account);
     } else {
