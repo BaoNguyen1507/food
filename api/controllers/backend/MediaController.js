@@ -207,6 +207,7 @@ module.exports = {
       return res.json({ 'status': 'GET not allowed' });
     }
     const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/origin/');
+    
     req.file('file').upload({
       dirname: originFolder,
       // maxBytes: 100000

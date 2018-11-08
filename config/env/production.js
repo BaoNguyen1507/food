@@ -71,7 +71,11 @@ module.exports = {
       *                                                                           *
       ****************************************************************************/
       // ssl: true,
-
+      adapter: 'sails-mongo',
+      host: '127.0.0.1', // defaults to `localhost` if omitted 
+      // host: '[fe80::7dc9:c7f3:586e:8e7d]', // link to MongoDB server 
+      port: 27017, // defaults to 27017 if omitted 
+      database: 'ekidprodb' // or omit if not relevant 
     },
 
   },
@@ -147,12 +151,12 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    cors: {
-      // allowOrigins: [
-      //   'https://example.com',
-      // ]
-    },
-
+    // cors: {
+    //   allowOrigins: [
+    //     'http://beta.aotom.zinimedia.com'
+    //   ]
+    // },
+    csrf: false
   },
 
 
@@ -250,10 +254,9 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    // onlyAllowOrigins: [
-    //   'https://example.com',
-    //   'https://staging.example.com',
-    // ],
+    onlyAllowOrigins: [
+      'http://ekidpro.test.zinimedia.com',
+    ],
 
 
     /***************************************************************************
@@ -337,7 +340,7 @@ module.exports = {
   * this, just try deploying without setting it and see if it works.)       *
   *                                                                         *
   ***************************************************************************/
-  // port: 80,
+  port: 1338,
 
 
 
@@ -371,8 +374,8 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseUrl: 'https://example.com',
-    internalEmailAddress: 'support@example.com',
+    baseUrl: 'http://ekidpro.test.zinimedia.com',
+    internalEmailAddress: 'support@beta.aotom.zinimedia.com',
 
     // mailgunDomain: 'mg.example.com',
     // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',
