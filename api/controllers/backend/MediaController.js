@@ -6,7 +6,7 @@
  */
 const MediaError = require('../../../config/errors/media');
 const MediaService = require('../../services/MediaService');
-
+const Sharp = require('sharp/lib');
 module.exports = {
   add: async (req, res) => {
     // GET ALL PARAMS
@@ -203,11 +203,16 @@ module.exports = {
   },
 
   upload: async (req, res) => {
+    let _cust = sails.config.custom; 
     if (req.method === 'GET') {
       return res.json({ 'status': 'GET not allowed' });
     }
     const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/origin/');
+    sails.log('link image', originFolder);
+    let timeStamp = _.now();
+    let thumbSquare = req.session.userId + '_' + timeStamp + '_'+ _cust.UPLOAD.THUMB.SQUARE.name + '_';
     
+ 
     req.file('file').upload({
       dirname: originFolder,
       // maxBytes: 100000
@@ -215,11 +220,16 @@ module.exports = {
       if (err) {
         return res.badRequest(err);
       } else {
+        _.each(file, function (img) {
+          sails.log('check img', img);
+          Sharp(img.fd).resize({ width: 65, height: 65 }).crop(Sharp.gravity.northwest).toFile(require('path')
+            .resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/square/' + img.filename))
+             .then((info) => {}).catch( (err) => { sails.log(err); }); 
+        })
         const _dataFile = process.platform === 'win32' ? file[0].fd.split('\\').pop() : file[0].fd.split('/').pop();
-        
         return res.json({
           status: 200,
-          fd: '/assets/images/zadmin/uploads/products/origin/' + _dataFile
+          fd: '/assets/images/zadmin/uploads/products/square/' + _dataFile
         });
       }
     });

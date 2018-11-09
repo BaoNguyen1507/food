@@ -150,8 +150,8 @@ module.exports.custom = {
         name: 'horizontal'
       },
       SQUARE: {
-        width: 200,
-        height: 200,
+        width: 65,
+        height: 65,
         name: 'square'
       }
     }

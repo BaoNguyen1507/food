@@ -6,6 +6,7 @@
  */
 const StudentError = require('../../../config/errors/student');
 const StudentService = require('../../services/StudentService');
+const MediaService = require('../../services/MediaService');
 const Sharp = require('sharp/lib');
 //Library
 const moment = require('moment');
@@ -23,15 +24,29 @@ module.exports = {
       data: student
     });
   },
-  // resizeAvatar: async (req, res) => {
-  //   var imageData = { 
-  //         origin: '/images/uploads/2018/' + oriFileName,
-  //         horizontal: '/images/uploads/2018/'+ _cust.UPLOAD.THUMB.HORIZONTAL.name +'/' + thumbHorzontal,
-  //         vertical: '/images/uploads/2018/'+ _cust.UPLOAD.THUMB.VERTICAL.name +'/' + thumbVertical,
-  //         square: '/images/uploads/2018/'+ _cust.UPLOAD.THUMB.SQUARE.name +'/' + thumbSquare
-  //       }
-  //   Sharp(ofile[0].fd).resize(_cust.UPLOAD.THUMB.HORIZONTAL.width, _cust.UPLOAD.THUMB.HORIZONTAL.height).crop(Sharp.gravity.northwest)
-  //     .toFile(require('path').resolve(sails.config.appPath, 'assets/images/uploads/2018/'+ _cust.UPLOAD.THUMB.HORIZONTAL.name +'/') + '/' + thumbHorzontal)
-  //     .then((info) => {}).catch( (err) => { sails.log(err); });      
-  // }
+  getStudentThumb: async (req, res) => {
+    let params = req.allParams();
+    let sizeStudent = 10;
+    let fromPosition = (params.page - 1) * sizeStudent;
+    // LIST ALBUM
+    let studentArr = await StudentService.find({ status: sails.config.custom.STATUS.PUBLISH }, sizeStudent, fromPosition, null);
+    if (studentArr.length === 0) {
+      return res.badRequest(StudentError.ERR_NOT_FOUND);
+    }
+    sails.log('check student',studentArr);  
+    let listStudent = [];
+    for (let i = 0; i < studentArr.length; i++){
+      let listMediaObj = [];
+      let mediaId = studentArr[i].avatar;
+      let mediaObj = await MediaService.get({ id: mediaId });   
+        listMediaObj.push(mediaObj);
+          sails.log('check media ID', listMediaObj);
+        studentArr[i].avatar = listMediaObj;         
+        listStudent.push(studentArr[i]);
+    }
+    return res.json({
+      code: 'SUCCESS_200',
+      data: listStudent
+    });
+  }
 };

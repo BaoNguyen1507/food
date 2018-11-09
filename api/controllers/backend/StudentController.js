@@ -38,7 +38,8 @@ module.exports = {
       heartRate: params.heartRate ? params.heartRate : '',
       eyes: params.eyes ? params.eyes : '',
       ears: params.ears ? params.ears : '',
-      notes: params.notes ? params.notes: '',
+      notes: params.notes ? params.notes : '',
+      avatar: params.thumbnail,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       createdBy: req.session.userId
     };
@@ -104,6 +105,7 @@ module.exports = {
       eyes: params.eyes ? params.eyes : '',
       ears: params.ears ? params.ears : '',
       notes: params.notes ? params.notes : '',
+      avatar: params.thumbnail,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       createdBy: req.session.userId
     };
