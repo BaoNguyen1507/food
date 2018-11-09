@@ -375,7 +375,7 @@ module.exports = {
   ***************************************************************************/
   custom: {
     baseUrl: 'http://ekidpro.test.zinimedia.com',
-    internalEmailAddress: 'support@beta.aotom.zinimedia.com',
+    internalEmailAddress: 'support@beta.ekidpro.test.zinimedia.com',
 
     // mailgunDomain: 'mg.example.com',
     // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',

@@ -16,7 +16,7 @@ module.exports = {
     // GET ALL PARAMS
     const params = req.allParams();
 
-    // CHECK FULLNAME & EMAILADDRESS & GENDER PARAMS
+    // CHECK FULLNAME & DATEOFBIRTH & GENDER PARAMS
     if (!params.fullName && !params.fullName.trim().length) {
       return res.badRequest(StudentError.ERR_FULLNAME_REQUIRED);
     } else if (!params.gender || !params.gender.trim().length) {
@@ -82,7 +82,7 @@ module.exports = {
     // GET ALL PARAMS
     const params = req.allParams();
 
-    // CHECK FULLNAME & EMAILADDRESS & GENDER PARAMS
+    // CHECK FULLNAME & DATEOFBIRTH & GENDER PARAMS
     if (!params.fullName && !params.fullName.trim().length) {
       return res.badRequest(StudentError.ERR_FULLNAME_REQUIRED);
     } else if (!params.gender || !params.gender.trim().length) {
@@ -198,10 +198,6 @@ module.exports = {
       where = {
         or: [{
           fullName: {
-            contains: bodyParams.filter.keyWord
-          }
-        }, {
-          emailAddress: {
             contains: bodyParams.filter.keyWord
           }
         }]
