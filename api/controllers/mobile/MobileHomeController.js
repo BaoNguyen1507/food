@@ -32,21 +32,21 @@ module.exports = {
         let size = 10;
         let fromPosition = (params.page - 1) * size;
         // LIST NOTE
-        let newNote = await NotificationService.find({ status: sails.config.custom.STATUS.PUBLISH}, size, fromPosition, null);
+        let newNoti = await NotificationService.find({ status: sails.config.custom.STATUS.PUBLISH}, size, fromPosition, null);
+        if (!newNoti) {
+            newNoti = [];
+        }
        
         // LIST ALBUM
         let album = await AlbumService.find({ status: sails.config.custom.STATUS.PUBLISH }, size, fromPosition, null);
-        if (album.length === 0) {
-            return res.badRequest(AlbumError.ERR_NOT_FOUND);
-        }
         let listAlbum = [];
-        if (album.length > 0) {
+        if (album && album.length > 0) {
             for (let y = 0; y < album.length; y++){
                 let listMediaObj = [];
                 let tmp = {};
                 let mediaId = album[y].avatar;
                 tmp.title = album[y].title;
-                if (mediaId.length > 0) {
+                if (mediaId && mediaId.length > 0) {
                     for (let i = 0; i < mediaId.length; i++){
                         let mediaObj = await MediaService.get({ id: mediaId[i] });                    
                         listMediaObj.push(mediaObj);
@@ -59,16 +59,14 @@ module.exports = {
         
         // LIST SCHEDULE
         let schedule = await ScheduleService.find({ status: sails.config.custom.STATUS.PUBLISH,date: date }, size, fromPosition, null);
-        if (schedule.length === 0) {
-            return res.badRequest(ScheduleError.ERR_NOT_FOUND);
+        if (!schedule) {
+            schedule = [];
         }
+
         // LIST MENU
-       let menus = await MenuService.find({ status: sails.config.custom.STATUS.PUBLISH,date: date }, size, fromPosition, null);
-       if (menus.length === 0) {
-        return res.badRequest(MenuError.ERR_NOT_FOUND);
-    }
+        let menus = await MenuService.find({ status: sails.config.custom.STATUS.PUBLISH,date: date }, size, fromPosition, null);
         let listMenus = [];
-        if (menus.length > 0) {
+        if (menus && menus.length > 0) {
             for (let i = 0; i < menus.length; i++){
                 let listMeals = [];
                 let tmp = {};
@@ -97,11 +95,11 @@ module.exports = {
         return res.json({
             code: 'SUCCESS_200',
             data: {
-                notification: newNote,
+                notification: newNoti,
                 album: listAlbum,
                 schedule: schedule,
                 menus: listMenus
             }
-          });
+        });
     },
 }
