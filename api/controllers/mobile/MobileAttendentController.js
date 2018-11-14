@@ -49,11 +49,13 @@ module.exports = {
     } 
     let classObj = await ClassService.get({ id: classID });
     let arrStudent = [];
-    for (let i = 0; i < classObj.students.length; i++){
-      let tmp = {};
-      tmp.fullName = classObj.students[i].fullName;
-      tmp.gender = classObj.students[i].gender;
-      arrStudent.push(tmp);
+    if (classObj.students.length > 0) {
+      for (let i = 0; i < classObj.students.length; i++){
+        let mediaID = classObj.students[i].avatar;
+        let mediaObj = await MediaService.get({ id: mediaID });
+        classObj.students[i].avatar = mediaObj;    
+        arrStudent.push(classObj.students[i]);
+      }
     }
     sails.log.info("================================ AttendentController.checkStudentByClass => END ================================");
     return res.ok({
