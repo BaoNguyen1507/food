@@ -33,15 +33,13 @@ module.exports = {
     if (studentArr.length === 0) {
       return res.badRequest(StudentError.ERR_NOT_FOUND);
     }
-    sails.log('check student',studentArr);  
     let listStudent = [];
     for (let i = 0; i < studentArr.length; i++){
       let listMediaObj = [];
       let mediaId = studentArr[i].avatar;
       let mediaObj = await MediaService.get({ id: mediaId });   
         listMediaObj.push(mediaObj);
-          sails.log('check media ID', listMediaObj);
-        studentArr[i].avatar = listMediaObj;         
+        studentArr[i].avatar = listMediaObj;
         listStudent.push(studentArr[i]);
     }
     return res.json({

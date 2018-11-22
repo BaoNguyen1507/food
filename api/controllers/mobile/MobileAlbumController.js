@@ -9,7 +9,7 @@ const AlbumService = require('../../services/AlbumService');
 const MediaService = require('../../services/MediaService');
 
 module.exports = {
-
+  
   newAlbum: async (req, res) => {
     let params = req.allParams();
     let sizeAlbum = 10;
