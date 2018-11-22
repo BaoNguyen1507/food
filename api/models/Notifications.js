@@ -16,8 +16,7 @@ module.exports = {
             defaultsTo: sails.config.custom.STATUS.DRAFT
         },
         noteType: {
-            type: 'number',
-            isIn: [sails.config.custom.TYPE.TEACHER,sails.config.custom.TYPE.PARENTS,sails.config.custom.TYPE.BGH,sails.config.custom.TYPE.ALL],
+            type: 'string',
             defaultsTo: sails.config.custom.TYPE.ALL
         },  
     },
