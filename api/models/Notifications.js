@@ -17,7 +17,7 @@ module.exports = {
         },
         noteType: {
             type: 'string',
-            defaultsTo: sails.config.custom.TYPE.ALL
+            defaultsTo: sails.config.custom.TYPE.ALL.toString()
         },  
     },
 };
