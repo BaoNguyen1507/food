@@ -19,13 +19,31 @@ const BackendNotificationController = {
     if (!params.title || !params.title.trim().length) {
       return res.badRequest(NotificationError.ERR_TITLENOTE_REQUIRED);
     }
+    console.log('params.noteType', params.noteType);
+    let _noteType = '';
+    if(params.noteType){
+      let count = 0;
+      if(params.noteType.teacher){
+        count++;
+        _noteType += sails.config.custom.TYPE.TEACHER + '|'; 
+      } 
+      if(params.noteType.bgh){
+        count++;
+        _noteType += sails.config.custom.TYPE.BGH + '|'; 
+      }
+      if(params.noteType.parent){
+        count++;
+        _noteType += sails.config.custom.TYPE.PARENT + '|'; 
+      }
+      _noteType = (count == 3?sails.config.custom.TYPE.ALL:_noteType);
+    }
 
     // PREPARE DATA NOTIFICATION
     const newData = {
       title: params.title, // REQUIRED
       message: params.message ? params.message : '',
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
-      noteType: params.noteType ? params.noteType : [sails.config.custom.TYPE.ALL]
+      noteType: _noteType
     };
 
     // ADD NEW DATA NOTIFICATION

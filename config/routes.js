@@ -83,11 +83,11 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   'PATCH /api/v1/post/': { controller: 'backend/PostController', action: 'trash' },
 
   // ALBUM
-  'GET /api/v1/album/': { controller: 'album/AlbumController', action: 'search' },
-  'GET /api/v1/album/:id/': { controller: 'album/AlbumController', action: 'get' },
-  'POST /api/v1/album/': { controller: 'album/AlbumController', action: 'add' },
-  'PATCH /api/v1/album/:id/': { controller: 'album/AlbumController', action: 'edit' },
-  'PATCH /api/v1/album/': { controller: 'album/AlbumController', action: 'trash' },
+  'GET /api/v1/album/': { controller: 'backend/AlbumController', action: 'search' },
+  'GET /api/v1/album/:id/': { controller: 'backend/AlbumController', action: 'get' },
+  'POST /api/v1/album/': { controller: 'backend/AlbumController', action: 'add' },
+  'PATCH /api/v1/album/:id/': { controller: 'backend/AlbumController', action: 'edit' },
+  'PATCH /api/v1/album/': { controller: 'backend/AlbumController', action: 'trash' },
 
   // SCHOOL
   'POST /api/v1/school/login/': { controller: 'backend/SchoolUserController', action: 'login' },
