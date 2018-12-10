@@ -136,7 +136,10 @@ module.exports = {
     }
     // CHECK EMAIL & PHONE EXIST WITH SCHOOL
     const foundEmailSchool = await SchoolService.find({
-      emailAddress: params.emailAddress
+      emailAddress: params.emailAddress,
+      id: {
+        '!': params.id
+      }
     });
     const foundPhoneSchool = await SchoolService.find({
       phone: params.phone

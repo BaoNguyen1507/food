@@ -241,12 +241,14 @@ module.exports = {
   search: async (req, res) => {
     // GET ALL PARAMS
     const params = req.allParams();
+    console.log('api/v1/user.search params:');
+    console.log(params);
 
     // PREAPARE BODY PARAMS
     const bodyParams = {
       filter: (params.filter && params.filter.trim().length) ? JSON.parse(params.filter) : null,
-      limit: params.limit ? Number(params.limit) : null,
-      offset: params.offset ? Number(params.offset) : null,
+      limit: params.length ? Number(params.length) : null,
+      offset: params.start ? Number(params.start) : null,
       sort: (params.sort && params.sort.trim().length) ? JSON.parse(params.sort) : null
     };
 
