@@ -241,8 +241,6 @@ module.exports = {
   search: async (req, res) => {
     // GET ALL PARAMS
     const params = req.allParams();
-    console.log('api/v1/user.search params:');
-    console.log(params);
 
     // PREAPARE BODY PARAMS
     const bodyParams = {

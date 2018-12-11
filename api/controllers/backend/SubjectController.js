@@ -176,11 +176,11 @@ module.exports = {
       where = {
         or: [{
           title: {
-            contains: bodyParams.keyWord
+            'contains': bodyParams.filter.keyWord
           }
         }, {
           code: {
-            contains: bodyParams.keyWord
+            'contains': bodyParams.filter.keyWord
           }
         }]
       };
