@@ -11,7 +11,7 @@ module.exports = {
     attributes: {
         expireAt: {
             type: 'number',
-            defaultsTo: Date.now() + 5 * 60
+            defaultsTo: Date.now() + 24 * 60 * 60 * 1000
         },
         token: {
             type:'string'
