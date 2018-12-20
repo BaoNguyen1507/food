@@ -17,7 +17,7 @@ module.exports = {
     dateOff: {
       type: 'string',
     },
-    class: { 
+    classID: { 
       model: 'class'
     },
     status: {                           //Integer {"TRASH":,"DRAFT":,"PUBLISH":, SCHEDULE:}

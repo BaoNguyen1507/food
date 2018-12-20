@@ -22,8 +22,8 @@ module.exports.custom = {
   * > but it can also be used for user-uploaded images, webhooks, etc.      *
   *                                                                         *
   **************************************************************************/
-  // baseUrl: 'http://171.244.45.121:1338',
-  baseUrl: 'http://localhost:1337',
+  // baseUrl: 'http://ekidpro.api.test.zinimedia.com:1338',
+  baseUrl: 'http://localhost:1338',
 
   BACKEND: {
 
@@ -99,7 +99,7 @@ module.exports.custom = {
     //NOTE
     ALL: 2,
     BGH: 3,
-    PARENTS: 4,
+    PARENT: 4,
     //For TAXONOMY
     CATEGORY: 0,
     TAG: 1,
@@ -150,8 +150,8 @@ module.exports.custom = {
         name: 'horizontal'
       },
       SQUARE: {
-        width: 200,
-        height: 200,
+        width: 65,
+        height: 65,
         name: 'square'
       }
     }

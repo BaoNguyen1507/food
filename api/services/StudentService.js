@@ -13,7 +13,7 @@ const StudentService = {
         sails.log.info(options);
 
         let records = await Student.findOne(options)
-            .populate("classes")
+            .populate("class")
             .populate("parents");
         return records;
 
@@ -80,7 +80,6 @@ const StudentService = {
         sort = (sort !== null && typeof sort === 'object') ? sort : [{ createdAt: 'ASC' }];
 
         let classes = await Student.find({ where: where, limit: limit, skip: skip, sort: sort })
-            .populate("school")
             .populate("parents")
             .populate("class")
             .populate("subjects")
