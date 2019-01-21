@@ -75,8 +75,8 @@ const StudentService = {
         sails.log.info(skip);
         sails.log.info(sort);
         where = (typeof where === 'object') ? where : {};
-        limit = (limit !== null && typeof limit === 'number') ? limit : 10;
-        skip = (skip !== null && typeof skip === 'number') ? skip : 0;
+        limit = (limit !== 'null') ? limit : 10;
+        skip = (skip !== null) ? skip : 0;
         sort = (sort !== null && typeof sort === 'object') ? sort : [{ createdAt: 'ASC' }];
 
         let classes = await Student.find({ where: where, limit: limit, skip: skip, sort: sort })

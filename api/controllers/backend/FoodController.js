@@ -138,7 +138,7 @@ module.exports = {
     // PREAPARE BODY PARAMS
     const bodyParams = {
       filter: (params.filter && params.filter.trim().length) ? JSON.parse(params.filter) : null,
-      limit: params.limit ? Number(params.limit) : null,
+      limit: (params.limit !== 'null') ? params.limit : 10,
       offset: params.offset ? Number(params.offset) : null,
       sort: (params.sort && params.sort.trim().length) ? JSON.parse(params.sort) : null
     };
