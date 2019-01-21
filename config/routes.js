@@ -45,10 +45,11 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
-  //LOGIN
-  'POST /api/v1/entrance/login/': { controller: 'backend/LoginController', action: 'login' },
-  'GET /api/v1/entrance/create/': { controller: 'backend/LoginController', action: 'createSuperAdmin' },
+  //INITIALIZE
+  // 'GET /api/v1/entrance/create/': { controller: 'backend/LoginController', action: 'createSuperAdmin' },
+  
   // USER
+  'POST /api/v1/user/login/': { controller: 'backend/UserController', action: 'login' },
   'GET /api/v1/user/': { controller: 'backend/UserController', action: 'search' },
   'GET /api/v1/user/:id/': { controller: 'backend/UserController', action: 'get' },
   'POST /api/v1/user/': { controller: 'backend/UserController', action: 'add' },
@@ -90,7 +91,6 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   'PATCH /api/v1/album/': { controller: 'backend/AlbumController', action: 'trash' },
 
   // SCHOOL
-  'POST /api/v1/school/login/': { controller: 'backend/SchoolUserController', action: 'login' },
   'GET /api/v1/school/': { controller: 'backend/SchoolController', action: 'search' },
   'GET /api/v1/school/:id/': { controller: 'backend/SchoolController', action: 'get' },
   'POST /api/v1/school/': { controller: 'backend/SchoolController', action: 'add' },

@@ -15,46 +15,26 @@ module.exports = {
     sails.log('--- o0o ---');
     sails.log('UserController - login running');
     let params = req.allParams();
-    let tempToken = true;
     let now = Date.now();
-    let token = await AuthService.find(params.token);
-    let checkToken = false;
     
-      if (token.token === params.tokens) {
-        checkToken = true;
-      }
-
-    if (tempToken === false) return res.badRequest(AuthError.ERR_SYSTEM_TOKEN_REQUIRE);
-    if (params.username == undefined || params.username === '') {
-      return res.badRequest(UserError.ERR_USER_EMAIL_REQUIRED);
-    } else if (params.password == undefined || params.password === '') {
-      return res.badRequest(UserError.ERR_USER_PASSWORD_REQUIRED);
-    }
-
-    let found = null,
-      schoolFound = null,
-      parentFound = null,  
-      objParam = null;
-    let matched = '';
-    if (params.username.indexOf('@') != -1) {
-      //check email
-      objParam = {
-        emailAddress: params.username
-      }
-    } else if (Number(params.username)) {
-      //check phone
-      objParam = {
-        phone: params.username
-      }
+    //validate username, password
+    if (params.username && params.username !== '' && params.password && params.password !== '') {
     } else {
-      //bad request
-      return res.badRequest(UserError.ERR_NOT_FOUND);
+      return res.badRequest(UserError.ERR_USER_INPUT_REQUIRED);
     }
+
+    let found = null, schoolFound = null, parentFound = null;
+
+    let objParam = {};
+    if (params.username.indexOf('@') != -1) {
+      objParam.emailAddress = params.username;
+    } else if (Number(params.username)) {
+      objParam.phone = params.username
+    } 
+
     if (objParam) {
       found = await UserService.find(objParam);
-      
       schoolFound = await SchoolService.find(objParam);
-    
       parentFound = await ParentService.find(objParam);
      
       if (!found.length && !schoolFound.length && !parentFound.length) {
@@ -62,7 +42,7 @@ module.exports = {
       }
     }
     //check password
-    if (found && found.length) {
+    if (found.length) {
       try {
         await sails.helpers.passwords.checkPassword(params.password, found[0].password).intercept('incorrect', 'badCombo');
       } catch (err) {
@@ -70,11 +50,8 @@ module.exports = {
           return res.badRequest(UserError.ERR_PASSWORD_WRONG);
         } 
       }
-      return res.json({
-        code: 'SUCCESS_200',
-        data: found[0]
-      })
-    } else if (schoolFound && schoolFound.length) {
+      return res.json({ code: 200, data: found[0] })
+    } else if (schoolFound.length) {
       try {
         await sails.helpers.passwords.checkPassword(params.password, schoolFound[0].password).intercept('incorrect', 'badCombo');
       } catch (err) {
@@ -82,11 +59,8 @@ module.exports = {
           return res.badRequest(UserError.ERR_PASSWORD_WRONG);
         } 
       }
-      return res.json({
-        code: 'SUCCESS_200',
-        data: schoolFound[0]
-      })
-    } else if (parentFound && parentFound.length) {
+      return res.json({ code: 200, data: schoolFound[0] })
+    } else if (parentFound.length) {
       try {
         await sails.helpers.passwords.checkPassword(params.password, parentFound[0].password).intercept('incorrect', 'badCombo');
       } catch (err) {
@@ -94,12 +68,7 @@ module.exports = {
           return res.badRequest(UserError.ERR_PASSWORD_WRONG);
         } 
       }
-      return res.json({
-        code: 'SUCCESS_200',
-        data: parentFound[0]
-      })
-    } else {
-      return res.badRequest(UserError.ERR_NOT_FOUND);
+      return res.json({ code: 200, data: parentFound[0] })
     }
   },  
 

@@ -27,7 +27,7 @@ module.exports = {
             var hashed = await sails.helpers.passwords.hashPassword(text);
             sails.log('check data hash',hashed);
             // Update the record for the logged-in user.
-            _userFound = await User.update({ id: _userFound.id }).set({ password: hashed }).fetch();
+            _userFound = await User.update({ id: _userFound[0].id }).set({ password: hashed }).fetch();
             _userFound = _userFound[0];
             _userFound.password = text;
         
