@@ -54,7 +54,7 @@ module.exports = {
                 listAlbum.push(tmp);
             }
         }
-        
+         
         return res.json({
             code: 'SUCCESS_200',
             data: {
