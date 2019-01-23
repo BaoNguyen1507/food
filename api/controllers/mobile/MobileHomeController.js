@@ -15,20 +15,18 @@ module.exports = {
         let params = req.allParams();
 
         // CHECK TOKEN
-        let tempToken = true;
-        let token = await AuthService.find(params.token);
-        let checkToken = false;
+        // let token = await AuthService.find(params.token);
+        // let checkToken = false;
         
-        if (token.token === params.tokens) {
-            checkToken = true;
-        }
+        // if (token.token === params.tokens) {
+        //     checkToken = true;
+        // }
 
-        if (tempToken === false) {
-        return res.badRequest(AuthError.ERR_SYSTEM_TOKEN_REQUIRE);
-        }
+        // if (checkToken === false) {
+        // return res.badRequest(AuthError.ERR_SYSTEM_TOKEN_REQUIRE);
+        // }
         // END CHECK TOKEN
         
-        let date = params.date;
         let size = 10;
         let fromPosition = (params.page - 1) * size;
         // LIST NOTE
@@ -57,48 +55,11 @@ module.exports = {
             }
         }
         
-        // LIST SCHEDULE
-        let schedule = await ScheduleService.find({ status: sails.config.custom.STATUS.PUBLISH,date: date }, size, fromPosition, null);
-        if (!schedule) {
-            schedule = [];
-        }
-
-        // LIST MENU
-        let menus = await MenuService.find({ status: sails.config.custom.STATUS.PUBLISH,date: date }, size, fromPosition, null);
-        let listMenus = [];
-        if (menus && menus.length > 0) {
-            for (let i = 0; i < menus.length; i++){
-                let listMeals = [];
-                let tmp = {};
-                let titleMeal = {};
-                tmp.title = menus[i].title;
-                tmp.time = menus[i].time;
-                let arrayMeal = menus[i].meal;
-                if (arrayMeal.length > 0) {
-                    for (let y = 0; y < arrayMeal.length; y++){
-                        let tmpThumb = {};
-                        let titleMeal = arrayMeal[y].title
-                        let thum = await MediaService.get({ id: arrayMeal[y].thumbnail });
-                        if (thum.length === 0) {
-                            return res.badRequest(ScheduleError.ERR_NOT_FOUND);
-                        } else {
-                            tmpThumb.title_meal = titleMeal;
-                            tmpThumb.path = thum.path;
-                            listMeals.push(tmpThumb);
-                        }
-                    }
-                }
-                tmp.meal = listMeals;
-                listMenus.push(tmp);
-            }
-        } 
         return res.json({
             code: 'SUCCESS_200',
             data: {
                 notification: newNoti,
-                album: listAlbum,
-                schedule: schedule,
-                menus: listMenus
+                album: listAlbum
             }
         });
     },
