@@ -42,7 +42,7 @@ module.exports.mobile = {
   'PUT /api/v1/mobile/post/addComment/': { controller: 'mobile/MobilePostController', action: 'addComment' },
   
   // ALBUM
-  'PUT /api/v1/mobile/album/newAlbum': { controller: 'mobile/MobileAlbumController', action: 'newAlbum' },
+  'PUT /api/v1/mobile/album/list': { controller: 'mobile/MobileAlbumController', action: 'list' },
   // SCHOOL
   
   'PUT /api/v1/mobile/school/': { controller: 'mobile/MobileSchoolController', action: 'search' },

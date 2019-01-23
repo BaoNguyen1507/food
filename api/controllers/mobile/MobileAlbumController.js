@@ -10,36 +10,6 @@ const MediaService = require('../../services/MediaService');
 
 module.exports = {
   
-  newAlbum: async (req, res) => {
-    let params = req.allParams();
-    let sizeAlbum = 10;
-    let fromPosition = (params.page - 1) * sizeAlbum;
-    // LIST ALBUM
-    let album = await AlbumService.find({ status: sails.config.custom.STATUS.PUBLISH }, sizeAlbum, fromPosition, null);
-    if (album.length === 0) {
-        return res.badRequest(AlbumError.ERR_NOT_FOUND);
-    }
-    let listAlbum = [];
-    if (album.length > 0) {
-        for (let y = 0; y < album.length; y++){
-            let listMediaObj = [];
-            let mediaId = album[y].avatar;
-            if (mediaId.length > 0) {
-                for (let i = 0; i < mediaId.length; i++){
-                    let mediaObj = await MediaService.get({ id: mediaId[i] });                    
-                    listMediaObj.push(mediaObj);
-                }
-            }
-          album[y].avatar = listMediaObj;         
-          listAlbum.push(album[y]);
-        }
-    }
-    return res.json({
-      code: 'SUCCESS_200',
-      data: listAlbum
-    });
-  },
-  
   add: async (req, res) => {
     sails.log.info("================================ AlbumController.add => START ================================");
     // GET ALL PARAMS
@@ -138,6 +108,36 @@ module.exports = {
     });
   },
 
+  list: async (req, res) => {
+    let params = req.allParams();
+    let sizeAlbum = 10;
+    let fromPosition = (params.page - 1) * sizeAlbum;
+    // LIST ALBUM
+    let album = await AlbumService.find({ status: sails.config.custom.STATUS.PUBLISH }, sizeAlbum, fromPosition, null);
+    if (album.length === 0) {
+        return res.badRequest(AlbumError.ERR_NOT_FOUND);
+    }
+    let listAlbum = [];
+    if (album.length > 0) {
+        for (let y = 0; y < album.length; y++){
+            let listMediaObj = [];
+            let mediaId = album[y].avatar;
+            if (mediaId.length > 0) {
+                for (let i = 0; i < mediaId.length; i++){
+                    let mediaObj = await MediaService.get({ id: mediaId[i] });                    
+                    listMediaObj.push(mediaObj);
+                }
+            }
+          album[y].avatar = listMediaObj;         
+          listAlbum.push(album[y]);
+        }
+    }
+    return res.json({
+      code: 'SUCCESS_200',
+      data: listAlbum
+    });
+  },
+  
   trash: async (req, res) => {
     // GET ALL PARAMS
     const params = req.allParams();
