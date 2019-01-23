@@ -79,12 +79,12 @@ module.exports = {
                         let tmpThumb = {};
                         let titleMeal = arrayMeal[y].title
                         let thum = await MediaService.get({ id: arrayMeal[y].thumbnail });
-                        if (thum.length === 0) {
-                            return res.badRequest(ScheduleError.ERR_NOT_FOUND);
-                        } else {
+                        if (thum) {
                             tmpThumb.title_meal = titleMeal;
                             tmpThumb.path = thum.path;
                             listMeals.push(tmpThumb);
+                        } else {
+                            return res.badRequest(ScheduleError.ERR_NOT_FOUND);
                         }
                     }
                 }
