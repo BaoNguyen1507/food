@@ -20,6 +20,7 @@ module.exports = {
       type: 'json',
       required: true
       //['Album':{'view':true,'edit':false,'delete':false}]
+      //https://sailsjs.com/documentation/concepts/policies check set policy here
     },
     status: { //Integer {"TRASH":,"DRAFT":,"PUBLISH":, SCHEDULE:}
       type: 'number',
