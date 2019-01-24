@@ -18,19 +18,21 @@ module.exports = {
     } else if (!params.path || !params.path.trim().length) {
       return res.badRequest(MediaError.ERR_PATH_REQUIRED);
     }
-
+    let school = params.school;
     // PREPARE DATA MEDIA
     const newData = {
       title: params.title, // REQUIRED
       path: params.path, // REQUIRED
       caption: (params.caption && params.caption.trim().length) ? params.caption : '',
-      school: params.schools,
+      school: school,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
     };
 
     // ADD NEW DATA MEDIA
     const newMedia = await MediaService.add(newData);
-
+    if (school) {
+      await Media.addToCollection(newMedia.id,'school',school)
+    }
     // RETURN DATA MEDIA
     return res.json({
       data: newMedia
@@ -70,16 +72,15 @@ module.exports = {
     } else if (!params.path || !params.path.trim().length) {
       return res.badRequest(MediaError.ERR_PATH_REQUIRED);
     }
-
+    let school = params.school;
     // PREPARE DATA MEDIA
     const newData = {
       title: params.title, // REQUIRED
       path: params.path, // REQUIRED
       caption: (params.caption && params.caption.trim().length) ? params.caption : '',
-      school: params.schools,
+      school: school,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT
     };
-
     // CHECK DATA MEDIA
     const media = MediaService.get({
       id: params.id
@@ -93,6 +94,9 @@ module.exports = {
       id: params.id
     }, newData);
 
+    if (school) {
+      await Media.replaceCollection(editObj[0].id, 'school', school).exec(function (err) { });
+    }
     // RETURN DATA MEDIA
     return res.json({
       data: editObj[0]
@@ -143,7 +147,7 @@ module.exports = {
     // PREAPARE BODY PARAMS
     const bodyParams = {
       filter: (params.filter && params.filter.trim().length) ? JSON.parse(params.filter) : null,
-      limit: params.limit ? Number(params.limit) : null,
+      limit: (params.limit !== 'null') ? params.limit : 10,
       offset: params.offset ? Number(params.offset) : null,
       sort: (params.sort && params.sort.trim().length) ? JSON.parse(params.sort) : null
     };
@@ -207,11 +211,11 @@ module.exports = {
     if (req.method === 'GET') {
       return res.json({ 'status': 'GET not allowed' });
     }
-    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/origin/');
+    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/medias/origin/');
     sails.log('link image', originFolder);
     let timeStamp = _.now();
-    let thumbSquare = req.session.userId + '_' + timeStamp + '_'+ _cust.UPLOAD.THUMB.SQUARE.name + '_';
-    
+    let thumbSquare = timeStamp + '_'+ _cust.UPLOAD.THUMB.SQUARE.name;
+    console.log('check time and user', thumbSquare);
  
     req.file('file').upload({
       dirname: originFolder,
@@ -220,16 +224,19 @@ module.exports = {
       if (err) {
         return res.badRequest(err);
       } else {
+        let name = '';
         _.each(file, function (img) {
-          sails.log('check img', img);
+          
+          name = img.filename;
+
           Sharp(img.fd).resize({ width: 65, height: 65 }).crop(Sharp.gravity.northwest).toFile(require('path')
-            .resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/square/' + img.filename))
+            .resolve(sails.config.appPath, 'assets/images/zadmin/uploads/medias/square/' + name.replace(/\s/g, '')))
              .then((info) => {}).catch( (err) => { sails.log(err); }); 
         })
         const _dataFile = process.platform === 'win32' ? file[0].fd.split('\\').pop() : file[0].fd.split('/').pop();
         return res.json({
           status: 200,
-          fd: '/assets/images/zadmin/uploads/products/square/' + _dataFile
+          fd: '/assets/images/zadmin/uploads/medias/square/' + name.replace(/\s/g, '')
         });
       }
     });

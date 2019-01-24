@@ -80,7 +80,7 @@ const ParticipantService = {
         sails.log.info(JSON.stringify(where));
 
         where = (typeof where === 'object') ? where : {};
-        limit = (limit !== null && typeof limit === 'number') ? limit : 10;
+        limit = (limit !== 'null') ? limit : 10;
         skip = (skip !== null && typeof skip === 'number') ? skip: 0;
         sort = (sort !== null && typeof sort === 'object') ? sort : { createAt: 1 };
 
