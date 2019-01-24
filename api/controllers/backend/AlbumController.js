@@ -27,7 +27,7 @@ module.exports = {
       description: (params.description && params.description.trim().length) ? params.description : '',
       totalLike: params.totalLike?params.totalLike:0,
       totalComment: params.totalComment?params.totalComment:0,
-      avatar: params.photos,
+      photos: params.photos,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       comments: params.comments
     };
@@ -83,7 +83,7 @@ module.exports = {
       description: (params.description && params.description.trim().length) ? params.description : '',
       totalLike: params.totalLike,
       totalComment: params.totalComment,
-      avatar: params.photos,
+      photos: params.photos,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       comments: params.comments
     };
