@@ -82,16 +82,15 @@ module.exports = {
     }
 
     //check email and phone exists
-    let foundOtherUser = await ParentService.find({
-      and: {
-        id: {
-          '!=': params.id
-        }
+    let foundOtherUser = await UserService.find({
+      id: {
+        '!': [params.id]
       },
-      or: {
-        emailAddress: params.emailAddress,
+      or: [{ 
+        emailAddress: params.emailAddress
+      },{
         phone: params.phone
-      }
+      }]
     });
     if(!foundOtherUser.length){
       let newData = {
@@ -106,6 +105,7 @@ module.exports = {
         id: params.id
       }, newData);
       return res.json({
+        code: 'SUCCESS_200',
         data: editObj[0]
       });
     } else {
