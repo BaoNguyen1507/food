@@ -14,7 +14,7 @@ const SchoolService = require('../../services/SchoolService');
 const moment = require('moment');
 
 module.exports = {
- 
+
 
   get: async (req, res) => {
     // GET ALL PARAMS
@@ -43,20 +43,7 @@ module.exports = {
     sails.log.info("================================ ParentController.edit => START ================================");
     // GET ALL PARAMS
     const params = req.allParams();
-    // CHECK TOKEN
-    let tempToken = true;
-    let token = await AuthService.find(params.token);
-    let checkToken = false;
-    
-      if (token.token === params.tokens) {
-        checkToken = true;
-      }
 
-    if (tempToken === false) {
-      return res.badRequest(AuthError.ERR_SYSTEM_TOKEN_REQUIRE);
-    }
-
-    // END CHECK TOKEN
     // ================================================================
     // CHECK FULLNAME & EMAILADDRESS & PHONE PARAMS
 
@@ -67,8 +54,8 @@ module.exports = {
     } else if (!params.phone) {
       return res.badRequest(ParentError.ERR_PHONE_REQUIRED);
     }
-     // CHECK EMAIL & PHONE EXIST WITH USER  
-     const foundEmailUser = await UserService.find({
+    // CHECK EMAIL & PHONE EXIST WITH USER  
+    const foundEmailUser = await UserService.find({
       emailAddress: params.emailAddress
     });
     const foundPhoneUser = await UserService.find({
@@ -79,33 +66,45 @@ module.exports = {
     } else if (foundPhoneUser.length) {
       return res.badRequest(ParentError.ERR_PHONE_PARENT_EXISTED);
     }
-      // CHECK EMAIL & PHONE EXIST WITH SCHOOL
-      const foundEmailSchool = await SchoolService.find({
-        emailAddress: params.emailAddress
-      });
-      const foundPhoneSchool = await SchoolService.find({
-        phone: params.phone
-      });
-      if (foundEmailSchool.length) {
-        return res.badRequest(ParentError.ERR_EMAIL_PARENT_EXISTED);
-      } else if (foundPhoneSchool.length) {
-        return res.badRequest(ParentError.ERR_PHONE_PARENT_EXISTED);
-      }
-     
+    // CHECK EMAIL & PHONE EXIST WITH SCHOOL
+    const foundEmailSchool = await SchoolService.find({
+      emailAddress: params.emailAddress
+    });
+    const foundPhoneSchool = await SchoolService.find({
+      phone: params.phone
+    });
+    if (foundEmailSchool.length) {
+      return res.badRequest(ParentError.ERR_EMAIL_PARENT_EXISTED);
+    } else if (foundPhoneSchool.length) {
+      return res.badRequest(ParentError.ERR_PHONE_PARENT_EXISTED);
+    }
+
     // CHECK DATA PARENT
-   
+
     let parent = await ParentService.get({ id: params.id });
-  
+
     if (!parent) {
       return res.notFound(ParentError.ERR_NOT_FOUND);
     }
-    
-    if (parent.emailAddress === params.emailAddress && parent.phone === params.phone) {
+
+    //check email and phone exists
+    let foundOtherParent = await ParentService.find({
+      and: {
+        id: {
+          '!=': params.id
+        }
+      },
+      or: {
+        emailAddress: params.emailAddress,
+        phone: params.phone
+      }
+    });
+    if(!foundOtherParent.length){
       const newData = {
         fullName: params.fullName, // REQUIRED
         emailAddress: params.emailAddress, // REQUIRED
         phone: params.phone, // REQUIRED
-        currentAddress: params.currentAddress ? params.currentAddress : '',   
+        currentAddress: params.currentAddress ? params.currentAddress : '',
       };
       const editObj = await ParentService.edit({
         id: params.id
@@ -115,76 +114,93 @@ module.exports = {
         data: editObj[0]
       });
     } else {
-      if (parent.emailAddress !== params.emailAddress && parent.phone !== params.phone) {
-        const foundEmailParent = await ParentService.find({
-          emailAddress: params.emailAddress
-        });
-        const foundPhoneParent = await ParentService.find({
-          phone: params.phone
-        });
-        if (foundPhoneParent.length) {
-          return res.badRequest(ParentError.ERR_PHONE_PARENT_EXISTED);
-        }
-        if (foundEmailParent.length) {
-          return res.badRequest(ParentError.ERR_EMAIL_PARENT_EXISTED);
-        } 
-        const newData = {
-          fullName: params.fullName, // REQUIRED
-          emailAddress: params.emailAddress, // REQUIRED
-          phone: params.phone, // REQUIRED
-          currentAddress: params.currentAddress ? params.currentAddress : '',   
-        };
-        const editObj = await ParentService.edit({
-          id: params.id
-        }, newData);
-        return res.json({
-          code: 'SUCCESS_200',
-          data: editObj[0]
-        });
-      }
-      else if (parent.emailAddress !== params.emailAddress && parent.phone === params.phone) {
-        const foundEmailParent = await ParentService.find({
-          emailAddress: params.emailAddress
-        });
-        if (foundEmailParent.length) {
-          return res.badRequest(ParentError.ERR_EMAIL_PARENT_EXISTED);
-        } 
-        const newData = {
-          fullName: params.fullName, // REQUIRED
-          emailAddress: params.emailAddress, // REQUIRED
-          phone: params.phone, // REQUIRED
-          currentAddress: params.currentAddress ? params.currentAddress : '',   
-        };
-        const editObj = await ParentService.edit({
-          id: params.id
-        }, newData);
-        return res.json({
-          code: 'SUCCESS_200',
-          data: editObj[0]
-        });
-      } else if (parent.emailAddress === params.emailAddress && parent.phone !== params.phone) {
-        const foundPhoneParent = await ParentService.find({
-          phone: params.phone
-        });
-        if (foundPhoneParent.length) {
-          return res.badRequest(ParentError.ERR_PHONE_PARENT_EXISTED);
-        } 
-        const newData = {
-          fullName: params.fullName, // REQUIRED
-          emailAddress: params.emailAddress, // REQUIRED
-          phone: params.phone, // REQUIRED
-          currentAddress: params.currentAddress ? params.currentAddress : '',   
-        };
-        const editObj = await ParentService.edit({
-          id: params.id
-        }, newData);
-        return res.json({
-          code: 'SUCCESS_200',
-          data: editObj[0]
-        });
-      }
-        
+      return res.badRequest(ParentError.ERR_PHONE_PARENT_EXISTED);
     }
+    // if (parent.emailAddress === params.emailAddress && parent.phone === params.phone) {
+    //   const newData = {
+    //     fullName: params.fullName, // REQUIRED
+    //     emailAddress: params.emailAddress, // REQUIRED
+    //     phone: params.phone, // REQUIRED
+    //     currentAddress: params.currentAddress ? params.currentAddress : '',
+    //   };
+    //   const editObj = await ParentService.edit({
+    //     id: params.id
+    //   }, newData);
+    //   return res.json({
+    //     code: 'SUCCESS_200',
+    //     data: editObj[0]
+    //   });
+    // } else {
+    //   if (parent.emailAddress !== params.emailAddress && parent.phone !== params.phone) {
+    //     const foundEmailParent = await ParentService.find({
+    //       emailAddress: params.emailAddress
+    //     });
+    //     const foundPhoneParent = await ParentService.find({
+    //       phone: params.phone
+    //     });
+    //     if (foundPhoneParent.length) {
+    //       return res.badRequest(ParentError.ERR_PHONE_PARENT_EXISTED);
+    //     }
+    //     if (foundEmailParent.length) {
+    //       return res.badRequest(ParentError.ERR_EMAIL_PARENT_EXISTED);
+    //     }
+    //     const newData = {
+    //       fullName: params.fullName, // REQUIRED
+    //       emailAddress: params.emailAddress, // REQUIRED
+    //       phone: params.phone, // REQUIRED
+    //       currentAddress: params.currentAddress ? params.currentAddress : '',
+    //     };
+    //     const editObj = await ParentService.edit({
+    //       id: params.id
+    //     }, newData);
+    //     return res.json({
+    //       code: 'SUCCESS_200',
+    //       data: editObj[0]
+    //     });
+    //   }
+    //   else if (parent.emailAddress !== params.emailAddress && parent.phone === params.phone) {
+    //     const foundEmailParent = await ParentService.find({
+    //       emailAddress: params.emailAddress
+    //     });
+    //     if (foundEmailParent.length) {
+    //       return res.badRequest(ParentError.ERR_EMAIL_PARENT_EXISTED);
+    //     }
+    //     const newData = {
+    //       fullName: params.fullName, // REQUIRED
+    //       emailAddress: params.emailAddress, // REQUIRED
+    //       phone: params.phone, // REQUIRED
+    //       currentAddress: params.currentAddress ? params.currentAddress : '',
+    //     };
+    //     const editObj = await ParentService.edit({
+    //       id: params.id
+    //     }, newData);
+    //     return res.json({
+    //       code: 'SUCCESS_200',
+    //       data: editObj[0]
+    //     });
+    //   } else if (parent.emailAddress === params.emailAddress && parent.phone !== params.phone) {
+    //     const foundPhoneParent = await ParentService.find({
+    //       phone: params.phone
+    //     });
+    //     if (foundPhoneParent.length) {
+    //       return res.badRequest(ParentError.ERR_PHONE_PARENT_EXISTED);
+    //     }
+    //     const newData = {
+    //       fullName: params.fullName, // REQUIRED
+    //       emailAddress: params.emailAddress, // REQUIRED
+    //       phone: params.phone, // REQUIRED
+    //       currentAddress: params.currentAddress ? params.currentAddress : '',
+    //     };
+    //     const editObj = await ParentService.edit({
+    //       id: params.id
+    //     }, newData);
+    //     return res.json({
+    //       code: 'SUCCESS_200',
+    //       data: editObj[0]
+    //     });
+    //   }
+
+    // }
   },
 
   search: async (req, res) => {
@@ -193,10 +209,10 @@ module.exports = {
     let tempToken = true;
     let token = await AuthService.find(params.token);
     let checkToken = false;
-    
-      if (token.token === params.tokens) {
-        checkToken = true;
-      }
+
+    if (token.token === params.tokens) {
+      checkToken = true;
+    }
 
     if (tempToken === false) return res.badRequest(AuthError.ERR_SYSTEM_TOKEN_REQUIRE);
     // PREAPARE BODY PARAMS
@@ -243,7 +259,7 @@ module.exports = {
     } else {
       condition = (params.condition) ? JSON.parse(params.condition) : null;
     }
-    
+
     if (condition) {
       where = condition;
     }
