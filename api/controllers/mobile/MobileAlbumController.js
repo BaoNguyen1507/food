@@ -28,7 +28,7 @@ module.exports = {
       description: (params.description && params.description.trim().length) ? params.description : '',
       totalLike: params.totalLike,
       totalComment: params.totalComment,
-      avatar: params.avatar,
+      avatar: params.photos,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       comments: params.comments
     };
@@ -57,7 +57,7 @@ module.exports = {
       return res.notFound(AlbumError.ERR_NOT_FOUND);
     }
     
-    const listMedias = await MediaService.find({ id: album.avatar });
+    const listMedias = await MediaService.find({ id: album.photos });
     album.media = listMedias;
 
     // RETURN DATA ALBUM
@@ -84,7 +84,7 @@ module.exports = {
       description: (params.description && params.description.trim().length) ? params.description : '',
       totalLike: params.totalLike,
       totalComment: params.totalComment,
-      avatar: params.avatar,
+      avatar: params.photos,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       comments: params.comments
     };
@@ -109,32 +109,26 @@ module.exports = {
   },
 
   list: async (req, res) => {
-    let params = req.allParams();
-    let sizeAlbum = 10;
-    let fromPosition = (params.page - 1) * sizeAlbum;
-    // LIST ALBUM
-    let album = await AlbumService.find({ status: sails.config.custom.STATUS.PUBLISH }, sizeAlbum, fromPosition, null);
-    if (album.length === 0) {
-        return res.badRequest(AlbumError.ERR_NOT_FOUND);
-    }
-    let listAlbum = [];
-    if (album.length > 0) {
-        for (let y = 0; y < album.length; y++){
-            let listMediaObj = [];
-            let mediaId = album[y].avatar;
-            if (mediaId.length > 0) {
-                for (let i = 0; i < mediaId.length; i++){
-                    let mediaObj = await MediaService.get({ id: mediaId[i] });                    
-                    listMediaObj.push(mediaObj);
-                }
-            }
-          album[y].avatar = listMediaObj;         
-          listAlbum.push(album[y]);
+    // GET ALL PARAMS
+    const params = req.allParams();
+
+    // QUERY DATA NOTIFICATION
+    const albums = await AlbumService.find({
+      status: sails.config.custom.STATUS.PUBLISH
+    }, params.limit, (params.page-1) * params.limit, params.sort)
+      
+    if(albums.length > 0){
+      for(let i=0; i<albums.length; i++){
+        let medias = await MediaService.find({id: albums[i].photos?albums[i].photos:[]}, 1000, null, null);
+        if(medias && medias.length > 0){
+          albums[i].medias = medias;
         }
+      }
     }
+
+    // RETURN DATA NOTIFICATION
     return res.json({
-      code: 'SUCCESS_200',
-      data: listAlbum
+      data: albums
     });
   },
   

@@ -27,7 +27,7 @@ module.exports = {
       description: (params.description && params.description.trim().length) ? params.description : '',
       totalLike: params.totalLike?params.totalLike:0,
       totalComment: params.totalComment?params.totalComment:0,
-      avatar: params.avatar,
+      avatar: params.photos,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       comments: params.comments
     };
@@ -56,7 +56,7 @@ module.exports = {
       return res.notFound(AlbumError.ERR_NOT_FOUND);
     }
     
-    const listMedias = await MediaService.find({ id: album.avatar });
+    const listMedias = await MediaService.find({ id: album.photos });
     album.media = listMedias;
 
     // RETURN DATA ALBUM
@@ -83,7 +83,7 @@ module.exports = {
       description: (params.description && params.description.trim().length) ? params.description : '',
       totalLike: params.totalLike,
       totalComment: params.totalComment,
-      avatar: params.avatar,
+      avatar: params.photos,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       comments: params.comments
     };

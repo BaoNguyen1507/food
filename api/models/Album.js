@@ -40,7 +40,7 @@ module.exports = {
     comments: { //LOAD ARRAY COMMENT with 4 atts: NAME, comment, time, avatar
       type: 'json'
     },
-    avatar: {
+    photos: {
       type: 'json',
       defaultsTo: [], //Load arrray MEDIA IDs: ObjectId:["20232332", "3545353543"]
       description:'photos belong to the album'
