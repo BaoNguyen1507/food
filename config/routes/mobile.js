@@ -1,5 +1,5 @@
 module.exports.mobile = {
-   /************* Auth **************/
+  /************* Auth **************/
   'PUT /api/v1/mobile/auth/token': { controller: 'mobile/MobileAuthController', action: 'getToken' },
   'GET /api/v1/mobile/auth/sampleToken': { controller: 'mobile/MobileAuthController', action: 'sampleToken' },
   'PUT /api/v1/mobile/auth/update-token': { controller: 'mobile/MobileAuthController', action: 'updateToken' },
@@ -12,9 +12,7 @@ module.exports.mobile = {
   
   //CHANGE-PASSWOD
   'PUT /api/v1/mobile/changepasword/': { controller: 'mobile/MobileChangePassController', action: 'changePassword' },
-  
-  //HOME
-  'PUT /api/v1/mobile/home/search': { controller: 'mobile/MobileHomeController', action: 'search' },
+
   // USER
   'PUT /api/v1/mobile/user/': { controller: 'mobile/MobileUserController', action: 'search' },
   'PUT /api/v1/mobile/user/get': { controller: 'mobile/MobileUserController', action: 'get' },
@@ -35,6 +33,7 @@ module.exports.mobile = {
   // STUDENT
   'PUT /api/v1/mobile/student/getStudent': { controller: 'mobile/MobileStudentController', action: 'getStudent' },
   'PUT /api/v1/mobile/student/getStudentThumb': { controller: 'mobile/MobileStudentController', action: 'getStudentThumb' },
+
   // POST
   'PUT /api/v1/mobile/post/': { controller: 'mobile/MobilePostController', action: 'search' },
   'PUT /api/v1/mobile/post/get/': { controller: 'mobile/MobilePostController', action: 'get' },
@@ -83,9 +82,8 @@ module.exports.mobile = {
   'PUT /api/v1/mobile/food/': { controller: 'mobile/MobileFoodController', action: 'trash' },
 
   //NOTIFICATION
-  'PUT /api/v1/mobile/notification/': { controller: 'mobile/MobileNotificationController', action: 'search' },
-  'PUT /api/v1/mobile/notification/get/': { controller: 'mobile/MobileNotificationController', action: 'get' },
-  'PUT /api/v1/mobile/notification/newNote': { controller: 'mobile/MobileNotificationController', action: 'newNote' },
+  'GET /api/v1/mobile/notification': { controller: 'mobile/MobileNotificationController', action: 'list' },
+  'GET /api/v1/mobile/notification/:id': { controller: 'mobile/MobileNotificationController', action: 'get' },
 
   // SCHEDULE
   'PUT /api/v1/mobile/schedule/getSchedule': { controller: 'mobile/MobileScheduleController', action: 'getSchedule' },
