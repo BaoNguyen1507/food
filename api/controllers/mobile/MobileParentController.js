@@ -89,15 +89,14 @@ module.exports = {
 
     //check email and phone exists
     let foundOtherParent = await ParentService.find({
-      and: {
-        id: {
-          '!=': params.id
-        }
+      id: {
+        '!': [params.id]
       },
-      or: {
-        emailAddress: params.emailAddress,
+      or: [{
+        emailAddress: params.emailAddress
+      },{
         phone: params.phone
-      }
+      }]
     });
     if(!foundOtherParent.length){
       const newData = {
