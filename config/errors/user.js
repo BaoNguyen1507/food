@@ -3,6 +3,7 @@ const ERRORS = {
   ERR_EDIT_FAIL: { code: 'ERR_USER_002', message: "User edit failed" },
   ERR_EMAIL_EXISTED: { code: 'ERR_USER_003', message: "Your email address is existed." },
   ERR_PHONE_EXISTED: { code: 'ERR_USER_004', message: "Your phone number is existed." },
+  ERR_EMAIL_PHONE_EXISTED: { code: 'ERR_USER_004', message: "Your email address or phone number is existed." },
   
   ERR_ID_REQUIRED: { code: 'ERR_USER_006', message: "User Id is required" },
   ERR_USER_EMAIL_REQUIRED: { code: 'ERR_USER_007', message: "Email is required" },

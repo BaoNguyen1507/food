@@ -48,19 +48,7 @@ module.exports = {
   edit: async (req, res) => {
     sails.log.info("================================ MobileUserController.edit => START ================================");
     let params = req.allParams();
-    // CHECK TOKEN
-    let tempToken = true;
-    let token = await AuthService.find(params.token);
-    let checkToken = false;
     
-      if (token.token === params.tokens) {
-        checkToken = true;
-      }
-
-    if (tempToken === false) {
-      return res.badRequest(AuthError.ERR_SYSTEM_TOKEN_REQUIRE);
-    }
-    // END CHECK TOKEN
     if (!params.fullName && !params.fullName.trim().length) {
       return res.badRequest(UserError.ERR_USER_FULLNAME_REQUIRED);
     } else if (!params.emailAddress || !params.emailAddress.trim().length) {
@@ -80,66 +68,49 @@ module.exports = {
     } else if (foundPhoneUser.length) {
       return res.badRequest(UserError.ERR_PHONE_EXISTED);
     }
-      // CHECK EMAIL & PHONE EXIST WITH SCHOOL
-      const foundEmailSchool = await SchoolService.find({
-        emailAddress: params.emailAddress
-      });
-      const foundPhoneSchool = await SchoolService.find({
-        phone: params.phone
-      });
-      if (foundEmailSchool.length) {
-        return res.badRequest(SchoolError.ERR_EMAIL_SCHOOL_EXISTED);
-      } else if (foundPhoneSchool.length) {
-        return res.badRequest(SchoolError.ERR_PHONE_SCHOOL_EXISTED);
-      }
-      // CHECK EMAIL & PHONE EXIST WITH PARENT
-    const foundEmailParent = await UserService.find({
+    // CHECK EMAIL & PHONE EXIST WITH SCHOOL
+    const foundEmailSchool = await SchoolService.find({
       emailAddress: params.emailAddress
     });
-    const foundPhoneParent = await UserService.find({
+    const foundPhoneSchool = await SchoolService.find({
       phone: params.phone
     });
-    if (foundEmailParent.length) {
-      return res.badRequest(UserError.ERR_EMAIL_PARENT_EXISTED);
-    } else if (foundPhoneParent.length) {
-      return res.badRequest(UserError.ERR_PHONE_PARENT_EXISTED);
+    if (foundEmailSchool.length) {
+      return res.badRequest(SchoolError.ERR_EMAIL_SCHOOL_EXISTED);
+    } else if (foundPhoneSchool.length) {
+      return res.badRequest(SchoolError.ERR_PHONE_SCHOOL_EXISTED);
     }
-    // Call constructor with custom options:
-    let message = (params.message) ? params.message : '';
-    let status = (params.status) ? parseInt(params.status) : 1;
 
-    if (params.metaFields && !Utils.isJsonString(params.metaFields)) {
-      return res.serverError(ErrorService.SYSTEM_JSON_FORMAT_FAIL);
-    }
-     
-    let newData = {
-      //required
-      emailAddress: params.emailAddress,
-      //required
-      phone: params.phone,
-      //required
-      fullName: params.fullName,
-      birthday: params.birthday,
-      professional: params.professional,
-      address : params.address
-    }
-      // CHECK DATA NOTIFICATION
-      const user = UserService.get({
-        id: params.id
-      });
-      if (!user) {
-        return res.notFound(UserError.ERR_NOT_FOUND);
+    //check email and phone exists
+    let foundOtherUser = await ParentService.find({
+      and: {
+        id: {
+          '!=': params.id
+        }
+      },
+      or: {
+        emailAddress: params.emailAddress,
+        phone: params.phone
       }
-
-      // UPDATE DATA USER
+    });
+    if(!foundOtherUser.length){
+      let newData = {
+        emailAddress: params.emailAddress,
+        phone: params.phone,
+        fullName: params.fullName,
+        birthday: params.birthday,
+        professional: params.professional,
+        address : params.address
+      }
       const editObj = await UserService.edit({
         id: params.id
       }, newData);
-
-    // RETURN DATA USER
-    return res.json({
-      data: editObj[0]
-    });
+      return res.json({
+        data: editObj[0]
+      });
+    } else {
+      return res.badRequest(UserError.ERR_EMAIL_PHONE_EXISTED);
+    }
   },
   
   search: async (req, res) => {
