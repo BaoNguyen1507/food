@@ -42,7 +42,7 @@ const BackendNotificationController = {
     // QUERY DATA NOTIFICATION
     const notes = await NotificationService.find({
       status: sails.config.custom.STATUS.PUBLISH
-    }, params.limit, (params.page-1) * params.limit, params.sort),
+    }, params.limit, (params.page-1) * params.limit, params.sort)
       
     // RETURN DATA NOTIFICATION
     return res.json({
