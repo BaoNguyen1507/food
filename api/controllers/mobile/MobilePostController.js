@@ -17,9 +17,11 @@ module.exports = {
 
   list: async (req, res) => {
     let params = req.allParams();
-    let sizePost = 10;
-    let fromPosition = (params.page - 1) * sizePost;
-    let newPost = await PostService.find({ status: sails.config.custom.STATUS.PUBLISH }, sizePost, fromPosition, null);
+    
+    let newPost = await await NotificationService.find({
+      status: sails.config.custom.STATUS.PUBLISH
+    }, params.limit, (params.page-1) * params.limit, params.sort);
+    
     let listMedia = await MediaService.find();
 
     for (let i = 0; i < newPost.length; i++){
