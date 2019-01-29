@@ -17,22 +17,24 @@ module.exports = {
 
   list: async (req, res) => {
     let params = req.allParams();
-    let sizePost = 10;
-    let fromPosition = (params.page - 1) * sizePost;
-    let newPost = await PostService.find({ status: sails.config.custom.STATUS.PUBLISH }, sizePost, fromPosition, null);
+    
+    let posts = await PostService.find({
+      status: sails.config.custom.STATUS.PUBLISH
+    }, params.limit, (params.page-1) * params.limit, params.sort);
+
     let listMedia = await MediaService.find();
 
-    for (let i = 0; i < newPost.length; i++){
+    for (let i = 0; i < posts.length; i++){
       for (let y = 0; y < listMedia.length; y++){
-        if (newPost[i].thumbnail == listMedia[y].id) {  
-          newPost[i].thumbnail = listMedia[y];
+        if (posts[i].thumbnail == listMedia[y].id) {  
+          posts[i].thumbnail = listMedia[y];
         }
       }
     }
     
     return res.json({
       code: 'SUCCESS_200',
-      data: newPost
+      data: posts
     });
   },
 
