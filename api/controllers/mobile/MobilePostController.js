@@ -15,7 +15,7 @@ const moment = require('moment');
 
 module.exports = {
 
-  newPost: async (req, res) => {
+  list: async (req, res) => {
     let params = req.allParams();
     let sizePost = 10;
     let fromPosition = (params.page - 1) * sizePost;

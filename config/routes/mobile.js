@@ -36,8 +36,8 @@ module.exports.mobile = {
 
   // POST
   'PUT /api/v1/mobile/post/': { controller: 'mobile/MobilePostController', action: 'search' },
-  'PUT /api/v1/mobile/post/get/': { controller: 'mobile/MobilePostController', action: 'get' },
-  'PUT /api/v1/mobile/post/newPost': { controller: 'mobile/MobilePostController', action: 'newPost' },
+  'GET /api/v1/mobile/post': { controller: 'mobile/MobilePostController', action: 'list' },
+  'GET /api/v1/mobile/post/:id': { controller: 'mobile/MobilePostController', action: 'get' },
   'PUT /api/v1/mobile/post/addComment/': { controller: 'mobile/MobilePostController', action: 'addComment' },
   
   // ALBUM
