@@ -58,9 +58,15 @@ module.exports = {
     } 
      // CHECK EMAIL & PHONE EXIST WITH USER  
      const foundEmailUser = await UserService.find({
+      id: {
+        '!=': [params.id]
+      },
       emailAddress: params.emailAddress
     });
     const foundPhoneUser = await UserService.find({
+      id: {
+        '!=': [params.id]
+      },
       phone: params.phone
     });
     if (foundEmailUser.length) {
@@ -84,7 +90,7 @@ module.exports = {
     //check email and phone exists
     let foundOtherUser = await UserService.find({
       id: {
-        '!': [params.id]
+        '!=': [params.id]
       },
       or: [{ 
         emailAddress: params.emailAddress
@@ -98,7 +104,6 @@ module.exports = {
         phone: params.phone,
         fullName: params.fullName,
         birthday: params.birthday,
-        professional: params.professional,
         address : params.address
       }
       const editObj = await UserService.edit({
