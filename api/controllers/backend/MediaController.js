@@ -229,7 +229,7 @@ module.exports = {
           
           name = img.filename;
 
-          Sharp(img.fd).resize({ width: 65, height: 65 }).crop(Sharp.gravity.northwest).toFile(require('path')
+          Sharp(img.fd).resize({ width: 400, height: 300 }).crop(Sharp.gravity.northwest).toFile(require('path')
             .resolve(sails.config.appPath, 'assets/images/zadmin/uploads/medias/square/' + name.replace(/\s/g, '')))
              .then((info) => {}).catch( (err) => { sails.log(err); }); 
         })
