@@ -78,7 +78,7 @@ const MenuService = {
         skip = (skip !== null && typeof skip === 'number') ? skip : 0;
         sort = (sort !== null && typeof sort === 'object') ? sort : [{ createdAt: 'DESC' }];
 
-        let menu = await Menu.find({ where: where, limit: limit, skip: skip, sort: sort }).populate('meal');
+        let menu = await Menu.find({ where: where, limit: limit, skip: skip, sort: sort });
 
         return menu;
     },

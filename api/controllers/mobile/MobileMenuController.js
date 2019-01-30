@@ -4,40 +4,75 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
-const MenuError = require('../../../config/errors/food');
+const MenuError = require('../../../config/errors/menu');
 const MenuService = require('../../services/MenuService');
+const FoodService = require('../../services/FoodService');
 //Library
 const moment = require('moment');
 
 module.exports = {
 
   search: async (req, res) => {
+    // let params = req.allParams();
+
+    // // CHECK TOKEN
+    // let tempToken = true;
+    // let token = await AuthService.find(params.token);
+    // let checkToken = false;
+    
+    // if (token.token === params.tokens) {
+    //   checkToken = true;
+    // }
+    // if (tempToken === false) {
+    //   return res.badRequest(AuthError.ERR_SYSTEM_TOKEN_REQUIRE);
+    //   }
+    //   // END CHECK TOKEN
+      
+    //   let date = params.date;
+    //   let sizeMenu = 10;
+    //   let fromPosition = (params.page - 1) * sizeMenu;
+    //   // LIST NOTE
+    //   let newMenu = await MenuService.find({ status: sails.config.custom.STATUS.PUBLISH}, sizeMenu, fromPosition, null);
+      
+    // return res.json({
+    //     code: 'SUCCESS_200',
+    //     data: newMenu
+    //   });
     let params = req.allParams();
 
-    // CHECK TOKEN
-    let tempToken = true;
-    let token = await AuthService.find(params.token);
-    let checkToken = false;
-    
-    if (token.token === params.tokens) {
-      checkToken = true;
+    if (!params.dateUse) {
+      return res.badRequest(MenuError.ERR_DATE_REQUIRED);
     }
-    if (tempToken === false) {
-      return res.badRequest(AuthError.ERR_SYSTEM_TOKEN_REQUIRE);
+    const tmpData = {
+      dateUse: params.dateUse
+    };
+
+    const find = await MenuService.find(tmpData);
+    if (find.length > 0) {
+      let i, j, k;
+      
+      for (i=0; i<find.length; i++) {
+        if (find[i].slotFeedings.length > 0) {
+          for (j=0; j<find[i].slotFeedings.length; j++) {
+            if (find[i].slotFeedings[j].foods.length > 0) {
+              for (k=0; k<find[i].slotFeedings[j].foods.length; k++) {
+                let findFood = null;
+                findFood = await FoodService.get({id: find[i].slotFeedings[j].foods[k]});
+                if (findFood) {
+                  find[i].slotFeedings[j].foods[k] = findFood;
+                }
+              }
+            }
+          }
+        }
       }
-      // END CHECK TOKEN
-      
-      let date = params.date;
-      let sizeMenu = 10;
-      let fromPosition = (params.page - 1) * sizeMenu;
-      // LIST NOTE
-      let newMenu = await MenuService.find({ status: sails.config.custom.STATUS.PUBLISH}, sizeMenu, fromPosition, null);
-      
-    return res.json({
-        code: 'SUCCESS_200',
-        data: newMenu
-      });
+    }
+
+    return res.ok({
+      data: find
+    });
   },
+
   add: async (req, res) => {
     sails.log.info("================================ MenuController.add => START ================================");
     // GET ALL PARAMS

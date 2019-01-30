@@ -8,6 +8,8 @@ const ERRORS = {
     ERR_ID_REQUIRED: { code: 'ERR_SCHEDULE_006', message: "Schedule Id is required" },
     ERR_TITLE_REQUIRED: { code: 'ERR_SCHEDULE_007', message: "Title is required" },
     ERR_TIME_REQUIRED: { code: 'ERR_SCHEDULE_008', message: "Time is required" },
+
+    ERR_DATE_REQUIRED: { code: 'ERR_SCHEDULE_009', message: "Date is required" },
   };
   
   module.exports = ERRORS;

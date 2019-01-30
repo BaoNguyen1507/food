@@ -81,12 +81,18 @@ module.exports.mobile = {
   'PUT /api/v1/mobile/food/:id/': { controller: 'mobile/MobileFoodController', action: 'edit' },
   'PUT /api/v1/mobile/food/': { controller: 'mobile/MobileFoodController', action: 'trash' },
 
+  //MENU
+  'GET /api/v1/mobile/menu/:id/': { controller: 'mobile/MobileMenuController', action: 'get' },
+  'GET /api/v1/mobile/menu': { controller: 'mobile/MobileMenuController', action: 'search' },
+
+  // SCHEDULE
+  'GET /api/v1/mobile/schedule': { controller: 'mobile/MobileScheduleController', action: 'search' },
+
   //NOTIFICATION
   'GET /api/v1/mobile/notification': { controller: 'mobile/MobileNotificationController', action: 'list' },
   'GET /api/v1/mobile/notification/:id': { controller: 'mobile/MobileNotificationController', action: 'get' },
 
-  // SCHEDULE
-  'PUT /api/v1/mobile/schedule/getSchedule': { controller: 'mobile/MobileScheduleController', action: 'getSchedule' },
+  
   // ATTEDENT
   'PUT /api/v1/mobile/attendent/checkAttendent': { controller: 'mobile/MobileAttendentController', action: 'checkAttendent' },
   'PUT /api/v1/mobile/attendent/checkStudentByClass': { controller: 'mobile/MobileAttendentController', action: 'checkStudentByClass' },

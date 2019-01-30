@@ -12,15 +12,15 @@ module.exports = {
     slotFeedings: {
       type: 'json',
       description: 'List schedule data',
-      defaultsTo: [{ "key": "1part", "time": "07:00", "status": "NONE", "foods": []}]
+      defaultsTo: [{ "key": "1part", "time": "07:00", "foods": []}]
       //Format for food
       //"foods\":[{"title":"Banana", "description":"Banana","nutrition":0.25, "thumbnail":"/path/aa.jpg"}]
     },
     dateUse: {
         type: 'string', /* Ngày áp dụng format YYYY-mm-dd*/
     },
-    class: {
-      model: 'class'
-    }
+    // class: {
+    //   model: 'class'
+    // }
   }
 };

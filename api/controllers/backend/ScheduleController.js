@@ -13,30 +13,47 @@ const moment = require('moment');
 module.exports = {
  
   add: async (req, res) => {
-    sails.log.info("================================ ScheduleController.add => START ================================");
-    // GET ALL PARAMS
+    // sails.log.info("================================ ScheduleController.add => START ================================");
+    // // GET ALL PARAMS
+    // const params = req.allParams();
+    // // CHECK FULLNAME & EMAILADDRESS & GENDER PARAMS
+    // if (!params.time) {
+    //   return res.badRequest(ScheduleError.ERR_TITLE_REQUIRED);
+    // } else if (!params.title || !params.title.trim().length) {
+    //   return res.badRequest(ScheduleError.ERR_TIME_REQUIRED);
+    // }
+
+    // // PREPARE DATA SCHEDULE
+    // const newData = {
+    //   time: params.time, // REQUIRED
+    //   title: params.title, // REQUIRED
+    //   date: params.date,
+    //   message: params.message,
+    //   status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
+    //   createdBy: req.session.userId
+    // };
+    
+    // // ADD NEW DATA SCHEDULE
+    // const newSchedule = await ScheduleService.add(newData);
+
+    // // RETURN DATA SCHEDULE
+    // return res.ok(newSchedule);
+
     const params = req.allParams();
-    // CHECK FULLNAME & EMAILADDRESS & GENDER PARAMS
-    if (!params.time) {
-      return res.badRequest(ScheduleError.ERR_TITLE_REQUIRED);
-    } else if (!params.title || !params.title.trim().length) {
-      return res.badRequest(ScheduleError.ERR_TIME_REQUIRED);
+
+    if (!params.slotSubjects) {
+      return res.badRequest(ScheduleError.ERR_SLOT_REQUIRED);
+    } else if (!params.dateUse) {
+      return res.badRequest(ScheduleError.ERR_DATE_REQUIRED);
     }
 
-    // PREPARE DATA SCHEDULE
-    const newData = {
-      time: params.time, // REQUIRED
-      title: params.title, // REQUIRED
-      date: params.date,
-      message: params.message,
-      status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
-      createdBy: req.session.userId
+    const tmpData = {
+      slotSubjects: params.slotSubjects,
+      dateUse: params.dateUse
     };
-    
-    // ADD NEW DATA SCHEDULE
-    const newSchedule = await ScheduleService.add(newData);
 
-    // RETURN DATA SCHEDULE
+    const newSchedule = await ScheduleService.add(tmpData);
+    
     return res.ok(newSchedule);
   },
 

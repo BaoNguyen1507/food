@@ -12,32 +12,48 @@ const moment = require('moment');
 module.exports = {
  
   add: async (req, res) => {
-    sails.log.info("================================ MenuController.add => START ================================");
-    // GET ALL PARAMS
-    const params = req.allParams();
-    // CHECK FULLNAME & EMAILADDRESS & GENDER PARAMS
-    if (!params.time) {
-      return res.badRequest(MenuError.ERR_TITLE_REQUIRED);
-    } else if (!params.title || !params.title.trim().length) {
-      return res.badRequest(MenuError.ERR_TIME_REQUIRED);
-    }
-    let meal = params.meal;
-    // PREPARE DATA MENU
-    const newData = {
-      time: params.time, // REQUIRED
-      title: params.title, // REQUIRED
-      meal: meal,
-      date : params.date,
-      status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
-      createdBy: req.session.userId
-    };
+    // sails.log.info("================================ MenuController.add => START ================================");
+    // // GET ALL PARAMS
+    // const params = req.allParams();
+    // // CHECK FULLNAME & EMAILADDRESS & GENDER PARAMS
+    // if (!params.time) {
+    //   return res.badRequest(MenuError.ERR_TITLE_REQUIRED);
+    // } else if (!params.title || !params.title.trim().length) {
+    //   return res.badRequest(MenuError.ERR_TIME_REQUIRED);
+    // }
+    // let meal = params.meal;
+    // // PREPARE DATA MENU
+    // const newData = {
+    //   time: params.time, // REQUIRED
+    //   title: params.title, // REQUIRED
+    //   meal: meal,
+    //   date : params.date,
+    //   status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
+    //   createdBy: req.session.userId
+    // };
     
-    // ADD NEW DATA MENU
-    const newMenu = await MenuService.add(newData);
-    if (meal) {
-      await Menu.addToCollection(newMenu.id, 'meal', meal).exec(function (err) { });
+    // // ADD NEW DATA MENU
+    // const newMenu = await MenuService.add(newData);
+    // if (meal) {
+    //   await Menu.addToCollection(newMenu.id, 'meal', meal).exec(function (err) { });
+    // }
+    // // RETURN DATA MENU
+    // return res.ok(newMenu);
+    const params = req.allParams();
+
+    if (!params.slotFeedings) {
+      return res.badRequest(MenuError.ERR_SLOT_REQUIRED);
+    } else if (!params.dateUse) {
+      return res.badRequest(MenuError.ERR_DATE_REQUIRED);
     }
-    // RETURN DATA MENU
+
+    const tmpData = {
+      slotFeedings: params.slotFeedings,
+      dateUse: params.dateUse
+    };
+
+    const newMenu = await MenuService.add(tmpData);
+    
     return res.ok(newMenu);
   },
 

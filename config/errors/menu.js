@@ -8,6 +8,9 @@ const ERRORS = {
     ERR_ID_REQUIRED: { code: 'ERR_MENU_006', message: "Menu Id is required" },
     ERR_TITLE_REQUIRED: { code: 'ERR_MENU_007', message: "Title is required" },
     ERR_TIME_REQUIRED: { code: 'ERR_MENU_008', message: "Time is required" },
+
+    ERR_SLOT_REQUIRED: { code: 'ERR_MENU_009', message: "Slot is required" },
+    ERR_DATE_REQUIRED: { code: 'ERR_MENU_010', message: "Date is required" },
   };
   
   module.exports = ERRORS;

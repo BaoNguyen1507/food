@@ -12,16 +12,16 @@ module.exports = {
       slotSubjects: {
           type: 'json',
           description: 'List schedule data',
-          defaultsTo: [{ "key": "1part", "time": "07:00", "status": "NONE", "subjects": []}]
+          defaultsTo: [{ "key": "1part", "time": "07:00", "subjects": []}]
           //Format for subjects -> get full structure from subject model
           //"subjects\":[{"title":"Math Team", "code":"math","alias":"math-team", "description":""}]
       },
       dateUse: {
           type: 'string', /* Ngày áp dụng format YYYY-mm-dd*/
       },
-      class: {
-          model: 'class',
-          required: true
-      }
+    //   class: {
+    //       model: 'class',
+    //       required: true
+    //   }
     }
 };
