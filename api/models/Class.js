@@ -52,6 +52,10 @@ module.exports = {
     },
     attendent: {
       model: 'attendent'
+    },
+    school: {
+      model: 'school',
+      required: true
     }
   }
 };

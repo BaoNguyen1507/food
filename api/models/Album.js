@@ -35,7 +35,7 @@ module.exports = {
       defaultsTo: sails.config.custom.STATUS.DRAFT
     },
     owner: {
-      model: 'user'
+      model: 'user' // Just allow teacher/staff/bod can upload album
     },
     comments: { //LOAD ARRAY COMMENT with 4 atts: NAME, comment, time, avatar
       type: 'json'
@@ -44,6 +44,10 @@ module.exports = {
       type: 'json',
       defaultsTo: [], //Load arrray MEDIA IDs: ObjectId:["20232332", "3545353543"]
       description:'photos belong to the album'
+    },
+    class: {
+        model: 'class',
+        required: true
     }
   }
 };

@@ -4,7 +4,7 @@
  * @create 2017/10/23 01:05
  * @update 2017/10/23 01:05
  * @file api/models/Subject.js
- * @description :: Subject model.
+ * @description :: Subject model -Môn học
  */
 
 module.exports = {
@@ -21,7 +21,6 @@ module.exports = {
     alias: {
       type: 'string',
       required: true,
-      
     },
     description: {
       type: 'string',

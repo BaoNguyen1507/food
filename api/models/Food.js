@@ -29,10 +29,6 @@ module.exports = {
     },
     thumbnail: {
       type:'json'
-    },
-    menus: {
-      collection: 'menu',
-      via: 'meal'
     }
   }
 };

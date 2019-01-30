@@ -8,27 +8,19 @@
  */
 
 module.exports = {
-
-    attributes: {
-      time: {
-        type: 'string',
-        required: true
-      },
-      title: {
-        type: 'string',
-        required: true
-      },
-      meal: {
-        collection: 'food',
-        via: 'menus'
-      },
-      date: {
-        type: 'string'
-      },
-      status: {                           //Integer {"TRASH":,"DRAFT":,"PUBLISH":, MENU:}
-        type: 'number',
-        isIn: [sails.config.custom.STATUS.TRASH,sails.config.custom.STATUS.DRAFT,sails.config.custom.STATUS.PUBLISH],
-        defaultsTo: sails.config.custom.STATUS.DRAFT
-      }
+  attributes: {
+    slotFeedings: {
+      type: 'json',
+      description: 'List schedule data',
+      defaultsTo: [{ "key": "1part", "time": "07:00", "status": "NONE", "foods": []}]
+      //Format for food
+      //"foods\":[{"title":"Banana", "description":"Banana","nutrition":0.25, "thumbnail":"/path/aa.jpg"}]
+    },
+    dateUse: {
+        type: 'string', /* Ngày áp dụng format YYYY-mm-dd*/
+    },
+    class: {
+      model: 'class'
     }
-  };
+  }
+};

@@ -4,30 +4,24 @@
  * @create 2017/10/23 01:05
  * @update 2017/10/23 01:05
  * @file api/models/Schedule.js
- * @description :: Schedule  model.
+ * @description :: Schedule  model. Thời khóa biểu: Ăn trưa, vệ sinh và khác subject môn học
  */
 
 module.exports = {
-
     attributes: {
-      time: {
-        type: 'string',
-        required: true
+      slotSubjects: {
+          type: 'json',
+          description: 'List schedule data',
+          defaultsTo: [{ "key": "1part", "time": "07:00", "status": "NONE", "subjects": []}]
+          //Format for subjects -> get full structure from subject model
+          //"subjects\":[{"title":"Math Team", "code":"math","alias":"math-team", "description":""}]
       },
-      title: {
-        type: 'string',
-        required: true
+      dateUse: {
+          type: 'string', /* Ngày áp dụng format YYYY-mm-dd*/
       },
-      date: {
-        type: 'string'
-      },
-      message: {
-        type: 'string'
-      },
-      status: {                           //Integer {"TRASH":,"DRAFT":,"PUBLISH":, SCHEDULE:}
-        type: 'number',
-        isIn: [sails.config.custom.STATUS.TRASH,sails.config.custom.STATUS.DRAFT,sails.config.custom.STATUS.PUBLISH],
-        defaultsTo: sails.config.custom.STATUS.DRAFT
+      class: {
+          model: 'class',
+          required: true
       }
     }
-  };
+};
