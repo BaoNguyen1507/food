@@ -12,7 +12,7 @@ const ParentService = require('../../services/ParentService');
 const UserService = require('../../services/UserService');
 const SchoolService = require('../../services/SchoolService');
 const AuthError = require('../../../config/errors/auth');
-
+const Sharp = require('sharp/lib');
 module.exports = {
 
   get: async (req, res) => {
