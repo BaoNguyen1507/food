@@ -202,7 +202,7 @@ module.exports = {
     if (req.method === 'GET') {
       return res.json({ 'status': 'GET not allowed' });
     }
-    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/origin/');
+    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/avatar/origin/');
     sails.log('link image', originFolder);
     let timeStamp = _.now();
     let thumbSquare = timeStamp + '_'+ _cust.UPLOAD.THUMB.SQUARE.name;
@@ -221,13 +221,13 @@ module.exports = {
           name = img.filename;
 
           Sharp(img.fd).resize({ width: 400, height: 300 }).crop(Sharp.gravity.northwest).toFile(require('path')
-            .resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/square/' + name.replace(/\s/g, '')))
+            .resolve(sails.config.appPath, 'assets/images/zadmin/uploads/avatar/square/' + name.replace(/\s/g, '')))
              .then((info) => {}).catch( (err) => { sails.log(err); }); 
         })
         const _dataFile = process.platform === 'win32' ? file[0].fd.split('\\').pop() : file[0].fd.split('/').pop();
         return res.json({
           status: 200,
-          fd: '/assets/images/zadmin/uploads/products/square/' + name.replace(/\s/g, '')
+          fd: '/assets/images/zadmin/uploads/avatar/square/' + name.replace(/\s/g, '')
         });
       }
     });
