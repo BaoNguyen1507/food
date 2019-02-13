@@ -17,6 +17,7 @@ module.exports.mobile = {
   'PUT /api/v1/mobile/user/': { controller: 'mobile/MobileUserController', action: 'search' },
   'PUT /api/v1/mobile/user/get': { controller: 'mobile/MobileUserController', action: 'get' },
   'PUT /api/v1/mobile/user/edit': { controller: 'mobile/MobileUserController', action: 'edit' },
+  'PUT /api/v1/mobile/user/upload': { controller: 'mobile/MobileUserController', action: 'upload' },
   
   // TAXONOMY
   'PUT /api/v1/mobile/taxonomy/': { controller: 'mobile/MobileTaxonomyController', action: 'search' },

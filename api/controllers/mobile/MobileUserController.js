@@ -196,5 +196,40 @@ module.exports = {
       recordsPublish: publish,
       data: users
     });
+  },
+  upload: async (req, res) => {
+    let _cust = sails.config.custom; 
+    if (req.method === 'GET') {
+      return res.json({ 'status': 'GET not allowed' });
+    }
+    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/origin/');
+    sails.log('link image', originFolder);
+    let timeStamp = _.now();
+    let thumbSquare = timeStamp + '_'+ _cust.UPLOAD.THUMB.SQUARE.name;
+    console.log('check time and user', thumbSquare);
+ 
+    req.file('file').upload({
+      dirname: originFolder,
+      // maxBytes: 100000
+    }, (err, file) => {
+      if (err) {
+        return res.badRequest(err);
+      } else {
+        let name = '';
+        _.each(file, function (img) {
+          
+          name = img.filename;
+
+          Sharp(img.fd).resize({ width: 400, height: 300 }).crop(Sharp.gravity.northwest).toFile(require('path')
+            .resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/square/' + name.replace(/\s/g, '')))
+             .then((info) => {}).catch( (err) => { sails.log(err); }); 
+        })
+        const _dataFile = process.platform === 'win32' ? file[0].fd.split('\\').pop() : file[0].fd.split('/').pop();
+        return res.json({
+          status: 200,
+          fd: '/assets/images/zadmin/uploads/products/square/' + name.replace(/\s/g, '')
+        });
+      }
+    });
   }
 };
