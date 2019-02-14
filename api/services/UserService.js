@@ -61,7 +61,7 @@ const UserService = {
         sails.log.info(limit);
         sails.log.info(skip);
         sails.log.info(sort);
-        where = (typeof where === 'object') ? where : {};
+        where = (typeof where == 'object') ? where : {};
         limit = (limit !== 'null') ? limit : 10;
         skip = (skip !== null && typeof skip === 'number') ? skip: 0;
         sort = (sort !== null && typeof sort === 'object') ? sort : [{ createdAt: 'DESC' }];

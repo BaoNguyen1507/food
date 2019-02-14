@@ -51,6 +51,7 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   // USER
   'POST /api/v1/user/login/': { controller: 'backend/UserController', action: 'login' },
   'GET /api/v1/user/': { controller: 'backend/UserController', action: 'search' },
+  'GET /api/v1/teacher/': { controller: 'backend/UserController', action: 'getTeacher' },
   'GET /api/v1/user/:id/': { controller: 'backend/UserController', action: 'get' },
   'POST /api/v1/user/': { controller: 'backend/UserController', action: 'add' },
   'PATCH /api/v1/user/:id/': { controller: 'backend/UserController', action: 'edit' },

@@ -32,7 +32,7 @@ module.exports = {
       objParam.phone = params.username
     } 
 
-    if (objParam) {
+    if (!_.isEmpty(objParam)) {
       found = await UserService.find(objParam);
       schoolFound = await SchoolService.find(objParam);
       parentFound = await ParentService.find(objParam);
@@ -40,6 +40,8 @@ module.exports = {
       if (!found.length && !schoolFound.length && !parentFound.length) {
         return res.badRequest(UserError.ERR_NOT_FOUND);
       }
+    } else {
+      return res.badRequest('need to input username/emailAdress');
     }
     //check password
     if (found.length) {

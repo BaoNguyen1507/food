@@ -385,4 +385,10 @@ module.exports = {
       return res.badRequest(UserError.ERR_NOT_FOUND);
     }
   },
+  getTeacher: async (req, res) => { 
+    var teacher = await User.find({userType: 1});
+    return res.json({
+      data: teacher
+    });
+  }
 };

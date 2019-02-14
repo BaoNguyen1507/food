@@ -12,7 +12,7 @@ const ClassService = {
         sails.log.info("================================ ClassService.get -> options: ================================");
         sails.log.info(options);
 
-        let records = await Class.findOne(options).populate('students');
+        let records = await Class.findOne(options).populate('students').populate('teachers');
         return records;
 
     },
@@ -80,7 +80,7 @@ const ClassService = {
 
         let classes = await Class.find({ where: where, limit: limit, skip: skip, sort: sort })
             .populate("students")
-            .populate("owner");
+            .populate("teachers");
         return classes;
     },
 

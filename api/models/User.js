@@ -140,7 +140,7 @@ module.exports = {
 
     classes: {
       collection: 'class',
-      via: 'owner'
+      via: 'teachers'
     },
     
     student: {

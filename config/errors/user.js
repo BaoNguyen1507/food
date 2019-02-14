@@ -12,7 +12,7 @@ const ERRORS = {
   ERR_USER_FULLNAME_REQUIRED: { code: 'ERR_USER_011', message: "User FullName is required" },
   
   ERR_USER_INPUT_REQUIRED: { code: 'ERR_USER_INPUT_REQUIRED' },
-  ERR_NOT_FOUND: { code: 'ERR_NOT_FOUND' },
+  ERR_NOT_FOUND: { code: 'EMAIL_OR_PHONE_NOT_EXIST' },
   ERR_PASSWORD_WRONG: { code: 'ERR_PASSWORD_WRONG' },
 };
 

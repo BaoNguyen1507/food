@@ -70,6 +70,7 @@ module.exports = {
       collection:'student',
       via: 'parents'
     },
+    
     type: {
       type: 'number',
       isIn: [sails.config.custom.TYPE.MOTHER, sails.config.custom.TYPE.FATHER, sails.config.custom.TYPE.CUSTODIAN],

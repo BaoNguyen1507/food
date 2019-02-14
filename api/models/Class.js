@@ -40,7 +40,7 @@ module.exports = {
       collection: 'student',
       via: 'class',
     },
-    owner: {
+    teachers: {
       collection: 'user',
       via: 'classes',
       description: 'The user who enroles this class.'

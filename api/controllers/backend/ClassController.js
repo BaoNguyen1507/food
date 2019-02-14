@@ -45,6 +45,8 @@ module.exports = {
       return res.badRequest(ClassError.ERR_SDKCLASS_EXISTED);
     }
     let students = params.students;
+    let school = params.school;
+    let teachers = params.teachers;
     // PREPARE DATA CLASS
     const newData = {
       className: params.className, // REQUIRED
@@ -52,7 +54,8 @@ module.exports = {
       admissionNumber: params.admissionNumber, // REQUIRED
       sdkClass: params.sdkClass, // REQUIRED
       students: students,
-      //school: params.school,
+      teachers:teachers,
+      school: school,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       createdBy: req.session.userId
     };
@@ -61,6 +64,12 @@ module.exports = {
     const newClass = await ClassService.add(newData);
     if (students) {
       Class.addToCollection(newClass.id, 'students', students).exec(function (err) { });
+    }
+    if (teachers) {
+      Class.addToCollection(newClass.id, 'teachers', teachers).exec(function (err) { });
+    }
+    if (school) {
+      Class.addToCollection(newClass.id, 'school', school).exec(function (err) { });
     }
     //CREATE RELATIONSHIP BETWEEN STUDENT AND SUBJECT
     // if (school) {
