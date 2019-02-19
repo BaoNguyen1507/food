@@ -213,7 +213,8 @@ module.exports = {
     if (id == undefined) {
       return res.badRequest('ID MISSING');
     }
-   let userObj = await UserService.get({ id });
+    
+   
     let _cust = sails.config.custom; 
     if (req.method === 'GET') {
       return res.json({ 'status': 'GET not allowed' });
@@ -227,7 +228,7 @@ module.exports = {
     req.file('file').upload({
       dirname: originFolder,
       // maxBytes: 100000
-    }, (err, file) => {
+    },async (err, file) => {
       if (err) {
         return res.badRequest(err);
       } else {
@@ -242,10 +243,19 @@ module.exports = {
              .then((info) => {}).catch( (err) => { sails.log(err); }); 
         })
         const _dataFile = process.platform === 'win32' ? file[0].fd.split('\\').pop() : file[0].fd.split('/').pop();
+        let userObj = await UserService.get({ id });
+      
+        let newData = {
+          avatar : '/assets/images/zadmin/uploads/avatar/square/' + name.replace(/\s/g, '')
+        }
+      
+          const editObj = await UserService.edit({ id }, newData);
+        
+        
         return res.json({
           status: 200,
-          fd: '/assets/images/zadmin/uploads/avatar/square/' + name.replace(/\s/g, ''),
-          user: userObj
+          // fd: '/assets/images/zadmin/uploads/avatar/square/' + name.replace(/\s/g, ''),
+          user: editObj
         });
       }
     });

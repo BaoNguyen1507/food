@@ -31,10 +31,10 @@ module.exports = {
       isIn: [sails.config.custom.STATUS.TRASH,sails.config.custom.STATUS.DRAFT,sails.config.custom.STATUS.PUBLISH],
       defaultsTo: sails.config.custom.STATUS.DRAFT
     },
-    uploadBy: {
-      model: 'user',
-      description: 'The user who created this item.'
-    },
+    // uploadBy: {
+    //   model: 'user',
+    //   description: 'The user who created this item.'
+    // },
     school: {
       model:'school'
     }

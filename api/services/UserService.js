@@ -67,7 +67,7 @@ const UserService = {
         sort = (sort !== null && typeof sort === 'object') ? sort : [{ createdAt: 'DESC' }];
 
         let Users  = await User.find({ where: where, limit: limit, skip: skip, sort: sort})
-            .populate("avatar")
+            //.populate("avatar")
             .populate("albums")
             .populate("post")
             .populate("taxonomy")
