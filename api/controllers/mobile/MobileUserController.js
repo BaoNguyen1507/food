@@ -198,13 +198,22 @@ module.exports = {
     });
   },
   upload: async (req, res) => {
-    let params = req.allParams();
+    //let params = req.allParams();
+    //let id = params.id;
+    const paramsString = req.url.split('?')[1];
+    const eachParamArray = paramsString.split('&');
+    let params = {};
+    eachParamArray.forEach((param) => {
+        const key = param.split('=')[0];
+        const value = param.split('=')[1];
+        Object.assign(params, {[key]: value});
+    });
+    sails.log(params)
     let id = params.id;
-    sails.log(id);
     if (id == undefined) {
       return res.badRequest('ID MISSING');
     }
-    let userObj = await UserService.get({ id });
+   let userObj = await UserService.get({ id });
     let _cust = sails.config.custom; 
     if (req.method === 'GET') {
       return res.json({ 'status': 'GET not allowed' });
@@ -223,6 +232,7 @@ module.exports = {
         return res.badRequest(err);
       } else {
         let name = '';
+        sails.log(file);
         _.each(file, function (img) {
           
           name = img.filename;
