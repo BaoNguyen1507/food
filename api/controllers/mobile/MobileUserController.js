@@ -198,6 +198,13 @@ module.exports = {
     });
   },
   upload: async (req, res) => {
+    let params = req.allParams();
+    let id = params.id;
+    sails.log(id);
+    if (id == undefined) {
+      return res.badRequest('ID MISSING');
+    }
+    let userObj = await UserService.get({ id });
     let _cust = sails.config.custom; 
     if (req.method === 'GET') {
       return res.json({ 'status': 'GET not allowed' });
@@ -227,7 +234,8 @@ module.exports = {
         const _dataFile = process.platform === 'win32' ? file[0].fd.split('\\').pop() : file[0].fd.split('/').pop();
         return res.json({
           status: 200,
-          fd: '/assets/images/zadmin/uploads/avatar/square/' + name.replace(/\s/g, '')
+          fd: '/assets/images/zadmin/uploads/avatar/square/' + name.replace(/\s/g, ''),
+          user: userObj
         });
       }
     });

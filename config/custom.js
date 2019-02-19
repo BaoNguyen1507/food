@@ -123,6 +123,9 @@ module.exports.custom = {
     IMAGE: 0,
     VIDEO: 1,
     FILE: 2,
+    //For Message
+    PRIVATE: 0,
+    PUBLIC: 1,
     //For Thumb
     VERTICAL: 'vertical',
     HORIZONTAL: 'horizontal',

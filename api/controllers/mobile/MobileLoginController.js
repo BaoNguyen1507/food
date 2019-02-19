@@ -41,7 +41,7 @@ module.exports = {
         return res.badRequest(UserError.ERR_NOT_FOUND);
       }
     } else {
-      return res.badRequest('need to input username/emailAdress');
+      return res.badRequest('EMAIL_OR_PHONE_NOT_EXIST');
     }
     //check password
     if (found.length) {
