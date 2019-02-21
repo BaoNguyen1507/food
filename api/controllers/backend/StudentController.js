@@ -25,6 +25,18 @@ module.exports = {
       return res.badRequest(StudentError.ERR_BIRTHDAY_REQUIRED);
     }
 
+    let healthHistory = [];
+    let w_h_History = [];
+    let dataHealthHistory = {
+      symptom: params.symptom,
+      note: params.note
+    }
+    let data_w_h_History = {
+      height: params.height,
+      weight: params.weight
+    }
+    healthHistory.push(dataHealthHistory);
+    w_h_History.push(data_w_h_History);
     // PREPARE DATA STUDENT
     const newData = {
       fullName: params.fullName, // REQUIRED
@@ -41,7 +53,8 @@ module.exports = {
       notes: params.notes ? params.notes : '',
       avatar: params.thumbnail,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
-      createdBy: req.session.userId
+      createdBy: req.session.userId,
+      healthHistory: healthHistory
     };
 
     // ADD NEW DATA STUDENT

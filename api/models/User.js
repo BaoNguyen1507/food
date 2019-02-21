@@ -149,6 +149,10 @@ module.exports = {
     student: {
       collection: 'student',
       via: 'owner'
+    },
+    message: {
+      collection: 'message',
+      via: 'teacherID'
     }
   } 
 };
