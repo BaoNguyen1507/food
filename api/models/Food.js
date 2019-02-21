@@ -16,11 +16,9 @@ module.exports = {
     },
     description: {
       type: 'string',
-      required: true
     },
     nutrition: {
       type: 'string',
-      required: true
     },
     status: {                           //Integer {"TRASH":,"DRAFT":,"PUBLISH":, SCHEDULE:}
       type: 'number',
