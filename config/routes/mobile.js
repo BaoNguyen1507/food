@@ -15,7 +15,7 @@ module.exports.mobile = {
 
   // USER
   'PUT /api/v1/mobile/user/': { controller: 'mobile/MobileUserController', action: 'search' },
-  'PUT /api/v1/mobile/user/get': { controller: 'mobile/MobileUserController', action: 'get' },
+  'GET /api/v1/mobile/user/get/:id': { controller: 'mobile/MobileUserController', action: 'get' },
   'PUT /api/v1/mobile/user/edit': { controller: 'mobile/MobileUserController', action: 'edit' },
   'PUT /api/v1/mobile/user/upload': { controller: 'mobile/MobileUserController', action: 'upload' },
   
@@ -28,7 +28,7 @@ module.exports.mobile = {
 
   // PARENT
   'PUT /api/v1/mobile/parent/': { controller: 'mobile/MobileParentController', action: 'search' },
-  'PUT /api/v1/mobile/parent/get': { controller: 'mobile/MobileParentController', action: 'get' },
+  'GET /api/v1/mobile/parent/get/:id': { controller: 'mobile/MobileParentController', action: 'get' },
   'PUT /api/v1/mobile/parent/edit': { controller: 'mobile/MobileParentController', action: 'edit' },
 
   // STUDENT
@@ -46,7 +46,7 @@ module.exports.mobile = {
 
   // SCHOOL
   'PUT /api/v1/mobile/school/': { controller: 'mobile/MobileSchoolController', action: 'search' },
-  'PUT /api/v1/mobile/school/get/': { controller: 'mobile/MobileSchoolController', action: 'get' },
+  'GET /api/v1/mobile/school/get/:id': { controller: 'mobile/MobileSchoolController', action: 'get' },
   'PUT /api/v1/mobile/school/edit/': { controller: 'mobile/MobileSchoolController', action: 'edit' },
 
 
