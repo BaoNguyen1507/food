@@ -10,19 +10,18 @@
 module.exports = {
     attributes: {
         teacherID: {
-            type: 'string'
+            model:'user'
         },
         parentID: {
-            type:'string'
+            model:'parent'
+        },
+        classID: {
+            model:'class'
         },
         type: {
             type: 'number',
             isIn: [sails.config.custom.TYPE.PRIVATE,sails.config.custom.TYPE.PUBLIC],
             defaultsTo: sails.config.custom.TYPE.PRIVATE
-        },
-        dataLogs: {
-            type: 'json',
-            defaultsTo: [{userID:"", message:"", time:""}]
         },
         lastSeen: {
             type: 'string',

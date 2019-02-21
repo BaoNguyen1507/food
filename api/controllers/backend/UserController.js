@@ -77,7 +77,8 @@ module.exports = {
       fullName: params.fullName,
       birthday: params.birthday ? params.birthday : '',
       status: (params.status != undefined ? params.status : sails.config.custom.STATUS.DRAFT),
-      userType: (params.userType != undefined ? params.userType : sails.config.custom.TYPE.STAFF)
+      userType: (params.userType != undefined ? params.userType : sails.config.custom.TYPE.STAFF),
+      avatar: params.avatar
     }
     //check email and phone 
     let foundEmail = await UserService.find({
@@ -181,7 +182,8 @@ module.exports = {
       fullName: params.fullName,
       birthday: params.birthday ? params.birthday : '',
       status: (params.status != undefined ? params.status : sails.config.custom.STATUS.DRAFT),
-      userType: (params.userType != undefined ? params.userType : sails.config.custom.TYPE.STAFF)
+      userType: (params.userType != undefined ? params.userType : sails.config.custom.TYPE.STAFF),
+      avatar: params.avatar
     }
 
       // CHECK DATA NOTIFICATION

@@ -254,7 +254,6 @@ module.exports = {
         
         return res.json({
           status: 200,
-          // fd: '/assets/images/zadmin/uploads/avatar/square/' + name.replace(/\s/g, ''),
           user: editObj
         });
       }
