@@ -22,7 +22,7 @@ module.exports.mobile = {
   // TAXONOMY
   'PUT /api/v1/mobile/taxonomy/': { controller: 'mobile/MobileTaxonomyController', action: 'search' },
   'GET /api/v1/mobile/taxonomy/:id/': { controller: 'mobile/MobileTaxonomyController', action: 'get' },
-  'PUT /api/v1/mobile/taxonomy/': { controller: 'mobile/MobileTaxonomyController', action: 'add' },
+  'POST /api/v1/mobile/taxonomy/': { controller: 'mobile/MobileTaxonomyController', action: 'add' },
   'PUT /api/v1/mobile/taxonomy/:id/': { controller: 'mobile/MobileTaxonomyController', action: 'edit' },
   'PUT /api/v1/mobile/taxonomy/': { controller: 'mobile/MobileTaxonomyController', action: 'trash' },
 
@@ -53,21 +53,21 @@ module.exports.mobile = {
   // CLASS
   'PUT /api/v1/mobile/class/': { controller: 'mobile/MobileClassController', action: 'search' },
   'GET /api/v1/mobile/class/:id/': { controller: 'mobile/MobileClassController', action: 'get' },
-  'PUT /api/v1/mobile/class/': { controller: 'mobile/MobileClassController', action: 'add' },
+  'POST /api/v1/mobile/class/': { controller: 'mobile/MobileClassController', action: 'add' },
   'PUT /api/v1/mobile/class/:id/': { controller: 'mobile/MobileClassController', action: 'edit' },
   'PUT /api/v1/mobile/class/': { controller: 'mobile/MobileClassController', action: 'trash' },
 
   // SUBJECT
   'PUT /api/v1/mobile/subject/': { controller: 'mobile/MobileSubjectController', action: 'search' },
   'GET /api/v1/mobile/subject/:id/': { controller: 'mobile/MobileSubjectController', action: 'get' },
-  'PUT /api/v1/mobile/subject/': { controller: 'mobile/MobileSubjectController', action: 'add' },
+  'POST /api/v1/mobile/subject/': { controller: 'mobile/MobileSubjectController', action: 'add' },
   'PUT /api/v1/mobile/subject/:id/': { controller: 'mobile/MobileSubjectController', action: 'edit' },
   'PUT /api/v1/mobile/subject/': { controller: 'mobile/MobileSubjectController', action: 'trash' },
   
   // COMMENT
   'PUT /api/v1/mobile/comment/': { controller: 'mobile/MobileCommentController', action: 'search' },
   'GET /api/v1/mobile/comment/:id/': { controller: 'mobile/MobileCommentController', action: 'get' },
-  'PUT /api/v1/mobile/comment/': { controller: 'mobile/MobileCommentController', action: 'add' },
+  'POST /api/v1/mobile/comment/': { controller: 'mobile/MobileCommentController', action: 'add' },
   'PUT /api/v1/mobile/comment/:id/': { controller: 'mobile/MobileCommentController', action: 'edit' },
   'PUT /api/v1/mobile/comment/': { controller: 'mobile/MobileCommentController', action: 'trash' },
 
@@ -78,7 +78,7 @@ module.exports.mobile = {
   //FOOD
   'PUT /api/v1/mobile/food/': { controller: 'mobile/MobileFoodController', action: 'search' },
   'GET /api/v1/mobile/food/:id/': { controller: 'mobile/MobileFoodController', action: 'get' },
-  'PUT /api/v1/mobile/food/': { controller: 'mobile/MobileFoodController', action: 'add' },
+  'POST /api/v1/mobile/food/': { controller: 'mobile/MobileFoodController', action: 'add' },
   'PUT /api/v1/mobile/food/:id/': { controller: 'mobile/MobileFoodController', action: 'edit' },
   'PUT /api/v1/mobile/food/': { controller: 'mobile/MobileFoodController', action: 'trash' },
 
