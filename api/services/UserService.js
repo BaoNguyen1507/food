@@ -12,9 +12,16 @@ const UserService = {
         sails.log.info("================================ UserService.get -> options: ================================");
         sails.log.info(options);
 
-        let records = await User.findOne(options);
+        let records = await User.findOne(options)
+            .populate("albums")
+            .populate("post")
+            .populate("taxonomy")
+            .populate("comments")
+            .populate("settings")
+            .populate("schools")
+            .populate("classes")
+            .populate("student");
         return records;
-        
     },
 
     add : async (options) => {
