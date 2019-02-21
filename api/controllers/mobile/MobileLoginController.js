@@ -23,8 +23,8 @@ module.exports = {
       return res.badRequest(UserError.ERR_USER_INPUT_REQUIRED);
     }
 
-    let found = null, schoolFound = null, parentFound = null;
-
+    let found = [], parentFound = [];
+    let type = params.type;
     let objParam = {};
     if (params.username.indexOf('@') != -1) {
       objParam.emailAddress = params.username;
@@ -33,11 +33,14 @@ module.exports = {
     } 
 
     if (!_.isEmpty(objParam)) {
-      found = await UserService.find(objParam);
-      schoolFound = await SchoolService.find(objParam);
-      parentFound = await ParentService.find(objParam);
-     
-      if (!found.length && !schoolFound.length && !parentFound.length) {
+      if (type == 'parent') {
+        parentFound = await ParentService.find(objParam);
+        sails.log(parentFound);
+      } else if(type == 'teacher') {
+        found = await UserService.find(objParam);
+      }  
+      //schoolFound = await SchoolService.find(objParam);
+      if (found.length == 0 &&  parentFound.length == 0) {
         return res.badRequest(UserError.ERR_NOT_FOUND);
       }
     } else {
@@ -53,16 +56,8 @@ module.exports = {
         } 
       }
       return res.json({ code: 200, data: found[0] })
-    } else if (schoolFound.length) {
-      try {
-        await sails.helpers.passwords.checkPassword(params.password, schoolFound[0].password).intercept('incorrect', 'badCombo');
-      } catch (err) {
-        if (err) {
-          return res.badRequest(UserError.ERR_PASSWORD_WRONG);
-        } 
-      }
-      return res.json({ code: 200, data: schoolFound[0] })
-    } else if (parentFound.length) {
+    }
+    else if (parentFound.length) {
       try {
         await sails.helpers.passwords.checkPassword(params.password, parentFound[0].password).intercept('incorrect', 'badCombo');
       } catch (err) {
