@@ -18,11 +18,7 @@ module.exports = {
     // CHECK TITLE & NUTRITION & DESCRIPTION PARAMS
     if (!params.title || !params.title.trim().length) {
       return res.badRequest(FoodError.ERR_TITLEFOOD_REQUIRED);
-    } else if (!params.nutrition || !params.nutrition.trim().length) {
-      return res.badRequest(FoodError.ERR_NUTRITION_REQUIRED);
-    } else if (!params.description || !params.description.trim().length) {
-      return res.badRequest(FoodError.ERR_DESCRIPTION_REQUIRED);
-    }
+    } 
     // PREPARE DATA FOOD
     const newData = {
       title: params.title, // REQUIRED
@@ -66,11 +62,7 @@ module.exports = {
     // CHECK TITLE & NUTRITION & DESCRIPTION PARAMS 
     if (!params.title || !params.title.trim().length) {
       return res.badRequest(FoodError.ERR_TITLE_REQUIRED);
-    } else if (!params.nutrition || !params.nutrition.trim().length) {
-      return res.badRequest(FoodError.ERR_NUTRITION_REQUIRED);
-    } else if (!params.description || !params.description.trim().length) {
-      return res.badRequest(FoodError.ERR_DESCRIPTION_REQUIRED);
-    }
+    } 
     // PREPARE DATA FOOD
     const newData = {
       title: params.title, // REQUIRED

@@ -81,7 +81,7 @@ const FoodService = {
         sort = (sort !== null && typeof sort === 'object') ? sort : [{ createdAt: 'DESC' }];
 
         let food  = await Food.find({ where: where, limit: limit, skip: skip, sort: sort})
-            .populate("menus");
+            //.populate("menus");
             // //.populate("createdBy", {select: ['id', 'fullName', 'type']})
             // .populate("createdBy");
         return food;    
