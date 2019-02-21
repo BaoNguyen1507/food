@@ -84,6 +84,9 @@ module.exports = {
     message: {
       collection: 'message',
       via: 'parentID'
+    },
+    avatar: {
+      type: 'string'
     }
   }
 };

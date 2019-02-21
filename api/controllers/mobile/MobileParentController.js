@@ -280,5 +280,66 @@ module.exports = {
       recordsPublish: publish,
       data: parents
     });
+  },
+  upload: async (req, res) => {
+    //let params = req.allParams();
+    //let id = params.id;
+    const paramsString = req.url.split('?')[1];
+    const eachParamArray = paramsString.split('&');
+    let params = {};
+    eachParamArray.forEach((param) => {
+        const key = param.split('=')[0];
+        const value = param.split('=')[1];
+        Object.assign(params, {[key]: value});
+    });
+    sails.log(params)
+    let id = params.id;
+    if (id == undefined) {
+      return res.badRequest('ID MISSING');
+    }
+    
+   
+    let _cust = sails.config.custom; 
+    if (req.method === 'GET') {
+      return res.json({ 'status': 'GET not allowed' });
+    }
+    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/avatar/origin/');
+    sails.log('link image', originFolder);
+    let timeStamp = _.now();
+    let thumbSquare = timeStamp + '_'+ _cust.UPLOAD.THUMB.SQUARE.name;
+    console.log('check time and user', thumbSquare);
+ 
+    req.file('file').upload({
+      dirname: originFolder,
+      // maxBytes: 100000
+    },async (err, file) => {
+      if (err) {
+        return res.badRequest(err);
+      } else {
+        let name = '';
+        sails.log(file);
+        _.each(file, function (img) {
+          
+          name = img.filename;
+
+          Sharp(img.fd).resize({ width: 400, height: 300 }).crop(Sharp.gravity.northwest).toFile(require('path')
+            .resolve(sails.config.appPath, 'assets/images/zadmin/uploads/avatar/square/' + name.replace(/\s/g, '')))
+             .then((info) => {}).catch( (err) => { sails.log(err); }); 
+        })
+        const _dataFile = process.platform === 'win32' ? file[0].fd.split('\\').pop() : file[0].fd.split('/').pop();
+        
+        let newData = {
+          avatar : '/assets/images/zadmin/uploads/avatar/square/' + name.replace(/\s/g, '')
+        }
+      
+          const editObj = await ParentService.edit({ id }, newData);
+        
+        
+        return res.json({
+          status: 200,
+          user: editObj
+        });
+      }
+    });
   }
 };
