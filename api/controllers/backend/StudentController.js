@@ -54,7 +54,8 @@ module.exports = {
       avatar: params.thumbnail,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       createdBy: req.session.userId,
-      healthHistory: healthHistory
+      healthHistory: healthHistory,
+      w_h_History: w_h_History
     };
 
     // ADD NEW DATA STUDENT
@@ -125,6 +126,10 @@ module.exports = {
 
     if(params.healthHistory){
       newData.healthHistory = params.healthHistory;
+    }
+
+    if(params.w_h_History){
+      newData.w_h_History = params.w_h_History;
     }
 
     // CHECK DATA STUDENT
