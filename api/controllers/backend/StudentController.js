@@ -123,6 +123,10 @@ module.exports = {
       createdBy: req.session.userId
     };
 
+    if(params.healthHistory){
+      newData.healthHistory = params.healthHistory;
+    }
+
     // CHECK DATA STUDENT
     const student = StudentService.get({
       id: params.id
