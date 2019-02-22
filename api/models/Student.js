@@ -77,11 +77,11 @@ module.exports = {
     },
     healthHistory: {
       type: 'json',
-      defaultsTo: [{date:"0", symptom:"0", note:"0"}]
+      defaultsTo: [{ date: "0", symptom:"0", note:"0" }]
     },
     w_h_History: {
       type: 'json',
-      defaultsTo: [{ createdAt: 0,date:0, height:0, weight:0}]
+      defaultsTo: [{ date: "0", height:0, weight:0 }]
     },
     avatar: {
       type: 'json',

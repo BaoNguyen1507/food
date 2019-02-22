@@ -169,7 +169,6 @@ module.exports = {
       note: params.note ? params.note : '',
       type: params.type ? params.type : 0,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
-      students: students,
       createdBy: req.session.userId
     };
 
