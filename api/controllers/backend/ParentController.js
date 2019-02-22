@@ -74,7 +74,7 @@ module.exports = {
       emailAddress: params.emailAddress, // REQUIRED
       phone: params.phone, // REQUIRED
       password: await sails.helpers.passwords.hashPassword(params.password), // REQUIRED
-      birthday: moment(params.birthday).valueOf(),
+      birthday: params.birthday,
       profession: params.profession ? params.profession : '',
       currentAddress: params.currentAddress ? params.currentAddress : '',
       permanentAddress: params.permanentAddress ? params.permanentAddress : '',
@@ -161,7 +161,7 @@ module.exports = {
       fullName: params.fullName, // REQUIRED
       emailAddress: params.emailAddress, // REQUIRED
       phone: params.phone, // REQUIRED
-      birthday: moment(params.birthday).valueOf(),
+      birthday: params.birthday,
       profession: params.profession ? params.profession : '',
       currentAddress: params.currentAddress ? params.currentAddress : '',
       permanentAddress: params.permanentAddress ? params.permanentAddress : '',
