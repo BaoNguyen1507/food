@@ -21,18 +21,15 @@ module.exports = {
       return res.badRequest(SubjectError.ERR_TITLE_REQUIRED);
     } else if (!params.code || !params.code.trim().length) {
       return res.badRequest(SubjectError.ERR_CODE_REQUIRED);
-    } else if (!params.description || !params.description.trim().length) {
-      return res.badRequest(SubjectError.ERR_DESCRIPTION_REQUIRED);
     }
 
     // PREPARE DATA SUBJECT
     const newData = {
       title: params.title, // REQUIRED
       code: params.code, // REQUIRED
-      alias: params.alias, // REQUIRED
-      description: params.description, // REQUIRED
-      status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
-      createdBy: req.session.userId
+      alias: params.alias, 
+      description: params.description,
+      status: params.status ? params.status : sails.config.custom.STATUS.DRAFT
     };
     
     // ADD NEW DATA SUBJECT
@@ -75,18 +72,15 @@ module.exports = {
       return res.badRequest(SubjectError.ERR_TITLE_REQUIRED);
     } else if (!params.code || !params.code.trim().length) {
       return res.badRequest(SubjectError.ERR_CODE_REQUIRED);
-    } else if (!params.description || !params.description.trim().length) {
-      return res.badRequest(SubjectError.ERR_DESCRIPTION_REQUIRED);
     }
 
     // PREPARE DATA SUBJECT
     const newData = {
       title: params.title, // REQUIRED
       code: params.code, // REQUIRED
-      alias: params.alias, // REQUIRED
-      description: params.description, // REQUIRED
-      status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
-      createdBy: req.session.userId
+      alias: params.alias, 
+      description: params.description, 
+      status: params.status ? params.status : sails.config.custom.STATUS.DRAFT
     };
 
     // CHECK DATA SUBJECT
