@@ -38,14 +38,14 @@ module.exports = {
       example: 'abc street, disctrict 5, HCM city'
     },
     height: {
-      type: 'string',
+      type: 'number',
       description: 'student height',
-      example: '85.5 cm'
+      example: '85.5'
     },
     weight: {
-      type: 'string',
+      type: 'number',
       description: 'student weight',
-      example: '10 kg'
+      example: '10'
     },
     bloodGroup: {
       type: 'string',
