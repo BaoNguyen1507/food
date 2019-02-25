@@ -77,7 +77,7 @@ module.exports = {
     let idStudent = params.idStudent;
     let symptom = params.symptom ? params.symptom : '';
     let note = params.note ? params.note : '';
-    let createdAt = moment().valueOf();
+    let date = params.date ? params.date : '';
 
     if (idStudent == '') {
       return res.badRequest('Missing id');
@@ -85,7 +85,7 @@ module.exports = {
     let studentObj = await Student.findOne(idStudent);
 
     let data_h_history = {
-      date:  createdAt,
+      date:  date,
       symptom: symptom,
       note: note
     }
