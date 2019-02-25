@@ -38,14 +38,14 @@ module.exports = {
       example: 'abc street, disctrict 5, HCM city'
     },
     height: {
-      type: 'string',
+      type: 'number',
       description: 'student height',
-      example: '85.5 cm'
+      example: '85.5'
     },
     weight: {
-      type: 'string',
+      type: 'number',
       description: 'student weight',
-      example: '10 kg'
+      example: '10'
     },
     bloodGroup: {
       type: 'string',
@@ -77,11 +77,11 @@ module.exports = {
     },
     healthHistory: {
       type: 'json',
-      defaultsTo: [{date:"0", symptom:"0", note:"0"}]
+      defaultsTo: [{ date: "0", symptom:"0", note:"0" }]
     },
     w_h_History: {
       type: 'json',
-      defaultsTo: [{ createdAt: 0,date:0, height:0, weight:0}]
+      defaultsTo: [{ date: "0", height:0, weight:0 }]
     },
     avatar: {
       type: 'json',

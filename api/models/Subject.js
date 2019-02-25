@@ -23,8 +23,7 @@ module.exports = {
       required: true,
     },
     description: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
     status: {                           //Integer {"TRASH":-1,"DRAFT":0,"PUBLISH":1, SCHEDULE:2}
       type: 'number',
