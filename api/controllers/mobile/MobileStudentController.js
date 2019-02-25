@@ -20,13 +20,13 @@ module.exports = {
     let weight = params.weight ? parseInt(params.weight) : 0;
    //let symptom = params.symptom ? params.symptom : '';
     //let note = params.note ? params.note : '';
-    let createdAt = moment().valueOf();
+    let createdAt = moment().format('YYYY-MM-DD');
 
     if (idStudent == '') {
       return res.badRequest('Missing id');
     }
     let studentObj = await Student.findOne(idStudent);
-    let date = moment(studentObj.updatedAt).format('DD/MM/YYYY')
+    let date = moment(studentObj.updatedAt).format('YYYY-MM-DD');
     sails.log(date);
     let data = {
       height: height,
@@ -85,7 +85,7 @@ module.exports = {
     let studentObj = await Student.findOne(idStudent);
 
     let data_h_history = {
-      date:  date,
+      date:  moment(date,'YYYY-MM-DD').format('YYYY-MM-DD'),
       symptom: symptom,
       note: note
     }
@@ -93,9 +93,9 @@ module.exports = {
    
     studentObj.healthHistory.push(data_h_history);
     
-      // let editObj = await Student.update(idStudent)
-      // .set(studentObj)
-      // .fetch();
+      let editObj = await Student.update(idStudent)
+      .set(studentObj)
+      .fetch();
   
     return res.json({
       code: 'SUCCESS_200',
