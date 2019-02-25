@@ -13,6 +13,54 @@ const moment = require('moment');
 
 module.exports = {
 
+  updateStudentDetail: async (req, res) => {
+    let params = req.allParams();
+    let idStudent = params.idStudent;
+    let height = parseInt(params.height);
+    let weight = parseInt(params.weight);
+    let date = params.date;
+    let createdAt = moment().valueOf();
+
+    if (idStudent == '') {
+      return res.badRequest('Missing id');
+    }
+    let studentObj = await Student.findOne(idStudent);
+    let data = {
+      createdAt: createdAt,
+      date: date,
+      height: height,
+      weight: weight
+    }
+    // Find date in w_h_history
+    var found = studentObj.w_h_History.some(function (el) {
+      return el.date === date;
+    });
+    let editObj = {};
+    if (found == true) {
+      for (let i = 0; i < studentObj.w_h_History.length; i++) {
+        if (date == studentObj.w_h_History[i].date) {
+          studentObj.w_h_History[i].height = height;
+          studentObj.w_h_History[i].weight = weight;
+        editObj = await Student.update(idStudent)
+          .set(studentObj)
+          .fetch();
+        }
+      }
+    } else {
+      studentObj.w_h_History.push(data);
+      editObj = await Student.update(idStudent)
+      .set(studentObj)
+      .fetch();
+    }
+    sails.log(found);
+    
+    sails.log(studentObj.w_h_History);
+    sails.log(createdAt);
+    return res.json({
+      code: 'SUCCESS_200',
+      data: editObj
+    })
+  },
   getStudent: async (req, res) => {
     let params = req.allParams();
     let student = await StudentService.get({ id: params.id });
