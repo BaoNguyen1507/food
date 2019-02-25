@@ -6,6 +6,7 @@
  */
 const ClassError = require('../../../config/errors/class');
 const ClassService = require('../../services/ClassService');
+const StudentService = require('../../services/StudentService');
 //Library
 const moment = require('moment');
 
@@ -47,6 +48,23 @@ module.exports = {
     let students = params.students;
     let school = params.school;
     let teachers = params.teachers;
+    let parents = [];
+    if (students.length > 0) {
+      for (let i = 0; i < students.length; i++) {
+        let parentObj = await StudentService.get(students[i])
+        if (parentObj.parents.length > 1) {
+          for (let y = 0; y < parentObj.parents.length; y++) { 
+            parents.push(parentObj.parents[y].id)
+          }
+        }
+        if (parentObj.parents.length > 0) {
+          parents.push(parentObj.parents[0].id)
+        }
+        
+      }
+    }
+    
+
     // PREPARE DATA CLASS
     const newData = {
       className: params.className, // REQUIRED
@@ -59,7 +77,15 @@ module.exports = {
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       createdBy: req.session.userId
     };
-
+    for (let i = 0; i < teachers.length; i++){
+      for (let y = 0; y < parents.length; y++){
+        const dataMessage = {
+          teacher: teachers[i],
+          parent: parents[y]
+        };
+      }
+    }
+    
     // ADD NEW DATA CLASS
     const newClass = await ClassService.add(newData);
     if (students) {

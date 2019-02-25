@@ -6,7 +6,7 @@
  */
 const StudentError = require('../../../config/errors/student');
 const StudentService = require('../../services/StudentService');
-
+var fs = require('fs');
 //Library
 const moment = require('moment');
 
@@ -65,7 +65,30 @@ module.exports = {
     // RETURN DATA STUDENT
     return res.ok(newStudent);
   },
-
+  importExcel: async (req, res) => {
+    sails.log.info("================================ StudentController.Import => START ================================");
+    // GET ALL PARAMS
+    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/import/');
+    
+    req.file('file').upload({
+      dirname: originFolder
+    }, (err, file) => {
+      if (err) {
+        return res.badRequest(err);
+      } else {
+        console.log(file[0].fd);
+        var dir = require('node-dir');
+        var files = dir.files(originFolder, { sync: true });
+        const data = fs.readdirSync(originFolder, {encoding: 'utf-8'})
+        console.log(files);
+        fs.readFileSync(originFolder + '/' + data, 'utf-8').split(/\r?\n/).forEach(function (line) { 
+          console.log(line);
+        })
+        fs.unlinkSync(originFolder + '/' + data);
+        
+      }
+    });
+  },
   get: async (req, res) => {
     sails.log.info("================================ StudentController.edit => START ================================");
     // GET ALL PARAMS

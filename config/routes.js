@@ -74,6 +74,7 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   'GET /api/v1/student/': { controller: 'backend/StudentController', action: 'search' },
   'GET /api/v1/student/:id/': { controller: 'backend/StudentController', action: 'get' },
   'POST /api/v1/student/': { controller: 'backend/StudentController', action: 'add' },
+  'POST /api/v1/student/import': { controller: 'backend/StudentController', action: 'importExcel' },
   'PATCH /api/v1/student/:id/': { controller: 'backend/StudentController', action: 'edit' },
   'PATCH /api/v1/student/': { controller: 'backend/StudentController', action: 'trash' },
  
