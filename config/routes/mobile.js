@@ -34,7 +34,8 @@ module.exports.mobile = {
   // STUDENT
   'PUT /api/v1/mobile/student/getStudent': { controller: 'mobile/MobileStudentController', action: 'getStudent' },
   'PUT /api/v1/mobile/student/getStudentThumb': { controller: 'mobile/MobileStudentController', action: 'getStudentThumb' },
-  'PUT /api/v1/mobile/student/updateStudentDetail': { controller: 'mobile/MobileStudentController', action: 'updateStudentDetail' },
+  'PUT /api/v1/mobile/student/updateWHHistory': { controller: 'mobile/MobileStudentController', action: 'updateWHHistory' },
+  'PUT /api/v1/mobile/student/updateHealthHistory': { controller: 'mobile/MobileStudentController', action: 'updateHealthHistory' },
 
   // POST
   'PUT /api/v1/mobile/post/': { controller: 'mobile/MobilePostController', action: 'search' },

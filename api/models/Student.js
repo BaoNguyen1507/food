@@ -77,7 +77,7 @@ module.exports = {
     },
     healthHistory: {
       type: 'json',
-      defaultsTo: [{ date: "0", symptom:"0", note:"0" }]
+      defaultsTo: [{ date: "", symptom:"", note:"" }]
     },
     w_h_History: {
       type: 'json',

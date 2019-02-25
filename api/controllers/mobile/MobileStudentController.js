@@ -13,30 +13,40 @@ const moment = require('moment');
 
 module.exports = {
 
-  updateStudentDetail: async (req, res) => {
+  updateWHHistory: async (req, res) => {
     let params = req.allParams();
     let idStudent = params.idStudent;
-    let height = parseInt(params.height);
-    let weight = parseInt(params.weight);
-    let date = params.date;
+    let height = params.height ? parseInt(params.height) : 0;
+    let weight = params.weight ? parseInt(params.weight) : 0;
+   //let symptom = params.symptom ? params.symptom : '';
+    //let note = params.note ? params.note : '';
     let createdAt = moment().valueOf();
 
     if (idStudent == '') {
       return res.badRequest('Missing id');
     }
     let studentObj = await Student.findOne(idStudent);
+    let date = moment(studentObj.updatedAt).format('DD/MM/YYYY')
+    sails.log(date);
     let data = {
+      height: height,
+      weight: weight
+    }
+    const edit = await StudentService.edit(idStudent, data);
+    sails.log(edit);
+    let data_w_h = {
       createdAt: createdAt,
-      date: date,
+      date:  date,
       height: height,
       weight: weight
     }
     // Find date in w_h_history
-    var found = studentObj.w_h_History.some(function (el) {
+    var found_w_h = studentObj.w_h_History.some(function (el) {
       return el.date === date;
     });
     let editObj = {};
-    if (found == true) {
+  
+    if (found_w_h == true) {
       for (let i = 0; i < studentObj.w_h_History.length; i++) {
         if (date == studentObj.w_h_History[i].date) {
           studentObj.w_h_History[i].height = height;
@@ -46,19 +56,50 @@ module.exports = {
           .fetch();
         }
       }
-    } else {
-      studentObj.w_h_History.push(data);
+    }
+    else {
+      studentObj.w_h_History.push(data_w_h);
       editObj = await Student.update(idStudent)
       .set(studentObj)
       .fetch();
     }
-    sails.log(found);
+   
     
     sails.log(studentObj.w_h_History);
     sails.log(createdAt);
     return res.json({
       code: 'SUCCESS_200',
       data: editObj
+    })
+  },
+  updateHealthHistory: async (req, res) => {
+    let params = req.allParams();
+    let idStudent = params.idStudent;
+    let symptom = params.symptom ? params.symptom : '';
+    let note = params.note ? params.note : '';
+    let createdAt = moment().valueOf();
+
+    if (idStudent == '') {
+      return res.badRequest('Missing id');
+    }
+    let studentObj = await Student.findOne(idStudent);
+
+    let data_h_history = {
+      date:  createdAt,
+      symptom: symptom,
+      note: note
+    }
+    // Find date in w_h_history
+   
+    studentObj.healthHistory.push(data_h_history);
+    
+      // let editObj = await Student.update(idStudent)
+      // .set(studentObj)
+      // .fetch();
+  
+    return res.json({
+      code: 'SUCCESS_200',
+      data: studentObj
     })
   },
   getStudent: async (req, res) => {
