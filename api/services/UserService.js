@@ -59,7 +59,20 @@ const UserService = {
         let editObj = await User.update(query, options).fetch();
         sails.log.info("================================ UserService.edit -> edit object: ================================");
         sails.log.info(editObj);
-        return editObj;
+        
+        let found = await User.findOne({
+                id: editObj.id
+            })
+            .populate("albums")
+            .populate("post")
+            .populate("taxonomy")
+            .populate("comments")
+            .populate("settings")
+            .populate("schools")
+            .populate("classes")
+            .populate("student");
+
+        return found;
     },
 
     find:  async( where, limit, skip, sort) => {
