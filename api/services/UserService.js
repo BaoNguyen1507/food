@@ -61,7 +61,7 @@ const UserService = {
         sails.log.info(editObj);
         
         let found = await User.findOne({
-                id: editObj.id
+                id: editObj[0].id
             })
             .populate("albums")
             .populate("post")
