@@ -21,13 +21,9 @@ module.exports = {
       maxLength: 200,
       example: 'Example is Description'
     },
-    totalLike: { 
-      type: 'number',
-      defaultsTo: 0
-    },
-    totalComment: {
-      type: 'number',
-      defaultsTo: 0
+    whoLike: { 
+      type: 'json',
+      defaultsTo: []
     },
     status: {                           //Integer {"TRASH":,"DRAFT":,"PUBLISH":, SCHEDULE:}
       type: 'number',

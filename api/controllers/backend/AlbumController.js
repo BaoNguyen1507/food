@@ -25,8 +25,6 @@ module.exports = {
     const newData = {
       title: params.title, //REQUIRED
       description: (params.description && params.description.trim().length) ? params.description : '',
-      totalLike: params.totalLike?params.totalLike:0,
-      totalComment: params.totalComment?params.totalComment:0,
       photos: params.photos,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       comments: params.comments
@@ -81,8 +79,7 @@ module.exports = {
     const newData = {
       title: params.title, //REQUIRED
       description: (params.description && params.description.trim().length) ? params.description : '',
-      totalLike: params.totalLike,
-      totalComment: params.totalComment,
+      whoLike: params.whoLike,
       photos: params.photos,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       comments: params.comments

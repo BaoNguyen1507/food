@@ -69,7 +69,7 @@ module.exports = {
   importExcel: async (req, res) => {
     sails.log.info("================================ StudentController.Import => START ================================");
     // GET ALL PARAMS
-    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/import/');
+    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/medias/import/');
     
     req.file('file').upload({
       dirname: originFolder

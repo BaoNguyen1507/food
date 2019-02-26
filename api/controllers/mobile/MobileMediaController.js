@@ -217,7 +217,7 @@ module.exports = {
     if (req.method === 'GET') {
       return res.json({ 'status': 'GET not allowed' });
     }
-    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/products/origin/');
+    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/medias/origin/');
     req.file('file').upload({
       dirname: originFolder,
       // maxBytes: 100000
@@ -229,7 +229,7 @@ module.exports = {
         
         return res.json({
           status: 200,
-          fd: '/assets/images/zadmin/uploads/products/origin/' + _dataFile.fd.split('/').pop()
+          fd: '/assets/images/zadmin/uploads/medias/origin/' + _dataFile.fd.split('/').pop()
         });
       }
     });
