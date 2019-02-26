@@ -238,7 +238,7 @@ module.exports = {
           
           name = img.filename;
 
-          Sharp(img.fd).resize({ width: 400, height: 300 }).crop(Sharp.gravity.northwest).toFile(require('path')
+          Sharp(img.fd).resize({ width: 400, height: 300 }).toFile(require('path')
             .resolve(sails.config.appPath, 'assets/images/zadmin/uploads/avatar/square/' + name.replace(/\s/g, '')))
              .then((info) => {}).catch( (err) => { sails.log(err); }); 
         })

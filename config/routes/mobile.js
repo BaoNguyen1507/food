@@ -50,6 +50,8 @@ module.exports.mobile = {
   
   // ALBUM
   'GET /api/v1/mobile/album': { controller: 'mobile/MobileAlbumController', action: 'list' },
+  'POST /api/v1/mobile/album': { controller: 'mobile/MobileAlbumController', action: 'add' },
+  'PUT /api/v1/mobile/album/:id': { controller: 'mobile/MobileAlbumController', action: 'edit' },
 
   // SCHOOL
   'PUT /api/v1/mobile/school/': { controller: 'mobile/MobileSchoolController', action: 'search' },
@@ -79,8 +81,8 @@ module.exports.mobile = {
   'PUT /api/v1/mobile/comment/': { controller: 'mobile/MobileCommentController', action: 'trash' },
 
   // MEDIA
-  'PUT /api/v1/mobile/media/newMedia': { controller: 'mobile/MobileMediaController', action: 'newMedia' },
-  'PUT /api/v1/mobile/media/upload/': { controller: 'mobile/MobileMediaController', action: 'upload' },
+  // 'PUT /api/v1/mobile/media/newMedia': { controller: 'mobile/MobileMediaController', action: 'newMedia' },
+  'POST /api/v1/mobile/media/add/': { controller: 'mobile/MobileMediaController', action: 'add' },
   
   //FOOD
   'PUT /api/v1/mobile/food/': { controller: 'mobile/MobileFoodController', action: 'search' },

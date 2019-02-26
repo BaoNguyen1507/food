@@ -4,6 +4,9 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
+
+const moment = require('moment');
+
 const MediaError = require('../../../config/errors/media');
 const MediaService = require('../../services/MediaService');
 
@@ -22,20 +25,29 @@ module.exports = {
   add: async (req, res) => {
     // GET ALL PARAMS
     const params = req.allParams();
+    
+    //upload file
+    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/medias/origin/');
+    let fileUpload = { path: null };
+    if(req.file('file')){
+      let ofile = await sails.helpers.uploadFile.with({
+        req: req,
+        file: 'file',
+        dest: originFolder
+      });
+      fileUpload.path = '/assets/images/zadmin/uploads/medias/origin/' + ofile[0].fd.split('/').pop();
+    }
 
-    // CHECK TITLE & PATH PARAMS
-    if (!params.title || !params.title.trim().length) {
-      return res.badRequest(MediaError.ERR_TITLEMEDIA_REQUIRED);
-    } else if (!params.path || !params.path.trim().length) {
-      return res.badRequest(MediaError.ERR_PATH_REQUIRED);
+    if(fileUpload.path == null){
+      return res.badRequest(MediaError.ERR_UPLOAD_FAIL);
     }
 
     // PREPARE DATA MEDIA
     const newData = {
-      title: params.title, // REQUIRED
-      path: params.path, // REQUIRED
+      title: params.title ? params.title : String(moment().valueOf()), // REQUIRED
+      path: fileUpload.path,
       caption: (params.caption && params.caption.trim().length) ? params.caption : '',
-      school: params.schools,
+      school: params.school,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
     };
 
@@ -229,7 +241,7 @@ module.exports = {
         
         return res.json({
           status: 200,
-          fd: '/assets/images/zadmin/uploads/products/origin/' + _dataFile.fd.split('/').pop()
+          path: '/assets/images/zadmin/uploads/products/origin/' + _dataFile.fd.split('/').pop()
         });
       }
     });
