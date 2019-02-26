@@ -18,24 +18,32 @@ module.exports = {
     // CHECK TITTLE PARAMS
     if (!params.title) {
       return res.badRequest(AlbumError.ERR_TITLEALBUM_REQUIRED);
-    } else if (!params.title.trim().length) {
-      return res.badRequest(AlbumError.ERR_SPACE_REQUIRED);
+    } else if (!params.photos || !params.photos.length) {
+      return res.badRequest(AlbumError.ERR_PHOTO_REQUIRED);
+    } else if (!params.owner) {
+      return res.badRequest(AlbumError.ERR_OWNER_REQUIRED);
+    } else if (!params.class) {
+      return res.badRequest(AlbumError.ERR_CLASS_REQUIRED);
     }
 
     // PREPARE DATA ALBUM
     const newData = {
       title: params.title, //REQUIRED
       description: (params.description && params.description.trim().length) ? params.description : '',
-      avatar: params.photos,
+      photos: params.photos,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
-      comments: params.comments
+      owner: params.owner,
+      atClass: params.class
     };
 
     // ADD NEW DATA ALBUM
     const newAlbum = await AlbumService.add(newData);
 
     // RETURN DATA ALBUM
-    return res.ok(newAlbum);
+    return res.json({
+      status: 200,
+      data: newAlbum
+    });
   },
 
   get: async (req, res) => {

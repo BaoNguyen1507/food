@@ -132,4 +132,5 @@ lib-cov
 database/db
 database/dump
 assets/images/zadmin/uploads/products
+assets/images/zadmin/uploads/medias
 
