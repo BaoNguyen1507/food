@@ -13,18 +13,9 @@ module.exports = {
             model:'message',
             required: true
         },
-        user: {
-            model: 'user',
-            required: true
-        },
-        message: {
-            type:'string',
-            required: true
-        },
-        time: {
-            type: 'string',
-            columnType: 'datetime',
-            required: true
+        dataLogs: {
+            type: 'json',
+            defaultsTo: [{ user: "", txtMessage:""}]
         }
     }
 };

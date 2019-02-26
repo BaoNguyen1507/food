@@ -164,7 +164,7 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   'PATCH /api/v1/role/': { controller: 'backend/RoleController', action: 'trash' },   
   // FILE
   'GET /assets/images/zadmin/uploads/*': { controller: 'backend/FileController', action: 'get' },
-
+  
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝

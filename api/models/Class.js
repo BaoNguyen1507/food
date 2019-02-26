@@ -56,6 +56,10 @@ module.exports = {
     school: {
       model: 'school',
       required: true
+    },
+    message: {
+      collection: 'message',
+      via: 'classes',
     }
   }
 };

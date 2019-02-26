@@ -152,7 +152,7 @@ module.exports = {
     },
     message: {
       collection: 'message',
-      via: 'teacherID'
+      via: 'teacher'
     }
   } 
 };
