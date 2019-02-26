@@ -64,7 +64,7 @@ module.exports = {
     }
     
     const listMedias = await MediaService.find({ id: album.photos });
-    album.media = listMedias;
+    album.photos = listMedias;
 
     // RETURN DATA ALBUM
     return res.json({
@@ -80,19 +80,9 @@ module.exports = {
     // CHECK TITTLE PARAMS
     if (!params.title) {
       return res.badRequest(AlbumError.ERR_TITLEALBUM_REQUIRED);
-    } else if (!params.title.trim().length) {
-      return res.badRequest(AlbumError.ERR_SPACE_REQUIRED);
+    } else if (!params.id) {
+      return res.badRequest(AlbumError.ERR_ID_REQUIRED);
     }
-
-    // PREPARE DATA ALBUM
-    const newData = {
-      title: params.title, //REQUIRED
-      description: (params.description && params.description.trim().length) ? params.description : '',
-      whoLike: params.whoLike,
-      avatar: params.photos,
-      status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
-      comments: params.comments
-    };
 
     // CHECK DATA ALBUM
     const album = AlbumService.get({
@@ -102,14 +92,28 @@ module.exports = {
       return res.notFound(AlbumError.ERR_NOT_FOUND);
     }
 
+    // PREPARE DATA ALBUM
+    const newData = {
+      title: params.title, //REQUIRED
+      description: params.description,
+      whoLike: params.whoLike,
+      photos: params.photos,
+      status: params.status,
+      comments: params.comments
+    };
+
     // UPDATE DATA ALBUM
-    const editObj = await AlbumService.edit({
+    await AlbumService.edit({
       id: params.id
     }, newData);
 
+    const found = await AlbumService.get({
+      id: params.id
+    });
+
     // RETURN DATA ALBUM
     return res.json({
-      data: editObj[0]
+      data: found
     });
   },
 
@@ -126,7 +130,7 @@ module.exports = {
       for(let i=0; i<albums.length; i++){
         let medias = await MediaService.find({id: albums[i].photos?albums[i].photos:[]}, 1000, null, null);
         if(medias && medias.length > 0){
-          albums[i].medias = medias;
+          albums[i].photos = medias;
         }
       }
     }

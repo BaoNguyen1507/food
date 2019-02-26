@@ -45,7 +45,8 @@ module.exports.mobile = {
   
   // ALBUM
   'GET /api/v1/mobile/album': { controller: 'mobile/MobileAlbumController', action: 'list' },
-  'POST /api/v1/mobile/album/add': { controller: 'mobile/MobileAlbumController', action: 'add' },
+  'POST /api/v1/mobile/album': { controller: 'mobile/MobileAlbumController', action: 'add' },
+  'PUT /api/v1/mobile/album/:id': { controller: 'mobile/MobileAlbumController', action: 'edit' },
 
   // SCHOOL
   'PUT /api/v1/mobile/school/': { controller: 'mobile/MobileSchoolController', action: 'search' },

@@ -9,7 +9,8 @@ const ERRORS = {
     ERR_PHOTO_REQUIRED: { code: 'ERR_ALBUM_006', message: "Photos are required" },
     ERR_OWNER_REQUIRED: { code: 'ERR_ALBUM_007', message: "Owner is required" },
     ERR_CLASS_REQUIRED: { code: 'ERR_ALBUM_008', message: "Class is required" },
-    ERR_SPACE_REQUIRED: { code: 'ERR_ALBUM_009', message: "Please not input space" }
+    ERR_SPACE_REQUIRED: { code: 'ERR_ALBUM_009', message: "Please not input space" },
+    ERR_ID_REQUIRED: { code: 'ERR_ALBUM_010', message: "Id is required" },
 };
 
 module.exports = ERRORS;

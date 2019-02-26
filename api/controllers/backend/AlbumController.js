@@ -55,7 +55,7 @@ module.exports = {
     }
     
     const listMedias = await MediaService.find({ id: album.photos });
-    album.media = listMedias;
+    album.photos = listMedias;
 
     // RETURN DATA ALBUM
     return res.json({
