@@ -31,6 +31,11 @@ module.exports.mobile = {
   'GET /api/v1/mobile/parent/get/:id': { controller: 'mobile/MobileParentController', action: 'get' },
   'PUT /api/v1/mobile/parent/edit': { controller: 'mobile/MobileParentController', action: 'edit' },
   'PUT /api/v1/mobile/parent/upload': { controller: 'mobile/MobileParentController', action: 'upload' },
+  // MESSAGE
+  'GET /api/v1/mobile/message/getGroupMessage': { controller: 'mobile/MobileMessageController', action: 'getGroupMessage' },
+  'POST /api/v1/mobile/message/storeMessageData': { controller: 'mobile/MobileMessageController', action: 'storeMessageData' },
+  'POST /api/v1/mobile/message/showDataMessage': { controller: 'mobile/MobileMessageController', action: 'showDataMessage' },
+  
   // STUDENT
   'PUT /api/v1/mobile/student/getStudent': { controller: 'mobile/MobileStudentController', action: 'getStudent' },
   'PUT /api/v1/mobile/student/getStudentThumb': { controller: 'mobile/MobileStudentController', action: 'getStudentThumb' },

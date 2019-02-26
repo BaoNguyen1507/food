@@ -43,8 +43,8 @@ module.exports = {
       dateOfBirth: params.dateOfBirth, // REQUIRED
       gender: params.gender ? params.gender : '', // REQUIRED
       currentAddress: params.currentAddress ? params.currentAddress : '',
-      height: params.height ? params.height : '',
-      weight: params.weight ? params.weight : '',
+      height: params.height ? parseInt(params.height) : 0,
+      weight: params.weight ? parseInt(params.weight) : 0,
       bloodGroup: params.bloodGroup ? params.bloodGroup : '',
       allergy: params.allergy ? params.allergy : '',
       heartRate: params.heartRate ? params.heartRate : '',
@@ -278,5 +278,5 @@ module.exports = {
       recordsPublish: publish,
       data: students
     });
-  }
+  },
 };

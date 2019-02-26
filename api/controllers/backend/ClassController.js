@@ -7,6 +7,8 @@
 const ClassError = require('../../../config/errors/class');
 const ClassService = require('../../services/ClassService');
 const StudentService = require('../../services/StudentService');
+const MessageService = require('../../services/MessageService');
+const MessageDataService = require('../../services/MessageDataService');
 //Library
 const moment = require('moment');
 
@@ -77,17 +79,29 @@ module.exports = {
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       createdBy: req.session.userId
     };
-    for (let i = 0; i < teachers.length; i++){
-      for (let y = 0; y < parents.length; y++){
-        const dataMessage = {
-          teacher: teachers[i],
-          parent: parents[y]
-        };
-      }
-    }
     
+    let dataMessage = {};
     // ADD NEW DATA CLASS
     const newClass = await ClassService.add(newData);
+    for (let i = 0; i < teachers.length; i++){
+      for (let y = 0; y < parents.length; y++){
+        dataMessage = {
+          teacher: teachers[i],
+          parent: parents[i],
+          classes: newClass.id
+        }
+        const newMessage = await MessageService.add(dataMessage);
+        if (teachers[i]) {
+          Message.addToCollection(newMessage.id, 'teacher', teachers[i]).exec(function (err) { });
+        }
+        if (parents[i]) {
+          Message.addToCollection(newMessage.id, 'parent', parents[i]).exec(function (err) { });
+        }
+        if (newClass.id) {
+          Message.addToCollection(newMessage.id, 'class', newClass.id).exec(function (err) { });
+        }
+      }
+    }
     if (students) {
       Class.addToCollection(newClass.id, 'students', students).exec(function (err) { });
     }

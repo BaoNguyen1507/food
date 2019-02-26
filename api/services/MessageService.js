@@ -74,13 +74,14 @@ const MessageService = {
         sails.log.info(skip);
         sails.log.info(sort);
         where = (typeof where === 'object') ? where : {};
-        limit = (limit !== 'null') ? limit : 10;
+        limit = (limit != undefined) ? limit : 10;
         skip = (skip !== null && typeof skip === 'number') ? skip : 0;
-        sort = (sort !== null && typeof sort === 'object') ? sort : [{ totalStudent: 'DESC' }];
+        sort = (sort !== null && typeof sort === 'object') ? sort : [{ createdAt: 'DESC' }];
 
         let messages = await Message.find({ where: where, limit: limit, skip: skip, sort: sort })
-            .populate("students")
-            .populate("teachers");
+            .populate("parent")
+            .populate("teacher")
+            .populate("classes");
         return messages;
     },
 

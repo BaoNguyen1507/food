@@ -9,13 +9,13 @@
 
 module.exports = {
     attributes: {
-        teacherID: {
+        teacher: {
             model:'user'
         },
-        parentID: {
+        parent: {
             model:'parent'
         },
-        classID: {
+        classes: {
             model:'class'
         },
         type: {
@@ -25,7 +25,7 @@ module.exports = {
         },
         lastSeen: {
             type: 'string',
-            columnType: 'datetime'
+            //columnType: 'datetime'
         }
     }
 };

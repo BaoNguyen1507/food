@@ -83,10 +83,10 @@ module.exports = {
       type: 'json',
       defaultsTo: [{ date: "0", height:0, weight:0 }]
     },
-    avatar: {
-      type: 'json',
-      // required: true,
-      description: 'Choose your picture for Avarta'
+    avatars: {
+      // collection: 'media',
+      // via: 'student'
+      type:'string'
     },
 
     // Date of admission and interacting

@@ -15,6 +15,7 @@ const StudentService = {
         let records = await Student.findOne(options)
             .populate("class")
             .populate("parents");
+            //.populate("avatars");
         return records;
 
     },
@@ -82,8 +83,8 @@ const StudentService = {
         let classes = await Student.find({ where: where, limit: limit, skip: skip, sort: sort })
             .populate("parents")
             .populate("class")
-            .populate("subjects")
             .populate("owner");
+            //.populate("avatars");
         return classes;
     },
 

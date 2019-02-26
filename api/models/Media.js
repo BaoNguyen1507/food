@@ -37,6 +37,9 @@ module.exports = {
     // },
     school: {
       model:'school'
-    }
+    },
+    // student: {
+    //   model:'student'
+    // }
   }
 };

@@ -83,7 +83,7 @@ module.exports = {
     },
     message: {
       collection: 'message',
-      via: 'parentID'
+      via: 'parent'
     },
     avatar: {
       type: 'string'
