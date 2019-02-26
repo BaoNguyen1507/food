@@ -91,16 +91,14 @@ module.exports = {
     if (!album) {
       return res.notFound(AlbumError.ERR_NOT_FOUND);
     }
-
+    
     // PREPARE DATA ALBUM
-    const newData = {
-      title: params.title, //REQUIRED
-      description: params.description,
-      whoLike: params.whoLike,
-      photos: params.photos,
-      status: params.status,
-      comments: params.comments
-    };
+    let newData = {};
+    for(key in params){
+      if(key !== 'id'){
+        newData[key] = params[key];
+      }
+    }
 
     // UPDATE DATA ALBUM
     await AlbumService.edit({
