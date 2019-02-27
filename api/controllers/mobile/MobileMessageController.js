@@ -18,19 +18,37 @@ module.exports = {
 
     getGroupMessage: async (req, res) => { 
         let params = req.allParams();
-        let classID = params.classId;
-        let parentID = params.parentId;
-        let teacherID = params.teacherId;
+        let classID = params.classId ? params.classId: '';
+        let parentID = params.parentId ? params.parentId : '';
+        let teacherID = params.teacherId ? params.teacherId: '';
         
-        let listGroupMessage = await MessageService.find(
-            {
-                classes: classID,
-                parent: parentID
-            });
-        return res.ok({
-            status: 200,
-            data: listGroupMessage
-        })
+        if (parentID != '' && classID != '') {
+            let listGroupMessage = await MessageService.find(
+                {
+                    classes: classID,
+                    parent: parentID
+                });
+            return res.ok({
+                status: 200,
+                data: listGroupMessage
+            })
+        } else if(teacherID != '' && classID != '') {
+            let listGroupMessage = await MessageService.find(
+                {
+                    classes: classID,
+                    teacher: teacherID
+                });
+            return res.ok({
+                status: 200,
+                data: listGroupMessage
+            })
+        } else {
+            return res.ok({
+                status: 200,
+                data: []
+            })
+        }
+        
     },
     storeMessageData: async (req, res) => { 
         let params = req.allParams();
