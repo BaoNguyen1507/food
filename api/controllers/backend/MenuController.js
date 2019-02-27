@@ -6,6 +6,7 @@
  */
 const MenuError = require('../../../config/errors/menu');
 const MenuService = require('../../services/MenuService');
+const FoodService = require('../../services/FoodService');
 //Library
 const moment = require('moment');
 
@@ -40,16 +41,30 @@ module.exports = {
     // // RETURN DATA MENU
     // return res.ok(newMenu);
     const params = req.allParams();
-
-    if (!params.slotFeedings) {
-      return res.badRequest(MenuError.ERR_SLOT_REQUIRED);
-    } else if (!params.dateUse) {
-      return res.badRequest(MenuError.ERR_DATE_REQUIRED);
+    let foods = [];
+    let meal = params.meal;
+    if (meal.length > 0) {
+      for (let i = 0; i < meal.length; i++){
+        let tmp = {};
+        let foodList = await FoodService.get(meal[i]);
+        tmp.title = foodList.title;
+        tmp.description = foodList.description;
+        tmp.id = foodList.id;
+        foods.push(tmp);
+      }
     }
-
+   
+    let time = params.time;
+    let date = params.date;
+    let status = params.status;
+    let slotFeedings = {
+      time: time,
+      foods: foods
+    }
     const tmpData = {
-      slotFeedings: params.slotFeedings,
-      dateUse: params.dateUse
+      slotFeedings: slotFeedings,
+      dateUse: date,
+      status: status
     };
 
     const newMenu = await MenuService.add(tmpData);

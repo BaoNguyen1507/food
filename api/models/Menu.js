@@ -16,6 +16,11 @@ module.exports = {
       //Format for food
       //"foods\":[{"title":"Banana", "description":"Banana","nutrition":0.25, "thumbnail":"/path/aa.jpg"}]
     },
+    status: {                           //Integer {"TRASH":-1,"DRAFT":0,"PUBLISH":1}
+      type: 'number',
+      isIn: [sails.config.custom.STATUS.TRASH, sails.config.custom.STATUS.DRAFT, sails.config.custom.STATUS.PUBLISH],
+      defaultsTo: sails.config.custom.STATUS.PUBLISH
+    },
     dateUse: {
       type: 'string', /* Ngày áp dụng format YYYY-mm-dd*/
     },

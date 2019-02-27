@@ -60,6 +60,9 @@ module.exports = {
     message: {
       collection: 'message',
       via: 'classes',
+    },
+    tuition: {
+      model: 'tuition'
     }
   }
 };

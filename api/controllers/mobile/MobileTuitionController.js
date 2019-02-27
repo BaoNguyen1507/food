@@ -1,5 +1,5 @@
 /**
- * MobileMessageController
+ * MobileTuitionController
  *
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
@@ -16,17 +16,8 @@ const moment = require('moment');
 
 module.exports = {
 
-    getGroupMessage: async (req, res) => { 
-        let params = req.allParams();
-        let classID = params.classId;
-        let parentID = params.parentId;
-        let teacherID = params.teacherId;
-        
-        let listGroupMessage = await MessageService.find(
-            {
-                classes: classID,
-                parent: parentID
-            });
+    getListTuition: async (req, res) => { 
+        let listGroupMessage = await MessageService.find({});
         return res.ok({
             status: 200,
             data: listGroupMessage

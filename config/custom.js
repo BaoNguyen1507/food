@@ -96,6 +96,9 @@ module.exports.custom = {
     //USER
     STAFF: 0,
     TEACHER: 1,
+    //TUITION
+    NOTPAID: 0,
+    PAID: 1,
     //NOTE
     ALL: 2,
     BGH: 3,
