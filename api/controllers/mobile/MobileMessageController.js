@@ -42,10 +42,30 @@ module.exports = {
                 status: 200,
                 data: listGroupMessage
             })
+        } else if(teacherID == '' && classID != '') {
+            return res.ok({
+                status: 400,
+                data: 'Missing Teacher ID'
+            })
+        } else if(parentID == '' && classID != '') {
+            return res.ok({
+                status: 400,
+                data: 'Missing Parent ID'
+            })
+        } else if(classID == '' && parentID != '') {
+            return res.ok({
+                status: 400,
+                data: 'Missing Class ID'
+            })
+        } else if(classID == '' && classID != '') {
+            return res.ok({
+                status: 400,
+                data: 'Missing Class ID'
+            })
         } else {
             return res.ok({
-                status: 200,
-                data: []
+                status: 400,
+                data: 'Need input data ID'
             })
         }
         
