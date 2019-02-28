@@ -74,6 +74,7 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   'GET /api/v1/student/': { controller: 'backend/StudentController', action: 'search' },
   'GET /api/v1/student/:id/': { controller: 'backend/StudentController', action: 'get' },
   'POST /api/v1/student/': { controller: 'backend/StudentController', action: 'add' },
+  'POST /api/v1/student/import': { controller: 'backend/StudentController', action: 'importExcel' },
   'PATCH /api/v1/student/:id/': { controller: 'backend/StudentController', action: 'edit' },
   'PATCH /api/v1/student/': { controller: 'backend/StudentController', action: 'trash' },
  
@@ -152,6 +153,7 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   'GET /api/v1/menu/': { controller: 'backend/MenuController', action: 'search' },
   'GET /api/v1/menu/:id/': { controller: 'backend/MenuController', action: 'get' },
   'POST /api/v1/menu/': { controller: 'backend/MenuController', action: 'add' },
+  'POST /api/v1/menu/import/': { controller: 'backend/MenuController', action: 'importExcel' },
   'PATCH /api/v1/menu/:id/': { controller: 'backend/MenuController', action: 'edit' },
   'PATCH /api/v1/menu/': { controller: 'backend/MenuController', action: 'trash' },
 
@@ -163,7 +165,7 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   'PATCH /api/v1/role/': { controller: 'backend/RoleController', action: 'trash' },   
   // FILE
   'GET /assets/images/zadmin/uploads/*': { controller: 'backend/FileController', action: 'get' },
-
+  
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝

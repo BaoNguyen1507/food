@@ -3,61 +3,61 @@
  * @author thanhvo
  * @create 2017/10/25 09:52
  * @update 2017/10/25 09:52
- * @file api/services/MenuService.js
+ * @file api/services/MessageDataService.js
  */
 'use strict';
 
-const MenuService = {
+const MessageDataService = {
     get: async (options) => {
-        sails.log.info("================================ MenuService.get -> options: ================================");
+        sails.log.info("================================ MessageDataService.get -> options: ================================");
         sails.log.info(options);
 
-        let records = await Menu.findOne(options);
+        let records = await MessageData.findOne(options).populate('students').populate('teachers');
         return records;
 
     },
 
     add: async (options) => {
-        sails.log.info("================================ MenuService.add -> options: ================================");
+        sails.log.info("================================ MessageDataService.add -> options: ================================");
         sails.log.info(options);
 
-        let newObj = await Menu.create(options)
+        let newObj = await MessageData.create(options)
             // Some other kind of usage / validation error
             .intercept('UsageError', (err) => {
                 return 'invalid';
             })
             .fetch();
-        sails.log.info("================================ MenuService.add -> new object: ================================");
+        sails.log.info("================================ MessageDataService.add -> new object: ================================");
         sails.log.info(newObj);
         return newObj;
     },
 
     edit: async (query, params) => {
-        sails.log.info("================================ MenuService.edit -> query, params: ================================");
+        sails.log.info("================================ MessageDataService.edit -> query, params: ================================");
         sails.log.info(query);
         sails.log.info(params);
 
         let options = {};
 
-        for (let key in Menu.attributes) {
-            if (key === "id" || key === "creadtedAt" || key === "toJSON") continue;
+        for (let key in MessageData.attributes) {
+            if (key === "id" || key === "createdAt" || key === "toJSON") continue;
 
             if (params && typeof (params[key]) !== "undefined") {
                 options[key] = params[key];
             }
         }
         options.updatedAt = new Date().getTime();
-        let editObj = await Menu.update(query, options).fetch();
-        sails.log.info("================================ MenuService.edit -> edit object: ================================");
+        let editObj = await MessageData.update(query, options).fetch();
+        sails.log.info("================================ MessageDataService.edit -> edit object: ================================");
         sails.log.info(editObj);
         return editObj;
     },
 
     del: (options, cb) => {
-        sails.log.info("================================ MenuService.del -> options: ================================");
+        sails.log.info("================================ MessageDataService.del -> options: ================================");
         sails.log.info(options);
 
-        Menu.destroy(options).exec((error, deletedRecords) => {
+        MessageData.destroy(options).exec((error, deletedRecords) => {
             if (error) {
                 sails.log.error(error);
                 return cb(error, null);
@@ -68,7 +68,7 @@ const MenuService = {
     },
 
     find: async (where, limit, skip, sort) => {
-        sails.log.info("================================ MenuService.find -> where: ================================");
+        sails.log.info("================================ MessageDataService.find -> where: ================================");
         sails.log.info(JSON.stringify(where));
         sails.log.info(limit);
         sails.log.info(skip);
@@ -78,16 +78,16 @@ const MenuService = {
         skip = (skip !== null && typeof skip === 'number') ? skip : 0;
         sort = (sort !== null && typeof sort === 'object') ? sort : [{ createdAt: 'DESC' }];
 
-        let menu = await Menu.find({ where: where, limit: limit, skip: skip, sort: sort });
-
-        return menu;
+        let messageDatas = await MessageData.find({ where: where, limit: limit, skip: skip, sort: sort })
+        .populate("message")    ;
+        return messageDatas;
     },
 
     count: async (where) => {
         where = (typeof where === 'object') ? where : {};
-        let totalMenu = await Menu.count(where);
-        return totalMenu;
+        let totalMessageData = await MessageData.count(where);
+        return totalMessageData;
     }
 };
 
-module.exports = MenuService;
+module.exports = MessageDataService;

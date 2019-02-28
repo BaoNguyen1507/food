@@ -81,6 +81,13 @@ module.exports = {
       isIn: [sails.config.custom.STATUS.TRASH, sails.config.custom.STATUS.DRAFT, sails.config.custom.STATUS.PUBLISH],
       defaultsTo: sails.config.custom.STATUS.DRAFT
     },
+    message: {
+      collection: 'message',
+      via: 'parent'
+    },
+    avatar: {
+      type: 'string'
+    }
   }
 };
 

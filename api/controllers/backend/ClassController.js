@@ -6,6 +6,9 @@
  */
 const ClassError = require('../../../config/errors/class');
 const ClassService = require('../../services/ClassService');
+const StudentService = require('../../services/StudentService');
+const MessageService = require('../../services/MessageService');
+const MessageDataService = require('../../services/MessageDataService');
 //Library
 const moment = require('moment');
 
@@ -47,6 +50,23 @@ module.exports = {
     let students = params.students;
     let school = params.school;
     let teachers = params.teachers;
+    let parents = [];
+    if (students.length > 0) {
+      for (let i = 0; i < students.length; i++) {
+        let parentObj = await StudentService.get(students[i])
+        if (parentObj.parents.length > 1) {
+          for (let y = 0; y < parentObj.parents.length; y++) { 
+            parents.push(parentObj.parents[y].id)
+          }
+        }
+        if (parentObj.parents.length > 0) {
+          parents.push(parentObj.parents[0].id)
+        }
+        
+      }
+    }
+    
+
     // PREPARE DATA CLASS
     const newData = {
       className: params.className, // REQUIRED
@@ -59,9 +79,29 @@ module.exports = {
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       createdBy: req.session.userId
     };
-
+    
+    let dataMessage = {};
     // ADD NEW DATA CLASS
     const newClass = await ClassService.add(newData);
+    for (let i = 0; i < teachers.length; i++){
+      for (let y = 0; y < parents.length; y++){
+        dataMessage = {
+          teacher: teachers[i],
+          parent: parents[i],
+          classes: newClass.id
+        }
+        const newMessage = await MessageService.add(dataMessage);
+        if (teachers[i]) {
+          Message.addToCollection(newMessage.id, 'teacher', teachers[i]).exec(function (err) { });
+        }
+        if (parents[i]) {
+          Message.addToCollection(newMessage.id, 'parent', parents[i]).exec(function (err) { });
+        }
+        if (newClass.id) {
+          Message.addToCollection(newMessage.id, 'class', newClass.id).exec(function (err) { });
+        }
+      }
+    }
     if (students) {
       Class.addToCollection(newClass.id, 'students', students).exec(function (err) { });
     }

@@ -96,6 +96,9 @@ module.exports.custom = {
     //USER
     STAFF: 0,
     TEACHER: 1,
+    //TUITION
+    NOTPAID: 0,
+    PAID: 1,
     //NOTE
     ALL: 2,
     BGH: 3,
@@ -123,6 +126,9 @@ module.exports.custom = {
     IMAGE: 0,
     VIDEO: 1,
     FILE: 2,
+    //For Message
+    PRIVATE: 0,
+    PUBLIC: 1,
     //For Thumb
     VERTICAL: 'vertical',
     HORIZONTAL: 'horizontal',

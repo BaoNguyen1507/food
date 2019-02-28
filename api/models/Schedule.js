@@ -12,7 +12,7 @@ module.exports = {
       slotSubjects: {
           type: 'json',
           description: 'List schedule data',
-          defaultsTo: [{ "key": "1part", "time": "07:00", "subjects": []}]
+          defaultsTo: [{ "time": "07:00", "subjects": [] }]
           //Format for subjects -> get full structure from subject model
           //"subjects\":[{"title":"Math Team", "code":"math","alias":"math-team", "description":""}]
       },

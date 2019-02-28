@@ -12,9 +12,16 @@ const UserService = {
         sails.log.info("================================ UserService.get -> options: ================================");
         sails.log.info(options);
 
-        let records = await User.findOne(options);
+        let records = await User.findOne(options)
+            .populate("albums")
+            .populate("post")
+            .populate("taxonomy")
+            .populate("comments")
+            .populate("settings")
+            .populate("schools")
+            .populate("classes")
+            .populate("student");
         return records;
-        
     },
 
     add : async (options) => {
@@ -52,7 +59,20 @@ const UserService = {
         let editObj = await User.update(query, options).fetch();
         sails.log.info("================================ UserService.edit -> edit object: ================================");
         sails.log.info(editObj);
-        return editObj;
+        
+        let found = await User.findOne({
+                id: editObj[0].id
+            })
+            .populate("albums")
+            .populate("post")
+            .populate("taxonomy")
+            .populate("comments")
+            .populate("settings")
+            .populate("schools")
+            .populate("classes")
+            .populate("student");
+
+        return found;
     },
 
     find:  async( where, limit, skip, sort) => {
@@ -67,7 +87,7 @@ const UserService = {
         sort = (sort !== null && typeof sort === 'object') ? sort : [{ createdAt: 'DESC' }];
 
         let Users  = await User.find({ where: where, limit: limit, skip: skip, sort: sort})
-            .populate("avatar")
+            //.populate("avatar")
             .populate("albums")
             .populate("post")
             .populate("taxonomy")

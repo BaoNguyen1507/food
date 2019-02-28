@@ -134,7 +134,7 @@ module.exports = {
                 "updatedAt": 1541739280891,
                 "id": "5be513107c1be172823f5b8f",
                 "title": "14.png",
-                "path": "/assets/images/zadmin/uploads/products/square/53f7dfe9-bb30-48d2-b434-918841581f26.png",
+                "path": "/assets/images/zadmin/uploads/medias/square/53f7dfe9-bb30-48d2-b434-918841581f26.png",
                 "caption": "Caption14.png",
                 "status": 1,
                 "uploadBy": null,

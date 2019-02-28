@@ -131,4 +131,5 @@ lib-cov
 *.pid
 /database
 assets/images/zadmin/uploads/products
+assets/images/zadmin/uploads/medias
 

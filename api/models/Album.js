@@ -21,13 +21,9 @@ module.exports = {
       maxLength: 200,
       example: 'Example is Description'
     },
-    totalLike: { 
-      type: 'number',
-      defaultsTo: 0
-    },
-    totalComment: {
-      type: 'number',
-      defaultsTo: 0
+    whoLike: { 
+      type: 'json',
+      defaultsTo: []
     },
     status: {                           //Integer {"TRASH":,"DRAFT":,"PUBLISH":, SCHEDULE:}
       type: 'number',
@@ -35,19 +31,21 @@ module.exports = {
       defaultsTo: sails.config.custom.STATUS.DRAFT
     },
     owner: {
-      model: 'user' // Just allow teacher/staff/bod can upload album
+      model: 'user',  // Just allow teacher/staff/bod can upload album
+      required: true
     },
     comments: { //LOAD ARRAY COMMENT with 4 atts: NAME, comment, time, avatar
-      type: 'json'
+      type: 'json',
+      defaultsTo: []
     },
     photos: {
       type: 'json',
       defaultsTo: [], //Load arrray MEDIA IDs: ObjectId:["20232332", "3545353543"]
       description:'photos belong to the album'
     },
-    class: {
-        model: 'class',
-        required: true
+    atClass: {
+      model: 'class',
+      required: true
     }
   }
 };

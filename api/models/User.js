@@ -103,12 +103,15 @@ module.exports = {
       defaultsTo: sails.config.custom.TYPE.STAFF
     },
     //--- association ---
+    // avatar: {
+    //   collection: 'media',
+    //   via: 'uploadBy',
+    //   description: 'user photo'
+    // },
     avatar: {
-      collection: 'media',
-      via: 'uploadBy',
+      type:'string',
       description: 'user photo'
     },
-
     albums: {
       collection: 'album',
       via: 'owner'
@@ -146,6 +149,10 @@ module.exports = {
     student: {
       collection: 'student',
       via: 'owner'
+    },
+    message: {
+      collection: 'message',
+      via: 'teacher'
     }
   } 
 };

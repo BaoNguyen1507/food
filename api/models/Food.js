@@ -14,13 +14,15 @@ module.exports = {
       type: 'string',
       required: true
     },
-    description: {
+    foodCode: {
       type: 'string',
       required: true
     },
+    description: {
+      type: 'string',
+    },
     nutrition: {
       type: 'string',
-      required: true
     },
     status: {                           //Integer {"TRASH":,"DRAFT":,"PUBLISH":, SCHEDULE:}
       type: 'number',

@@ -6,7 +6,7 @@
  */
 const StudentError = require('../../../config/errors/student');
 const StudentService = require('../../services/StudentService');
-
+var fs = require('fs');
 //Library
 const moment = require('moment');
 
@@ -25,14 +25,26 @@ module.exports = {
       return res.badRequest(StudentError.ERR_BIRTHDAY_REQUIRED);
     }
 
+    let healthHistory = [];
+    let w_h_History = [];
+    let dataHealthHistory = {
+      symptom: params.symptom,
+      note: params.note
+    }
+    let data_w_h_History = {
+      height: params.height,
+      weight: params.weight
+    }
+    healthHistory.push(dataHealthHistory);
+    w_h_History.push(data_w_h_History);
     // PREPARE DATA STUDENT
     const newData = {
       fullName: params.fullName, // REQUIRED
       dateOfBirth: params.dateOfBirth, // REQUIRED
       gender: params.gender ? params.gender : '', // REQUIRED
       currentAddress: params.currentAddress ? params.currentAddress : '',
-      height: params.height ? params.height : '',
-      weight: params.weight ? params.weight : '',
+      height: params.height ? parseInt(params.height) : 0,
+      weight: params.weight ? parseInt(params.weight) : 0,
       bloodGroup: params.bloodGroup ? params.bloodGroup : '',
       allergy: params.allergy ? params.allergy : '',
       heartRate: params.heartRate ? params.heartRate : '',
@@ -41,7 +53,9 @@ module.exports = {
       notes: params.notes ? params.notes : '',
       avatar: params.thumbnail,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
-      createdBy: req.session.userId
+      createdBy: req.session.userId,
+      healthHistory: healthHistory,
+      w_h_History: w_h_History
     };
 
     // ADD NEW DATA STUDENT
@@ -52,7 +66,30 @@ module.exports = {
     // RETURN DATA STUDENT
     return res.ok(newStudent);
   },
-
+  importExcel: async (req, res) => {
+    sails.log.info("================================ StudentController.Import => START ================================");
+    // GET ALL PARAMS
+    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/medias/import/');
+    
+    req.file('file').upload({
+      dirname: originFolder
+    }, (err, file) => {
+      if (err) {
+        return res.badRequest(err);
+      } else {
+        console.log(file[0].fd);
+        var dir = require('node-dir');
+        var files = dir.files(originFolder, { sync: true });
+        const data = fs.readdirSync(originFolder, {encoding: 'utf-8'})
+        console.log(files);
+        fs.readFileSync(originFolder + '/' + data, 'utf-8').split(/\r?\n/).forEach(function (line) { 
+          console.log(line);
+        })
+        fs.unlinkSync(originFolder + '/' + data);
+        
+      }
+    });
+  },
   get: async (req, res) => {
     sails.log.info("================================ StudentController.edit => START ================================");
     // GET ALL PARAMS
@@ -109,6 +146,14 @@ module.exports = {
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
       createdBy: req.session.userId
     };
+
+    if(params.healthHistory){
+      newData.healthHistory = params.healthHistory;
+    }
+
+    if(params.w_h_History){
+      newData.w_h_History = params.w_h_History;
+    }
 
     // CHECK DATA STUDENT
     const student = StudentService.get({
@@ -233,5 +278,5 @@ module.exports = {
       recordsPublish: publish,
       data: students
     });
-  }
+  },
 };

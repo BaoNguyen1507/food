@@ -12,7 +12,9 @@ const AlbumService = {
         sails.log.info("================================ AlbumService.get -> options: ================================");
         sails.log.info(options);
 
-        let records = await Album.findOne(options);
+        let records = await Album.findOne(options)
+            .populate('owner')
+            .populate('atClass');
         return records;
         
     },
