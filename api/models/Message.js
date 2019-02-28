@@ -24,7 +24,8 @@ module.exports = {
       defaultsTo: sails.config.custom.TYPE.PRIVATE
     },
     lastSeen: {
-      type: number //latest time to view message
+      type: number, //latest time to view message
+      defaultsTo: Date.now()
     }
   }
 };
