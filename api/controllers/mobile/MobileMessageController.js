@@ -60,54 +60,42 @@ module.exports = {
   },
   storeMessageData: async (req, res) => {
     let params = req.allParams();
-    let userId = params.userId;
-    let txtMessage = params.txtMessage;
-    let message = params.messageId;
-
-    let dataLogs = {
-      user: userId,
-      txtMessage: txtMessage
-    };
-    let data = {
-      message: message,
-      dataLogs
-    };
-    let dataObj = await MessageDataService.add(data);
-    return res.ok({
-      status: 200,
-      data: dataObj
-    });
+		let userId = params.userId ? params.userId : '';
+		let txtMessage = params.txtMessage ? params.txtMessage: '';
+		let message = params.messageId ? params.messageId : '';
+		if (userId == '' || message == '') {
+				return res.badRequest('Missing data to add')
+		} else {
+			let dataLogs = {
+				user: userId,
+				txtMessage: txtMessage
+			}
+			let data = {
+				message: message,
+				dataLogs
+			}
+			let dataObj = await MessageDataService.add(data);
+			return res.ok({
+				status: 200,
+				data: dataObj
+			})
+		}
   },
   showDataMessage: async (req, res) => {
     let params = req.allParams();
-    let message = params.messageId;
+		let messageId = params.messageId ? params.messageId : '';
+		if (messageId == '') {
+				return res.badRequest('Missing message group id');
+		}
 
-    let listMessage = await MessageDataService.find({ message: message });
-    let data = [];
-    if (listMessage.length > 0) {
-      for (let i = 0; i < listMessage.length; i++) {
-        if (listMessage[i].dataLogs.user == listMessage[i].message.teacher) {
-          let tmp = {};
-          let userMessage = await UserService.get(listMessage[i].dataLogs.user);
-          if (!_.isEmpty(userMessage)) {
-            tmp.id = userMessage.id;
-            tmp.fullName = userMessage.fullName;
-            data.push(tmp);
-          }
-        } else {
-          let parentMessage = await ParentService.get(
-            listMessage[i].dataLogs.user
-          );
-          if (!_.isEmpty(parentMessage)) {
-            let tmp = {};
-            tmp.id = parentMessage.id;
-            tmp.fullName = parentMessage.fullName;
-            data.push(tmp);
-          }
-        }
-      }
-    }
-    listMessage.push(data);
+		const bodyParams = {
+      limit: params.limit ? Number(params.limit) : null,
+      offset: params.offset ? Number(params.offset) : null,
+      sort: (params.sort && params.sort.trim().length) ? JSON.parse(params.sort) : null
+		};
+		
+    let listMessage = await MessageDataService.find({ message: messageId }, bodyParams.limit, bodyParams.offset, bodyParams.sort);
+		
     return res.ok({
       status: 200,
       data: listMessage
