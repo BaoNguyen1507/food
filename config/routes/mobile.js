@@ -35,6 +35,7 @@ module.exports.mobile = {
   'POST /api/v1/mobile/message/getGroupMessage': { controller: 'mobile/MobileMessageController', action: 'getGroupMessage' },
   'POST /api/v1/mobile/message/storeMessageData': { controller: 'mobile/MobileMessageController', action: 'storeMessageData' },
   'POST /api/v1/mobile/message/showDataMessage': { controller: 'mobile/MobileMessageController', action: 'showDataMessage' },
+  'PUT /api/v1/mobile/message/alreadySeenGroupMessage': { controller: 'mobile/MobileMessageController', action: 'alreadySeenGroupMessage' },
   
   // STUDENT
   'PUT /api/v1/mobile/student/getStudent': { controller: 'mobile/MobileStudentController', action: 'getStudent' },
