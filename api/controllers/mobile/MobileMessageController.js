@@ -43,9 +43,14 @@ module.exports = {
     });
 
     for (let i = 0; i < listGroupMessage.length; i++) {
-      listGroupMessage[i].latestMessages = await MessageDataService.find({
+			let rs = await MessageData.find({
         message: listGroupMessage[i].id
-      }).sort('createdAt DESC');
+			}).where({
+				updatedAt: {
+					'>': listGroupMessage[i].updatedAt
+				}
+			}).sort('createdAt DESC');
+      listGroupMessage[i].unreadMessages = rs;
     }
 
     return res.ok({
