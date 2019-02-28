@@ -8,24 +8,23 @@
 'use strict';
 
 module.exports = {
-    attributes: {
-        teacher: {
-            model:'user'
-        },
-        parent: {
-            model:'parent'
-        },
-        classes: {
-            model:'class'
-        },
-        type: {
-            type: 'number',
-            isIn: [sails.config.custom.TYPE.PRIVATE,sails.config.custom.TYPE.PUBLIC],
-            defaultsTo: sails.config.custom.TYPE.PRIVATE
-        },
-        lastSeen: {
-            type: 'string',
-            //columnType: 'datetime'
-        }
+  attributes: {
+    teacher: {
+      model: 'user'
+    },
+    parent: {
+      model: 'parent'
+    },
+    classes: {
+      model: 'class'
+    },
+    type: {
+      type: 'number',
+      isIn: [sails.config.custom.TYPE.PRIVATE, sails.config.custom.TYPE.PUBLIC],
+      defaultsTo: sails.config.custom.TYPE.PRIVATE
+    },
+    lastSeen: {
+      type: number //latest time to view message
     }
+  }
 };
