@@ -7,39 +7,16 @@
 const MenuError = require('../../../config/errors/menu');
 const MenuService = require('../../services/MenuService');
 const FoodService = require('../../services/FoodService');
+const SchoolService = require('../../services/SchoolService');
 //Library
 const moment = require('moment');
+var fs = require('fs');
 
 module.exports = {
  
   add: async (req, res) => {
     // sails.log.info("================================ MenuController.add => START ================================");
-    // // GET ALL PARAMS
-    // const params = req.allParams();
-    // // CHECK FULLNAME & EMAILADDRESS & GENDER PARAMS
-    // if (!params.time) {
-    //   return res.badRequest(MenuError.ERR_TITLE_REQUIRED);
-    // } else if (!params.title || !params.title.trim().length) {
-    //   return res.badRequest(MenuError.ERR_TIME_REQUIRED);
-    // }
-    // let meal = params.meal;
-    // // PREPARE DATA MENU
-    // const newData = {
-    //   time: params.time, // REQUIRED
-    //   title: params.title, // REQUIRED
-    //   meal: meal,
-    //   date : params.date,
-    //   status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
-    //   createdBy: req.session.userId
-    // };
     
-    // // ADD NEW DATA MENU
-    // const newMenu = await MenuService.add(newData);
-    // if (meal) {
-    //   await Menu.addToCollection(newMenu.id, 'meal', meal).exec(function (err) { });
-    // }
-    // // RETURN DATA MENU
-    // return res.ok(newMenu);
     const params = req.allParams();
     let foods = [];
     let meal = params.meal;
@@ -71,7 +48,88 @@ module.exports = {
     
     return res.ok(newMenu);
   },
-
+  importExcel: async (req, res) => {
+    sails.log.info("================================ StudentController.Import => START ================================");
+    // GET ALL PARAMS
+    const excelToJson = require('convert-excel-to-json');
+    const originFolder = require('path').resolve(sails.config.appPath, 'assets/images/zadmin/uploads/medias/import/');
+    
+    req.file('file').upload({
+      dirname: originFolder
+    },async (err, file) => {
+      if (err) {
+        return res.badRequest(err);
+      } else {
+        console.log(file[0].fd);
+        
+        var dir = require('node-dir');
+        //var files = dir.files(originFolder, { sync: true });
+        const data = fs.readdirSync(originFolder, { encoding: 'utf-8' })
+          //
+        console.log(originFolder);
+        const result = excelToJson({
+          sourceFile: originFolder + '/' +data[0]
+      });
+        console.log(result.Thu2);
+        let slotFeeding = [];
+        let dateUse = result.Thu2[0].B;
+        let schoolName = result.Thu2[2].D;
+        let schoolObj = await SchoolService.get({ schoolName: schoolName });
+        let school = schoolObj.id;
+        if (result.Thu2.length > 2) {
+          for (let y = 2; y < result.Thu2.length; y++){
+            let foodArr = [];
+            let classArray = [];
+            let time = moment(result.Thu2[y].A).format('HH:mm:ss');
+            let food = result.Thu2[y].B;
+            let foodCodes = food.split(';')
+            let classes = result.Thu2[y].C;
+            let classArr = classes.split(';');
+            
+            if (foodCodes.length > 0) {
+              for (let i = 0; i < foodCodes.length; i++){
+                let tmp = {};
+                let foodList = [];
+                 foodList = await Food.find({ foodCode : foodCodes[i]});
+                tmp.id = foodList[0].id;
+                foodArr.push(tmp);
+              }
+            }
+            if (classArr.length > 0) {
+              for (let i = 0; i < classArr.length; i++){
+                let tmp = {};
+                let classList = [];
+                classList = await Class.find({ className : classArr[i]});
+                tmp.id = classList[0].id;
+                classArray.push(tmp);
+              }
+            }
+            let foodSlot = {
+              time: time,
+              foods: foodArr,
+              class: classArray
+            }
+            slotFeeding.push(foodSlot)
+          }
+        }
+        let tmpData = {
+          dateUse: dateUse,
+          slotFeedings: slotFeeding,
+          school: school,
+          status : 1 
+        }
+        const newMenu = await MenuService.add(tmpData);
+        if (school) {
+          await Food.addToCollection(newMenu.id, 'school', school).exec(function (err) { });
+        }
+        fs.unlinkSync(originFolder + '/' + data);
+        return res.ok({
+          status: 200,
+          data: newMenu
+        })
+      }
+    });
+  },
   get: async (req, res) => {
     // GET ALL PARAMS
     const params = req.allParams();

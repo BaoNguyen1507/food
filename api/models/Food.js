@@ -14,6 +14,10 @@ module.exports = {
       type: 'string',
       required: true
     },
+    foodCode: {
+      type: 'string',
+      required: true
+    },
     description: {
       type: 'string',
     },

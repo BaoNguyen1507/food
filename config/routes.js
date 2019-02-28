@@ -153,6 +153,7 @@ module.exports.routes = Object.assign(routes_mobile.mobile, {
   'GET /api/v1/menu/': { controller: 'backend/MenuController', action: 'search' },
   'GET /api/v1/menu/:id/': { controller: 'backend/MenuController', action: 'get' },
   'POST /api/v1/menu/': { controller: 'backend/MenuController', action: 'add' },
+  'POST /api/v1/menu/import/': { controller: 'backend/MenuController', action: 'importExcel' },
   'PATCH /api/v1/menu/:id/': { controller: 'backend/MenuController', action: 'edit' },
   'PATCH /api/v1/menu/': { controller: 'backend/MenuController', action: 'trash' },
 

@@ -1,0 +1,1 @@
+mongo directory --drop --host localhost --db ts1-aotom D:\NodeJS\web-aotom-nodejs\database\ts1-aotom

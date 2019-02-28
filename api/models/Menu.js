@@ -12,7 +12,7 @@ module.exports = {
     slotFeedings: {
       type: 'json',
       description: 'List schedule data',
-      defaultsTo: [{"time": "07:00", "foods": []}]
+      defaultsTo: [{"time": "07:00", "foods": [], "class":[]}]
       //Format for food
       //"foods\":[{"title":"Banana", "description":"Banana","nutrition":0.25, "thumbnail":"/path/aa.jpg"}]
     },
@@ -20,6 +20,9 @@ module.exports = {
       type: 'number',
       isIn: [sails.config.custom.STATUS.TRASH, sails.config.custom.STATUS.DRAFT, sails.config.custom.STATUS.PUBLISH],
       defaultsTo: sails.config.custom.STATUS.PUBLISH
+    },
+    school: {
+      model: 'school'
     },
     dateUse: {
       type: 'string', /* Ngày áp dụng format YYYY-mm-dd*/
