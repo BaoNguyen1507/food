@@ -72,26 +72,34 @@ module.exports = {
     },
     storeMessageData: async (req, res) => { 
         let params = req.allParams();
-        let userId = params.userId;
-        let txtMessage = params.txtMessage;
-        let message = params.messageId;
-        let dataLogs = {
-            user: userId,
-            txtMessage: txtMessage
+        let userId = params.userId ? params.userId : '';
+        let txtMessage = params.txtMessage ? params.txtMessage: '';
+        let message = params.messageId ? params.messageId : '';
+        if (userId == '' || message == '') {
+            return res.badRequest('Missing data to add')
+        } else {
+            let dataLogs = {
+                user: userId,
+                txtMessage: txtMessage
+            }
+            let data = {
+                message: message,
+                dataLogs
+             }
+            let dataObj = await MessageDataService.add(data);
+            return res.ok({
+                status: 200,
+                data: dataObj
+            })
         }
-        let data = {
-            message: message,
-            dataLogs
-         }
-        let dataObj = await MessageDataService.add(data);
-        return res.ok({
-            status: 200,
-            data: dataObj
-        })
+        
     },
     showDataMessage: async (req, res) => { 
         let params = req.allParams();
-        let message = params.messageId;
+        let message = params.messageId ? params.messageId : '';
+        if (message == '') {
+            return res.badRequest('Missing message group id');
+        }
         
         let listMessage = await MessageDataService.find({ message: message });
         let data = [];
