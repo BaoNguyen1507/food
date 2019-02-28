@@ -129,7 +129,6 @@ lib-cov
 *.log
 *.out
 *.pid
-database/db
-database/dump
+/database
 assets/images/zadmin/uploads/products
 
