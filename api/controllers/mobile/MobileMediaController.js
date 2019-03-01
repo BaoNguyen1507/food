@@ -35,7 +35,17 @@ module.exports = {
         file: 'file',
         dest: originFolder
       });
-      fileUpload.path = '/assets/images/zadmin/uploads/medias/origin/' + ofile[0].fd.split('/').pop();
+      //check extension of file
+      let filename = ofile[0].fd.split('/').pop();
+      if(filename.indexOf('.') == -1){
+        //upload from device
+        if(ofile[0].type === 'image/jpeg'){
+          filename += '.jpg';
+        } else if(ofile[0].type === 'image/png'){
+          filename += '.png';
+        }
+      }
+      fileUpload.path = '/assets/images/zadmin/uploads/medias/origin/' + filename;
     }
 
     if(fileUpload.path == null){
