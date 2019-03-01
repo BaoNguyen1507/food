@@ -12,7 +12,7 @@ module.exports = {
     slotFeedings: {
       type: 'json',
       description: 'List schedule data',
-      defaultsTo: [{"time": "07:00", "foods": [], "class":[]}]
+      defaultsTo: [{"time": "07:00", "foods": []}]
       //Format for food
       //"foods\":[{"title":"Banana", "description":"Banana","nutrition":0.25, "thumbnail":"/path/aa.jpg"}]
     },
@@ -23,6 +23,9 @@ module.exports = {
     },
     school: {
       model: 'school'
+    },
+    classes: {
+      model:'class'
     },
     dateUse: {
       type: 'string', /* Ngày áp dụng format YYYY-mm-dd*/

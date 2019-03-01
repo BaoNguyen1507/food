@@ -29,6 +29,9 @@ module.exports = {
       isIn: [sails.config.custom.STATUS.TRASH,sails.config.custom.STATUS.DRAFT,sails.config.custom.STATUS.PUBLISH],
       defaultsTo: sails.config.custom.STATUS.DRAFT
     },
+    school: {
+      model: 'school'
+    },
     thumbnail: {
       type:'json'
     }

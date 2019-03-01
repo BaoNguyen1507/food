@@ -63,6 +63,9 @@ module.exports = {
     },
     tuition: {
       model: 'tuition'
+    },
+    menu: {
+      model: 'menu'
     }
   }
 };

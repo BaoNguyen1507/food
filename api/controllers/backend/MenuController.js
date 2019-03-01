@@ -8,6 +8,8 @@ const MenuError = require('../../../config/errors/menu');
 const MenuService = require('../../services/MenuService');
 const FoodService = require('../../services/FoodService');
 const SchoolService = require('../../services/SchoolService');
+const ClassService = require('../../services/ClassService');
+
 //Library
 const moment = require('moment');
 var fs = require('fs');
@@ -69,63 +71,146 @@ module.exports = {
         console.log(originFolder);
         const result = excelToJson({
           sourceFile: originFolder + '/' +data[0]
-      });
-        console.log(result.Thu2);
-        let slotFeeding = [];
-        let dateUse = result.Thu2[0].B;
-        let schoolName = result.Thu2[2].D;
-        let schoolObj = await SchoolService.get({ schoolName: schoolName });
-        let school = schoolObj.id;
-        if (result.Thu2.length > 2) {
-          for (let y = 2; y < result.Thu2.length; y++){
-            let foodArr = [];
-            let classArray = [];
-            let time = moment(result.Thu2[y].A).format('HH:mm:ss');
-            let food = result.Thu2[y].B;
-            let foodCodes = food.split(';')
-            let classes = result.Thu2[y].C;
-            let classArr = classes.split(';');
+        });
+        var obj = Object.values(result);
+
+        
+        for (let i = 2; i < obj.length; i++){
+          let slotFeeding = [];
+          let tab = obj[i];
+          if (tab.length > 0) {
+            let dateUse = tab[0].B;
+            let checkDate = moment(dateUse).weekday();
+            if (checkDate < 6) {
+              let sdkSchool = tab[1].B;
+              let schoolObj = await SchoolService.get({ sdkSchool: sdkSchool });
+              let school = schoolObj.id;
+              let sdkClass = tab[2].B;
+              let classObj = await ClassService.get({ sdkClass: sdkClass });
+              let classes = classObj.id;
+              let tmp = {};
+              let foodArr = [];
+              let monday = [];
+              let tuesday = [];
+              let wednessday = [];
+              let thursday = [];
+              let friday = [];
+              let dayCheck = 0;
+              let nextDay = 0;
+              for (let y = 4; y < tab.length; y++){
+                if ((y+1) == tab.length) {
+                  
+                }
+                
+                if (tab[y].A != '' && tab[y].A != undefined) {
+                    nextDay = checkDate + dayCheck;
+                    if (nextDay == 1) {
+
+                      tmp = {};
+                      tmp.time = tab[y].A ? tab[y].A : '';
+                      foodArr = [];
+                      let date = {};
+                      //monday = [];
+                      // tuesday = [];
+                      // wednessday = [];
+                      // thursday = [];
+                      // friday = [];
+    
+                      let mondayFood = tab[y].B ? tab[y].B : '';
+                      if (mondayFood != '') {
+                        let mondayObj = await FoodService.get({ foodCode: mondayFood });
+                        //monday.push(mondayObj.id)
+                        date.id = mondayObj.id
+                      }
+                      // let tuesdayFood = tab[y].C ? tab[y].C : '';
+                      // if (tuesdayFood != '') {
+                      //   let tuesdayObj = await FoodService.get({ foodCode: tuesdayFood });
+                      //   tuesday.push(tuesdayObj.id)
+                      //   date.tuesday = tuesday
+                      // }
+                      // let wednessdayFood = tab[y].D ? tab[y].D : '';
+                      // if (wednessdayFood != '') {
+                      //   let wednessdayObj = await FoodService.get({ foodCode: wednessdayFood });
+                      //   wednessday.push(wednessdayObj.id)
+                      //   date.wednessday = wednessday
+                      // }
+                      // let thursdayFood = tab[y].E ? tab[y].E : '';
+                      // if (thursdayFood != '') {
+                      //   let thursdayObj = await FoodService.get({ foodCode: thursdayFood });
+                      //   thursday.push(thursdayObj.id)
+                      //   date.thursday = thursday
+                      // }
+                      // let fridayFood = tab[y].F ? tab[y].F : '';
+                      // if (fridayFood != '') {
+                      //   let fridayObj = await FoodService.get({ foodCode: fridayFood });
+                      //   friday.push(fridayObj.id)
+                      //   date.friday = friday
+                      // }
+                      foodArr.push(date);
+                      tmp.foods = foodArr;
+                      slotFeeding.push(tmp);
+                    } 
+                  } else {
+                  let date = {};
+                    if (nextDay == 1) {
+                      let mondayFood = tab[y].B ? tab[y].B : '';
+                      if (mondayFood != '') {
+                        let mondayObj = await FoodService.get({ foodCode: mondayFood });
+                        //monday.push(mondayObj.id)
+                        date.id = mondayObj.id;
+                      }
+                    }
+                    
+                    // let tuesdayFood = tab[y].C ? tab[y].C : '';
+                    // if (tuesdayFood != '') {
+                    //   let tuesdayObj = await FoodService.get({ foodCode: tuesdayFood });
+                    //   tuesday.push(tuesdayObj.id)
+                    //   date.tuesday = tuesday
+                    // }
+                    // let wednessdayFood = tab[y].D ?  tab[y].D : '';
+                    // if (wednessdayFood != '') {
+                    //   let wednessdayObj = await FoodService.get({ foodCode: wednessdayFood });
+                    //   wednessday.push(wednessdayObj.id)
+                    //   date.wednessday = wednessday
+                    // }
+                    // let thursdayFood = tab[y].E ? tab[y].E : '';
+                    // if (thursdayFood != '') {
+                    //   let thursdayObj = await FoodService.get({ foodCode: thursdayFood });
+                    //   thursday.push(thursdayObj.id)
+                    //   date.thursday = thursday
+                    // }
+                    // let fridayFood = tab[y].F ? tab[y].F : '';
+                    // if (fridayFood != '') {
+                    //   let fridayObj = await FoodService.get({ foodCode: fridayFood });
+                    //   friday.push(fridayObj.id)
+                    //   date.friday = friday
+                    // }
+                    foodArr.push(date);
+                    tmp.foods = foodArr;
+                    //slotFeeding.push(tmp);
+                  }
+
+              }
+              let tmpData = {
+                dateUse: dateUse,
+                slotFeedings: slotFeeding,
+                school: school,
+                classes: classes,
+                status: 1
+              }
+              const newMenu = await MenuService.add(tmpData);
+              if (school) {
+                await Menu.addToCollection(newMenu.id, 'school', school).exec(function (err) { });
+              }
+            }
             
-            if (foodCodes.length > 0) {
-              for (let i = 0; i < foodCodes.length; i++){
-                let tmp = {};
-                let foodList = [];
-                 foodList = await Food.find({ foodCode : foodCodes[i]});
-                tmp.id = foodList[0].id;
-                foodArr.push(tmp);
-              }
-            }
-            if (classArr.length > 0) {
-              for (let i = 0; i < classArr.length; i++){
-                let tmp = {};
-                let classList = [];
-                classList = await Class.find({ className : classArr[i]});
-                tmp.id = classList[0].id;
-                classArray.push(tmp);
-              }
-            }
-            let foodSlot = {
-              time: time,
-              foods: foodArr,
-              class: classArray
-            }
-            slotFeeding.push(foodSlot)
           }
         }
-        let tmpData = {
-          dateUse: dateUse,
-          slotFeedings: slotFeeding,
-          school: school,
-          status : 1 
-        }
-        const newMenu = await MenuService.add(tmpData);
-        if (school) {
-          await Food.addToCollection(newMenu.id, 'school', school).exec(function (err) { });
-        }
+
         fs.unlinkSync(originFolder + '/' + data);
         return res.ok({
           status: 200,
-          data: newMenu
+          //data: newMenu
         })
       }
     });
