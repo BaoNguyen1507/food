@@ -82,6 +82,10 @@ module.exports = {
       type: 'string',
       description: 'The date publish school'
     },
+    foods:{
+      collection: 'food',
+      via:'school'
+    }
   }
 };
 

@@ -20,16 +20,21 @@ module.exports = {
       return res.badRequest(FoodError.ERR_TITLEFOOD_REQUIRED);
     } 
     // PREPARE DATA FOOD
+    let school = params.school;
     const newData = {
       title: params.title, // REQUIRED
       nutrition: params.nutrition, // REQUIRED
       description: params.description, // REQUIRED
       thumbnail: params.thumbnail,
       status: params.status ? params.status : sails.config.custom.STATUS.DRAFT,
+      school: school,
       createdBy: req.session.userId
     };
     // ADD NEW DATA FOOD
     const newFood = await FoodService.add(newData);
+    if (school) {
+      await Food.addToCollection(newFood.id, 'school', school).exec(function (err) { });
+    }
     // RETURN DATA FOOD
     return res.ok(newFood);
   },
