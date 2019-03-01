@@ -42,6 +42,8 @@ module.exports = {
       return res.badRequest(MediaError.ERR_UPLOAD_FAIL);
     }
 
+    console.log('uploaded: ', fileUpload.path)
+
     // PREPARE DATA MEDIA
     const newData = {
       title: params.title ? params.title : String(moment().valueOf()), // REQUIRED
